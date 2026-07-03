@@ -1,21 +1,20 @@
 # category: "work" 항목은 타임라인 왼쪽, "school" 항목은 오른쪽에 표시됩니다.
-# 아래 예시를 본인 학력/경력으로 교체하세요.
 experiences:
 
-- place: "Your Institution"
-  time: "2024 - now"
-  title: "Researcher"
-  subtitle: "Department / Lab name"
+- place: "KIST"
+  time: "Dec 2023 - Jun 2024"
+  title: "Research Intern"
+  subtitle: "Korea Institute of Science and Technology, Seoul <br/> Advisor: Dr. Changhyuk Lee"
   category: "work"
 
-- place: "Your University"
-  time: "20XX - 20XX"
-  title: "M.Sc. Student"
-  subtitle: "Major / Department"
-  category: "school"
+- place: "Inha University, MILab"
+  time: "Mar 2023 - now"
+  title: "Undergraduate Researcher"
+  subtitle: "Scientific computing and machine learning research <br/> Advisor: Prof. Yoonsuk Hyun"
+  category: "work"
 
-- place: "Your University"
-  time: "20XX - 20XX"
+- place: "Inha University"
+  time: "2021 - 2025 (expected)"
   title: "B.Sc. Student"
-  subtitle: "Major / Department"
+  subtitle: "Mathematics &amp; Statistics (double major) <br/> College of Natural Sciences"
   category: "school"

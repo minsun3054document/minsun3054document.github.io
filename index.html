@@ -6,14 +6,60 @@ title: Home
 <div class="docs-section" id="bio">
   <h4>Bio</h4>
   <p>
-  I am a researcher interested in <b>computational neuroscience</b> and <b>data-driven analysis of neural systems</b>.
-  <!-- TODO: 본인 연구 분야와 관심사를 소개하는 문단으로 교체하세요. -->
+  I am an undergraduate student at <b>Inha University</b>, double majoring in <b>Mathematics</b> and <b>Statistics</b>.
+  My research interests lie in <b>machine learning and deep learning</b>, with recent work spanning
+  topological data analysis, LLM-based applications, and neural engineering.
   </p>
 
   <p>
-  <!-- TODO: 소속, 학력, 경력 요약 문단으로 교체하세요. -->
-  You can find my code on <a href="{{ site.data.main_info.github }}" target="_blank">GitHub</a>.
+  I am an undergraduate researcher at MILab (Inha University), advised by Prof. Yoonsuk Hyun,
+  working on scientific computing and machine learning.
+  From December 2023 to June 2024, I was a research intern at the <b>Korea Institute of Science and Technology (KIST)</b>,
+  advised by Dr. Changhyuk Lee, where I worked on real-time behavior classification,
+  Angle Sensitive Pixel (ASP) reconstruction for neural probes,
+  and an in silico model of motor and non-motor symptoms of Parkinson's disease.
   </p>
+
+  <p>
+  You can find my code on <a href="{{ site.data.main_info.github }}" target="_blank">GitHub</a>
+  and my writing on my <a href="{{ site.data.main_info.blog }}" target="_blank">blog</a>.
+  </p>
+</div>
+
+<!-- ========== PROJECTS (list) ========== -->
+<div class="docs-section" id="projects">
+  <h4>Projects</h4>
+
+  <div class="paper">
+    <p class="title"><b>Conversational AI Service for Restaurant Recommendations in Jeju Island using LLM</b></p>
+    <p><i>Competition by Korea Association for ICT Promotion (KAIT), Sep - Oct 2024</i></p>
+  </div>
+
+  <div class="paper">
+    <p class="title"><b>LLM AI for Solving Mathematics Problems</b></p>
+    <p><i>Competition by Inha University, Aug - Oct 2024</i></p>
+  </div>
+
+  <div class="paper">
+    <p class="title"><b>Drowsiness Prevention System App Utilizing Open API</b></p>
+    <p><i>Competition by ETRI, Oct - Dec 2023</i></p>
+  </div>
+
+  <div class="paper">
+    <p class="title"><b>Bilateral Research on AI Technology Development and Mathematical Problem Solving</b></p>
+    <p><i>Inha University, MILab, Mar 2023 - present</i></p>
+  </div>
+</div>
+
+<!-- ========== AWARDS ========== -->
+<div class="docs-section" id="awards">
+  <h4>Awards &amp; Honors</h4>
+  <ul>
+    <li><b>National Assembly Public Data Utilization Competition</b>, Encouragement Award, Jun 2024</li>
+    <li><b>2023 ETRI Open API Utilization Contest</b>, President's Award from ETRI, Nov 2023</li>
+    <li><b>2024 Standard Co-op Program</b>, Excellence Award for Best Internship Report, May 2024</li>
+    <li><b>NVIDIA DLI Certificate</b>, Building Transformer-Based Natural Language Processing Applications, Aug 2022</li>
+  </ul>
 </div>
 
 
@@ -22,9 +68,11 @@ title: Home
 <div class="docs-section" id="publications">
   <h4>Publications</h4>
 
+  {% if site.data.main_info.google_scholar != "" %}
   <p>Most recent publications on <a href="{{ site.data.main_info.google_scholar }}" target="_blank">Google Scholar</a>.<br/>
   <sup>‡</sup> indicates equal contribution.
   </p>
+  {% endif %}
 
   <ul class="tab-nav">
     <li><div class="button active" data-ref="#papers-selected">Selected</div></li>

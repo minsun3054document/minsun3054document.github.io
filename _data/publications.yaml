@@ -3,8 +3,8 @@
 # paper_pdf는 외부 URL 또는 /assets/publications/ 경로 둘 다 가능합니다.
 papers:
 
-  - title: "Title of Your Paper"
-    authors: "<b>Minsun</b>, Coauthor One, Coauthor Two"
-    venue: "Venue Name (Journal/Conference), Year."
+  - title: "LPI: Locational Persistent Image — Wafer Defect Pattern Recognition based on Topological Data Analysis"
+    authors: "<b>Minsun Lee</b>"
+    venue: "Poster, KSIAM 2023 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2023."
     paper_pdf: ""
     selected: y
