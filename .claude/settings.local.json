@@ -12,7 +12,9 @@
       "Bash(find / -maxdepth 4 -iname \"conda.sh\")",
       "Bash(git config *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); [print\\(b['commit'][:7], b['status'], b['created_at']\\) for b in d[:5]]\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(d['commit'][:7], d['status']\\)\")"
     ]
   }
 }

@@ -1,18 +1,15 @@
-# 논문을 아래 형식으로 추가하세요.
-# selected: y 인 논문만 "Selected" 탭에 표시됩니다.
+# 논문을 아래 형식으로 추가하세요. (최신순으로 위에 배치)
 # paper_pdf는 외부 URL 또는 /assets/publications/ 경로 둘 다 가능합니다.
+# thumbnail을 지정하면 왼쪽에 대표 이미지가 함께 표시됩니다.
 papers:
-
-  - title: "LPI: Locational Persistent Image — Wafer Defect Pattern Recognition based on Topological Data Analysis"
-    authors: "<b>Minsun Lee</b>"
-    venue: "Poster, KSIAM 2023 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2023."
-    paper_pdf: ""
-    selected: y
-
 
   - title: "Robust Finetuning from Generative Representations via Nuisance extended Information Bottleneck"
     authors: "<b>Minsun Lee</b>, Gwangyeol Yu, Yunhun Nam, Jinwoo Shin, Jongheon Jeong"
     venue: "<a href=\"https://cis.ieee.org/publications/t-neural-networks-and-learning-systems\" target=\"_blank\">IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</a>, 2026."
     paper_pdf: ""
     thumbnail: "/assets/publications/mainfigure.png"
-    selected: y
+
+  - title: "LPI: Locational Persistent Image — Wafer Defect Pattern Recognition based on Topological Data Analysis"
+    authors: "<b>Minsun Lee</b>"
+    venue: "Poster, KSIAM 2023 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2023."
+    paper_pdf: ""
