@@ -6,13 +6,13 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   <title>{{ site.data.main_info.name }} | {{ page.title }}</title>
-  <meta name="description" content="Martin Saveski">
-  <meta name="author" content="Martin Saveski">
-  <meta property="og:title" content="Martin Saveski" />
+  <meta name="description" content="{{ site.data.main_info.name }}">
+  <meta name="author" content="{{ site.data.main_info.name }}">
+  <meta property="og:title" content="{{ site.data.main_info.name }}" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="http://www.martinsaveski.com" />
-  <meta property="og:site_name" content="Martin Saveski" />
-  <link rel="canonical" href="http://www.martinsaveski.com" />
+  <meta property="og:url" content="{{ site.url }}" />
+  <meta property="og:site_name" content="{{ site.data.main_info.name }}" />
+  <link rel="canonical" href="{{ site.url }}" />
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -77,25 +77,35 @@
             <p>{{ site.data.main_info.title }}</p>
             <p>{{ site.data.main_info.email }}</p>
             <p>
+{% if site.data.main_info.bsky != "" %}
               <span onclick="window.open('{{ site.data.main_info.bsky }}')" style="cursor: pointer">
                 <i class="fa-brands fa-bluesky" style="padding-top: 10px"></i>
               </span>
+{% endif %}
 
+{% if site.data.main_info.twitter != "" %}
               <span onclick="window.open('{{ site.data.main_info.twitter }}')" style="cursor: pointer">
                 <i class="fa-brands fa-twitter fa-lg"></i>
               </span>
+{% endif %}
 
+{% if site.data.main_info.linkedin != "" %}
               <span onclick="window.open('{{ site.data.main_info.linkedin }}')" style="cursor: pointer">
                 <i class="fa-brands fa-linkedin fa-lg"></i>
               </span>
+{% endif %}
 
+{% if site.data.main_info.github != "" %}
               <span onclick="window.open('{{ site.data.main_info.github }}')" style="cursor: pointer">
                 <i class="fa-brands fa-github fa-lg"></i>
               </span>
+{% endif %}
 
+{% if site.data.main_info.google_scholar != "" %}
               <span onclick="window.open('{{ site.data.main_info.google_scholar }}')" style="cursor: pointer">
                 <i class="ai ai-google-scholar ai-lg" aria-hidden="true"></i>
               </span>
+{% endif %}
             </p>
         </div>
       </div>
@@ -106,7 +116,6 @@
       <div class="container">
         <ul class="navbar-list">
           <li class="navbar-item"><a class="navbar-link" href={{ "/index.html#bio" | prepend: site.baseurl }}>Bio</a></li>
-          <li class="navbar-item"><a class="navbar-link" href={{ "/index.html#prospective-students" | prepend: site.baseurl }}>Prospective Students</a></li>
           <li class="navbar-item"><a class="navbar-link" href={{ "/index.html#publications" | prepend: site.baseurl }}>Publications</a></li>
           <!--<li class="navbar-item"><a class="navbar-link" href={{ "/index.html#projects" | prepend: site.baseurl }}>Projects</a></li>-->
           <li class="navbar-item"><a class="navbar-link" href={{ "/index.html#resume" | prepend: site.baseurl }}>Vita</a></li>
@@ -125,25 +134,35 @@
           {{ site.data.main_info.email }}
         </div>
         <div class="four columns">
+{% if site.data.main_info.bsky != "" %}
           <span onclick="window.open('{{ site.data.main_info.bsky }}')" style="cursor: pointer">
             <i class="fa-brands fa-bluesky fa-sm" style="padding-top: 10px"></i>
           </span>
+{% endif %}
 
+{% if site.data.main_info.twitter != "" %}
           <span onclick="window.open('{{ site.data.main_info.twitter }}')" style="cursor: pointer">
             <i class="fa-brands fa-twitter"></i>
           </span>
+{% endif %}
 
+{% if site.data.main_info.linkedin != "" %}
           <span onclick="window.open('{{ site.data.main_info.linkedin }}')" style="cursor: pointer">
             <i class="fa-brands fa-linkedin"></i>
           </span>
+{% endif %}
 
+{% if site.data.main_info.github != "" %}
           <span onclick="window.open('{{ site.data.main_info.github }}')" style="cursor: pointer">
             <i class="fa-brands fa-github"></i>
           </span>
+{% endif %}
 
+{% if site.data.main_info.google_scholar != "" %}
           <span onclick="window.open('{{ site.data.main_info.google_scholar }}')" style="cursor: pointer">
             <i class="ai ai-google-scholar" aria-hidden="true"></i>
           </span>
+{% endif %}
         </div>
       </div>
     </div>
@@ -151,7 +170,9 @@
   </div>
 
   <!-- Google Analytics -->
+  {% if site.data.main_info.google_analystics_tracking_id != "" %}
   {% include google_analytics.html %}
+  {% endif %}
 
   <!-- do not remove -->
   <span id="62cd7b7da1aff3196fdc26b60e396df9"></span>

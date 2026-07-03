@@ -1,7 +1,8 @@
 source:      .
 destination: ./_site
 includes:    ./_includes
-baseurl: /msaveski
+baseurl: ""
+url: "https://minsun3054document.github.io"
 
 collections:
   projects:

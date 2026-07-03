@@ -1,36 +1,25 @@
-# Martin Saveski's Website
+# Personal Website
 
-## Updates guide
-Change one of the files in `_data`, unless you are changing the look of the website.
+개인 홈페이지 소스입니다. [Jekyll](https://jekyllrb.com/) 기반이며 GitHub Pages(`https://minsun3054document.github.io`)로 배포합니다.
+템플릿: [msaveski/www_personal](https://github.com/msaveski/www_personal)
 
-Test changes with:
-```
-jekyll serve
-```
+## 로컬 실행 (conda 환경)
 
-Push to the ML web directory:
-```
-rm -rf public_html
-mkdir public_html
-```
-```
-./__deploy.sh
+```bash
+conda activate ms_homepage
+export PATH="/opt/anaconda3/envs/ms_homepage/bin:$PATH"
+bundle install
+bundle exec jekyll serve --baseurl ""
+# http://127.0.0.1:4000 접속
 ```
 
-More info on the [Media Lab wiki](http://wiki.media.mit.edu/view/Necsys/WebPagePersonal).
+## 내용 수정
 
-**Stanford links**
-- Use fetch!
-- [Basic WWW for Individual Users](https://uit.stanford.edu/service/web/centralhosting/howto_user)
-- [AFS File Transfer](https://uit.stanford.edu/service/afs/file-transfer/macintosh)
-
-
-## External Libraries
-- Framework: [Jekyll](http://jekyllrb.com/)
-- CSS
-  - [Skeleton](getskeleton.com)
-  - Tabs: [Skeleton Tabs](https://github.com/nathancahill/skeleton-tabs)
-  - Experience: [Timeline](https://codepen.io/NilsWe/pen/FemfK)
-  - Icons: [Font Awesome](http://fontawesome.io/)
-- JS
-  - [Jquery (3.1.1)](https://jquery.com/)
+| 파일 | 내용 |
+|---|---|
+| `_data/main_info.yaml` | 이름, 직함, 이메일, 소셜 링크, 프로필 사진 |
+| `_data/experience.yaml` | 학력/경력 타임라인 |
+| `_data/publications.yaml` | 논문 목록 |
+| `index.html` | Bio 문단 |
+| `assets/profile-pics/profile.jpg` | 프로필 사진 |
+| `assets/cv/cv_web.pdf` | CV PDF |
