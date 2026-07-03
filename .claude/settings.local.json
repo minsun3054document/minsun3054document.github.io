@@ -1,9 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh api *)",
+      "Bash(git ls-remote *)",
       "Bash(gh auth *)",
-      "Bash(git config *)"
+      "Bash(git -C /home/minsun/ms_homepage status --short)",
+      "Bash(gh repo *)",
+      "Bash(grep -i -E \"\\\\.\\(jpg|jpeg|png|pdf\\)$\")",
+      "Bash(git push *)",
+      "Bash(gh api *)"
     ]
   }
 }
