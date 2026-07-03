@@ -8,3 +8,11 @@ papers:
     venue: "Poster, KSIAM 2023 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2023."
     paper_pdf: ""
     selected: y
+
+
+  - title: "Robust Finetuning from Generative Representations via Nuisance extended Information Bottleneck"
+    authors: "<b>Minsun Lee</b>, Gwangyeol Yu, Yunhun Nam, Jinwoo Shin, Jongheon Jeong"
+    venue: "<a href=\"https://cis.ieee.org/publications/t-neural-networks-and-learning-systems\" target=\"_blank\">IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</a>, 2026."
+    paper_pdf: ""
+    thumbnail: "/assets/publications/mainfigure.png"
+    selected: y
