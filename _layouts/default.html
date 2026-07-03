@@ -134,11 +134,10 @@
 
     <div class="footer">
       <div class="row">
-        <div class="four columns">
-          {{ site.data.main_info.name }}
-        </div>
-        <div class="four columns">
-          {{ site.data.main_info.email }}
+        <div class="eight columns">
+          {{ site.data.main_info.name }}  |  {{ site.data.main_info.email }}
+          <br/>
+          based on <a href="https://github.com/msaveski/www_personal" target="_blank">Martin Saveski's template</a>. Last updated: {{ site.time | date: "%B %-d, %Y" }}.
         </div>
         <div class="four columns">
 {% if site.data.main_info.bsky != "" %}
