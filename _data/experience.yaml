@@ -2,25 +2,25 @@
 experiences:
 
 - place: "KIST"
-  time: "Dec 2023 - Jun 2024"
+  time: "Dec. 2023 - Jun. 2024"
   title: "Research Intern"
   subtitle: "Korea Institute of Science and Technology, Seoul <br/> Advisor: Dr. Changhyuk Lee"
   category: "work"
 
 - place: "Inha University, MILab"
-  time: "2023 - 2024"
+  time: "Mar. 2023 - Feb. 2024"
   title: "Undergraduate Researcher"
-  subtitle: "Scientific computing and machine learning research <br/> Advisor: Prof. Yoonsuk Hyun"
+  subtitle: "Scientific computing and machine learning research <br/> Advisor: Prof. Yoonsuk Hyun and Prof. Seungchan Ko"
   category: "work"
 
 - place: "Inha University"
-  time: "2021 - 2025"
+  time: "Mar. 2021 - Feb. 2025"
   title: "B.S"
   subtitle: "Mathematics &amp; Statistics (double major) <br/> College of Natural Sciences"
   category: "school"
 
 - place: "Korea University"
-  time: "2025 - 2027 (expected)"
+  time: "Sep. 2025 - Aug. 2027 (expected)"
   title: "M.S. Student in Artificial Intelligence"
   # subtitle: "Graduate School of Artificial Intelligence"
   category: "school"
