@@ -15,12 +15,12 @@ experiences:
 
 - place: "Inha University"
   time: "2021 - 2025"
-  title: "B.Sc. Student"
+  title: "B.S"
   subtitle: "Mathematics &amp; Statistics (double major) <br/> College of Natural Sciences"
   category: "school"
 
 - place: "Korea University"
   time: "2025 - 2027 (expected)"
-  title: "M.S. Student"
-  subtitle: "Graduate School of Artificial Intelligence"
+  title: "M.S. Student in Artificial Intelligence"
+  # subtitle: "Graduate School of Artificial Intelligence"
   category: "school"
