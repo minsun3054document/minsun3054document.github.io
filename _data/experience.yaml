@@ -1,16 +1,16 @@
 # category: "work" 항목은 타임라인 왼쪽, "school" 항목은 오른쪽에 표시됩니다.
 experiences:
 
-- place: "Korea Institute of Science and Technology (KIST)"
-  time: "Dec. 2023 - Jun. 2024"
-  title: "Research Intern"
-  subtitle: "Brain Science Institute (BSI) <br/> Advisor: Dr. Changhyuk Lee"
-  category: "work"
-
 - place: "Inha University, MILab"
   time: "Mar. 2023 - Feb. 2024"
   title: "Undergraduate Researcher"
   subtitle: "Scientific computing and machine learning research <br/> Advisor: Prof. Yoonsuk Hyun and Prof. Seungchan Ko"
+  category: "work"
+
+- place: "Korea Institute of Science and Technology (KIST)"
+  time: "Dec. 2023 - Jun. 2024"
+  title: "Research Intern"
+  subtitle: "Brain Science Institute (BSI) <br/> Advisor: Dr. Changhyuk Lee"
   category: "work"
 
 - place: "Inha University"
