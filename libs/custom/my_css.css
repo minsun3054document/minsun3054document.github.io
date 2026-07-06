@@ -19,9 +19,11 @@ h4 {
   /*text-transform: uppercase; */}
 .paper p {
   margin-bottom: 2px }
-.paper p a {
+.paper p a,
+#about a {
   text-decoration: none; }
-.paper p a:hover {
+.paper p a:hover,
+#about a:hover {
   text-decoration: underline; }
 .paper-buttons {
   margin-top: 5px }
