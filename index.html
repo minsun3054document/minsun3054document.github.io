@@ -64,31 +64,6 @@ title: Home
   {% endfor %}
 </div>
 
-<!-- ========== PROJECTS ========== -->
-<div class="docs-section" id="projects">
-  <h4>Projects</h4>
-
-  <div class="paper">
-    <p class="title"><b>Conversational AI Service for Restaurant Recommendations in Jeju Island using LLM</b></p>
-    <p><i>Competition by Korea Association for ICT Promotion (KAIT), Sep - Oct 2024</i></p>
-  </div>
-
-  <div class="paper">
-    <p class="title"><b>LLM AI for Solving Mathematics Problems</b></p>
-    <p><i>Competition by Inha University, Aug - Oct 2024</i></p>
-  </div>
-
-  <div class="paper">
-    <p class="title"><b>Drowsiness Prevention System App Utilizing Open API</b></p>
-    <p><i>Competition by ETRI, Oct - Dec 2023</i></p>
-  </div>
-
-  <div class="paper">
-    <p class="title"><b>Bilateral Research on AI Technology Development and Mathematical Problem Solving</b></p>
-    <p><i>Inha University, MILab, Mar 2023 - present</i></p>
-  </div>
-</div>
-
 <!-- ========== PROJECTS (alternate, thumbnail-based; unused) ==========
 <div class="docs-section" id="projects-thumbnails">
   <h4>Projects</h4>
@@ -167,8 +142,6 @@ title: Home
 <!-- ========== EDUCATION ========== -->
 <div class="docs-section" id="education">
   <h4>Education</h4>
-
-  <p>Full Resume in <a href={{ "/assets/cv/cv_web.pdf" | prepend: site.baseurl }} target="_blank">PDF</a>.</p>
 
   {% assign edu = site.data.experience.experiences | where: "category", "school" | reverse %}
   {% for exp in edu %}
