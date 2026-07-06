@@ -150,7 +150,7 @@ title: Home
       <div class="eight columns"><b>{{ exp.place }}</b></div>
       <div class="four columns" style="text-align: right;"><b>{{ exp.time }}</b></div>
     </div>
-    <p>{{ exp.title }} <br/> {{ exp.subtitle }}</p>
+    <p>{{ exp.title }}{% if exp.subtitle %} <br/> {{ exp.subtitle }}{% endif %}</p>
   </div>
   {% endfor %}
 </div>
@@ -166,7 +166,7 @@ title: Home
       <div class="eight columns"><b>{{ exp.place }}</b></div>
       <div class="four columns" style="text-align: right;"><b>{{ exp.time }}</b></div>
     </div>
-    <p>{{ exp.title }} <br/> {{ exp.subtitle }}</p>
+    <p>{{ exp.title }}{% if exp.subtitle %} <br/> {{ exp.subtitle }}{% endif %}</p>
   </div>
   {% endfor %}
 </div>
