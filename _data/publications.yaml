@@ -6,7 +6,7 @@ papers:
   - tag: "P1"
     title: "Robust Finetuning from Generative Representations via Nuisance extended Information Bottleneck"
     authors: "<b>Minsun Lee</b>, Gwangyeol Yu, <a href=\"https://yunpal.github.io/\" target=\"_blank\">Yunhun Nam</a>, <a href=\"https://alinlab.kaist.ac.kr/shin.html\" target=\"_blank\">Jinwoo Shin</a>, <a href=\"https://jh-jeong.github.io/\" target=\"_blank\">Jongheon Jeong</a>"
-    venue: "IEEE Transactions on Neural Networks and Learning Systems (TNNLS), 2026 (Under Review)"
+    venue: "IEEE Transactions on Neural Networks and Learning Systems (TNNLS), 2026 <br/> (Under Review)"
     paper_pdf: "/assets/publications/Robust_Finetuning_from_Generative_Representations_via_Nuisance_extended_Information_Bottleneck.pdf"
     thumbnail: "/assets/publications/mainfigure.png"
 
