@@ -10,7 +10,8 @@ papers:
     paper_pdf: "/assets/publications/Robust_Finetuning_from_Generative_Representations_via_Nuisance_extended_Information_Bottleneck.pdf"
     thumbnail: "/assets/publications/mainfigure.png"
 
-  # - title: "LPI: Locational Persistent Image — Wafer Defect Pattern Recognition based on Topological Data Analysis"
-  #   authors: "<b>Minsun Lee</b>"
-  #   venue: "Poster, KSIAM 2023 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2023."
-  #   paper_pdf: ""
+  - tag: "Poster"
+    title: "LPI: Locational Persistent Image — Wafer Defect Pattern Recognition based on Topological Data Analysis"
+    authors: "<b>Minsun Lee</b>"
+    venue: "Poster, KSIAM 2023 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2023."
+    paper_pdf: ""
