@@ -11,7 +11,15 @@ papers:
     thumbnail: "/assets/publications/mainfigure.png"
 
   - tag: "Poster"
+    title: "Pipe Production Process Schedule Optimization: Using EDA Method & Data Prediction"
+    authors: "Bonggi Jeong, Gyewan Kim, Yongmin Kim, Youngrok Park, <b>Minsun Lee</b>, Heesu Jeong, Yoonsuk Hyun"
+    venue: "Poster, KSIAM 2024 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2024."
+    poster: "/assets/publications/Pipe_Poster_241208.png"
+    thumbnail: "/assets/publications/pipe_figure.png"
+
+  - tag: "Poster"
     title: "LPI: Locational Persistent Image — Wafer Defect Pattern Recognition based on Topological Data Analysis"
-    authors: "<b>Minsun Lee</b>"
+    authors: "Miyoung Kim, Gyewan Kim, Sanghyun Park, Heesu Jeong, <b>Minsun Lee</b>, Seungchan Ko"
     venue: "Poster, KSIAM 2023 Fall Conference (Korean Society for Industrial and Applied Mathematics), 2023."
-    paper_pdf: ""
+    poster: "/assets/publications/LPI_Poster.png"
+    thumbnail: "/assets/publications/LPI_figure.png"
