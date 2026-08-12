@@ -20,7 +20,9 @@ h4 {
 .paper p {
   margin-bottom: 2px }
 .paper p a,
-#about a {
+#about a,
+#experience a,
+#experience a:hover {
   text-decoration: none; }
 .paper p a:hover,
 #about a:hover {
