@@ -19,7 +19,7 @@ papers:
 
   - tag: "Poster"
     title: "LPI: Locational Persistent Image — Wafer Defect Pattern Recognition based on Topological Data Analysis"
-    authors: "Miyoung Kim, Gyewan Kim, Sanghyun Park, Heesu Jeong, <b>Minsun Lee</b>, Seungchan Ko"
+    authors: "Miyoung Kim, Gyewan Kim, Sanghyun Park, Heesu Jeong, <b>Minsun Lee</b>, <a href=\"https://sites.google.com/view/scko/home?authuser=0\" target=\"_blank\">Seungchan Ko</a>"
     venue: "KSIAM (Korean Society for Industrial and Applied Mathematics), 2023 Fall."
     poster: "/assets/publications/LPI_Poster.png"
     thumbnail: "/assets/publications/LPI_figure.png"
