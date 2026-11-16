@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeNS-JEPA: Robust Latent World Models via Learned Nuisance Separation</title>
+<meta name="description" content="LeNS-JEPA is a training-only plug-in that separates nuisance from state in JEPA world models, improving planning under appearance shifts while keeping the base model unchanged at inference.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="static/css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236e5ba6'/><rect x='12' y='12' width='12' height='12' rx='2' fill='%23f2b134'/><rect x='40' y='12' width='12' height='12' rx='2' fill='%23fff'/><rect x='26' y='26' width='12' height='12' rx='2' fill='%23f2b134'/><rect x='12' y='40' width='12' height='12' rx='2' fill='%23fff'/><rect x='40' y='40' width='12' height='12' rx='2' fill='%23f2b134'/></svg>">
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="logo">LeNS-JEPA</div>
+  <div class="links">
+    <a href="#overview">Overview</a>
+    <a href="#demo">Demo</a>
+    <a href="#method">Method</a>
+    <a href="#mask">Mask</a>
+    <a href="#results">Results</a>
+    <a href="#plugin">Plug-in</a>
+    <a href="#analysis">Analysis</a>
+    <a href="#limitations">Limitations</a>
+    <a href="#bibtex">BibTeX</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="badge"><span class="dot"></span>Paper under review</span>
+    <h1 class="title">LeNS-JEPA</h1>
+    <p class="subtitle">Robust Latent World Models via <b>Le</b>arned <b>N</b>uisance <b>S</b>eparation</p>
+    <div class="authors"><a class="author" href="https://minsun3054document.github.io/" target="_blank">Minsun Lee</a><span class="sep">·</span><span class="author">Gwangyeol Yu</span><span class="sep">·</span><span class="author">Jongheon Jeong</span><div class="affil">Korea University</div></div>
+    <div class="buttons">
+      <a class="btn primary disabled" title="Released after review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>Paper <span class="soon">soon</span></a>
+      <a class="btn disabled" title="Released after review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>Code <span class="soon">soon</span></a>
+      <a class="btn" href="#demo"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Videos</a>
+      <a class="btn" href="#bibtex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>BibTeX</a>
+    </div>
+
+    <div class="hero-mosaic" id="heroMosaic"></div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">+<span class="count" data-to="21.9" data-dec="1">0</span><small>%</small></div><div class="cap">higher mean OoD success than LeWM over four tasks (43.8 → 53.4)</div></div>
+      <div class="stat"><div class="num">+<span class="count" data-to="6.5" data-dec="1">0</span><small>%</small></div><div class="cap">higher mean InD success than LeWM (76.5 → 81.5)</div></div>
+      <div class="stat"><div class="num">+<span class="count" data-to="45.2" data-dec="1">0</span><small>% / +50.0%</small></div><div class="cap">TwoRoom OoD success when plugged into GAWM / SMWM</div></div>
+      <div class="stat"><div class="num"><span class="count" data-to="0" data-dec="0">0</span><small> extra</small></div><div class="cap">parameters at inference: the base model is unchanged (18.03M)</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ OVERVIEW ============ -->
+<section id="overview">
+  <div class="wrap reveal">
+    <div class="kicker">Overview</div>
+    <h2>Keep the state, route the nuisance elsewhere.</h2>
+    <p class="lead">JEPA world models plan by comparing latent states. When background color, texture, brightness, blur or noise change at test time, the latent moves even though the physical state does not, and planning fails. LeNS-JEPA adds a <b>training-only</b> nuisance pathway to an existing world model so that its predictive latent depends less on appearance, using clean trajectories only.</p>
+    <div class="tldr"><b>TL;DR.</b> A learned patch mask hides nuisance patches from the predictive encoder and routes their features to an auxiliary nuisance latent <span class="m">z_n</span>. Both latents reconstruct the full observation, so masked content is kept rather than discarded, and an action-adversarial critic keeps state out of the nuisance path. At inference the base model encodes the full image exactly as before.</div>
+    <figure class="card">
+      <img class="zoomable" src="static/images/teaser.png" alt="Teaser figure">
+      <figcaption><b>Figure 1.</b> Appearance shifts move the latent of a standard JEPA world model even when the state is unchanged. LeNS-JEPA separates a predictive latent <span class="m">z_s</span> from a nuisance latent <span class="m">z_n</span> during training.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ DEMO ============ -->
+<section id="demo">
+  <div class="wrap reveal">
+    <div class="kicker">Demo</div>
+    <h2>Planning under appearance shifts</h2>
+    <p class="lead">Executed trajectories of the 50-query test runs, replayed in the simulator from the recorded actions (no re-planning). The observation is shifted; the goal image is clean. Each clip is chosen by a fixed rule: the first test query where LeWM + LeNS-JEPA reaches the goal and LeWM does not.</p>
+    <div class="demo-box">
+      <div class="demo-controls">
+        <div class="seg" id="taskSeg"></div>
+        <div class="seg" id="shiftSeg"></div>
+        <label class="switch" title="Show the first query where LeWM succeeds and LeNS-JEPA fails"><input type="checkbox" id="failToggle"><span class="track"></span>Show a failure case</label>
+      </div>
+      <div class="demo-stage" id="demoStage"><div class="demo-empty">Videos are being rendered.</div></div>
+      <div class="demo-info" id="demoInfo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section id="method">
+  <div class="wrap reveal">
+    <div class="kicker">Method</div>
+    <h2>A training-only nuisance pathway</h2>
+    <p class="lead">LeNS-JEPA keeps the base world model, its objective <span class="m">\mathcal{L}_{\mathrm{wm}}</span>, and its planner. It only requires that the encoder takes patch tokens, so that selected patches can be masked and the gradient of <span class="m">\mathcal{L}_{\mathrm{wm}}</span> reaches the mask.</p>
+    <figure class="card">
+      <img class="zoomable" src="static/images/method_overview.png" alt="Method overview">
+      <figcaption><b>Figure 2.</b> A patch scorer on frozen DINOv2 features selects patches for the nuisance pathway. Selected patches are withheld from the predictive encoder, their first-block features form <span class="m">z_n</span>, and <span class="m">z_s</span> and <span class="m">z_n</span> jointly reconstruct the features of the unmasked observation. An action-adversarial critic on <span class="m">z_n</span> discourages masking the agent.</figcaption>
+    </figure>
+    <div class="steps">
+      <div class="step amber"><div class="n">01 · SCORER</div><h3>Learned patch mask</h3><p>A scorer on frozen DINOv2 ViT-S/14 features marks nuisance patches. No mask ratio or area prior; the objectives decide how much to mask.</p><div class="eq"><span class="m">m_t^i = \mathbf{1}[\,g_\omega(\mathbf{f}_t^i) &gt; 0\,]</span></div></div>
+      <div class="step"><div class="n">02 · PREDICTIVE</div><h3>Masked predictive latent</h3><p>Masked patch embeddings are replaced by a learnable token; the base objective is trained on the masked latent <span class="m">z_s</span>.</p><div class="eq"><span class="m">z_{s,t} = f_\theta(o_t;\, m_t)</span></div></div>
+      <div class="step teal"><div class="n">03 · NUISANCE</div><h3>Nuisance latent and reconstruction</h3><p>Masked content is kept: first-block features at masked patches form <span class="m">z_n</span>, and <span class="m">z_s, z_n</span> reconstruct the full feature map.</p><div class="eq"><span class="m">z_{n,t}^i = m_t^i\,\mathbf{h}_t^i</span></div></div>
+      <div class="step red"><div class="n">04 · ADVERSARIAL</div><h3>Keep state out of <span class="m">z_n</span></h3><p>A critic predicts the action from consecutive <span class="m">z_n</span>; gradient reversal pushes the mask away from action-revealing patches such as the agent.</p><div class="eq"><span class="m">\beta\mathcal{L}_{\mathrm{wm}} + \lambda_{\mathrm{rec}}\mathcal{L}_{\mathrm{rec}} + \lambda_{\mathrm{adv}}\mathcal{L}_{\mathrm{adv}}</span></div></div>
+    </div>
+    <div class="callout"><div class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="#f2b134"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><div><b>Nothing changes at test time.</b> The mask, the nuisance latent, the reconstructor and the critic are used only during training. At inference the base encoder sees the full observation, with the same 18.03M parameters as the base model; the 1.40M training-only modules are discarded.</div></div>
+  </div>
+</section>
+
+<!-- ============ MASK ============ -->
+<section id="mask">
+  <div class="wrap reveal">
+    <div class="kicker">Learned mask</div>
+    <h2>Where the mask goes, and how it evolves</h2>
+    <p class="lead">Without any label or instruction about location, the scorer mostly selects patches outside the task objects: the floor and walls in TwoRoom, the table around the pusher and block in PushT, and the background behind the arm in Reacher.</p>
+    <figure class="card">
+      <img class="zoomable" src="static/images/mask_examples.png" alt="Mask examples">
+      <figcaption><b>Figure 3.</b> Training-time masks on validation frames of TwoRoom, PushT, and Reacher (masked patches in yellow).</figcaption>
+    </figure>
+    <div class="video-card" style="margin-top:22px" id="maskVideoCard">
+      <div class="head"><h3 style="margin:0">Mask during training</h3><div class="seg" id="maskSeg"></div></div>
+      <div id="maskStage"><div class="demo-empty" style="color:#8f8aa8">Videos are being rendered.</div></div>
+      <div class="foot" id="maskFoot">The masked fraction is not prescribed: it rises and falls with the balance among the objectives during training.</div>
+    </div>
+    <figure class="card">
+      <img class="zoomable" src="static/images/mask_dynamics.png" alt="Mask dynamics">
+      <figcaption><b>Mask statistics over training.</b> Top: fraction of masked patches recorded during training (light) and its rolling median (dark), log scale. Bottom: share of masked patches on task objects (points) against the share of the image those objects occupy (dotted). On PushT and Reacher the mask becomes less active late in training; on Cube the reported model barely masks.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section id="results">
+  <div class="wrap reveal">
+    <div class="kicker">Results</div>
+    <h2>Higher OoD success, base model unchanged</h2>
+    <p class="lead">Planning success on four simulated environments (TwoRoom, PushT, OGBench Cube, Reacher). OoD Avg. is the mean over grayscale, hue, blur, noise and color–brightness shifts. Training uses unperturbed trajectories only.</p>
+    <div class="table-wrap"><table class="res" id="mainTable"></table></div>
+    <p class="table-note">Bold: best, underline: second best per column. Green / red under the LeNS-JEPA rows: change relative to the base model directly above. 50 test queries per condition (one query = 2 points), single training seed.</p>
+
+    <div class="chart-card">
+      <div class="chart-head">
+        <h3 style="margin:0">Per-shift success, mean over the four tasks</h3>
+        <div class="legend"><span><i style="background:#cfcbe0"></i>LeWM</span><span><i style="background:#6e5ba6"></i>LeWM + LeNS-JEPA</span></div>
+      </div>
+      <svg class="chart" id="shiftChart" viewBox="0 0 900 300"></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLUG-IN ============ -->
+<section id="plugin">
+  <div class="wrap reveal">
+    <div class="kicker">Plug-in</div>
+    <h2>One recipe, three base models</h2>
+    <p class="lead">LeNS-JEPA is added to LeWM, GAWM and SMWM while each keeps its own predictor, objective, and inference architecture. For all three, the largest OoD gain in success points is on TwoRoom.</p>
+    <div class="chart-card">
+      <div class="chart-head">
+        <div class="seg" id="metricSeg"><button class="on" data-m="ood">OoD Avg.</button><button data-m="ind">InD</button></div>
+        <div class="legend"><span><i style="background:#d9d5e8"></i>Base model</span><span><i style="background:#9488ba"></i>Base + LeNS-JEPA</span></div>
+      </div>
+      <svg class="chart" id="pluginChart" viewBox="0 0 1000 360"></svg>
+    </div>
+    <div class="grid-3">
+      <div class="mini"><div class="big">+34.3%</div><div class="sub">LeWM, TwoRoom OoD (57.2 → 76.8)</div></div>
+      <div class="mini"><div class="big">+45.2%</div><div class="sub">GAWM, TwoRoom OoD (58.4 → 84.8)</div></div>
+      <div class="mini"><div class="big">+50.0%</div><div class="sub">SMWM, TwoRoom OoD (60.8 → 91.2)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANALYSIS ============ -->
+<section id="analysis">
+  <div class="wrap reveal">
+    <div class="kicker">Analysis</div>
+    <h2>Stronger shifts, rollouts, and native recoloring</h2>
+    <figure class="card">
+      <img class="zoomable" src="static/images/severity_rollout.png" alt="Shift strength and rollout error">
+      <figcaption><b>Figure 4.</b> (a) Planning success as the shift strength grows (observations shifted, goals clean). (b) Latent prediction error of a five-step rollout from a single context frame: the error from a shifted context is lower with LeNS-JEPA on all three tasks, while the error without a shift stays small for both models.</figcaption>
+    </figure>
+    <div class="two-col" style="margin-top:22px">
+      <div class="chart-card" style="margin-top:0">
+        <h3>Native recoloring · TwoRoom</h3>
+        <table class="res" style="min-width:0"><thead><tr><th>Condition</th><th>LeWM</th><th>+ LeNS-JEPA</th></tr></thead>
+          <tbody><tr><td>InD</td><td>86.00</td><td class="best">96.00</td></tr><tr><td>Agent color</td><td>46.67</td><td class="best">50.00</td></tr><tr><td>Background color</td><td>41.33</td><td class="best">56.00</td></tr><tr class="ours"><td>OoD Average</td><td>44.00</td><td class="best">53.00</td></tr></tbody></table>
+      </div>
+      <div class="chart-card" style="margin-top:0">
+        <h3>Native recoloring · PushT</h3>
+        <table class="res" style="min-width:0"><thead><tr><th>Condition</th><th>LeWM</th><th>+ LeNS-JEPA</th></tr></thead>
+          <tbody><tr><td>InD</td><td class="best">98.00</td><td>94.00</td></tr><tr><td>Goal color</td><td>18.00</td><td class="best">38.00</td></tr><tr><td>Occlusion</td><td>17.00</td><td class="best">27.00</td></tr><tr class="ours"><td>OoD Average</td><td>17.50</td><td class="best">32.50</td></tr></tbody></table>
+      </div>
+    </div>
+    <p class="table-note">Native recoloring re-renders the scene with new colors instead of transforming pixels (CPU evaluation on the same 50 test queries, so InD can differ from the main table). On PushT, the agent, block and background color factors, where both models succeed on fewer than 15% of the queries, are omitted.</p>
+    <figure class="card">
+      <img class="zoomable" src="static/images/planning_qualitative.png" alt="Qualitative planning">
+      <figcaption><b>Executed trajectories.</b> Upper row: base model; lower row: base model + LeNS-JEPA, under the shift named in each panel. A green frame marks the step at which the goal is reached.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ LIMITATIONS ============ -->
+<section id="limitations">
+  <div class="wrap reveal">
+    <div class="kicker">Scope</div>
+    <h2>Limitations</h2>
+    <div class="lims">
+      <div class="lim"><h3><svg class="lic" viewBox="0 0 24 24" fill="none" stroke="#c2453b" stroke-width="2"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M21 7l-9 5-9-5"/></svg>Cube trade-off</h3><p>On Cube, OoD success rises only slightly (50.4 → 52.8) and InD success drops (70 → 62). The reported Cube model barely uses the mask, so its encoder input differs little from the base model.</p></div>
+      <div class="lim"><h3><svg class="lic" viewBox="0 0 24 24" fill="none" stroke="#f2b134" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10" r="1.5" fill="#f2b134"/><circle cx="12" cy="7.5" r="1.5" fill="#f2b134"/><circle cx="15.5" cy="10" r="1.5" fill="#f2b134"/></svg>Nuisance on the object itself</h3><p>A patch-level mask cannot separate the color of an object from its position. Gains are smaller when the shift falls on task-relevant objects, such as hue on the TwoRoom agent or the Reacher arm.</p></div>
+      <div class="lim"><h3><svg class="lic" viewBox="0 0 24 24" fill="none" stroke="#6e5ba6" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#efecf8"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#efecf8"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Mask placement depends on the base</h3><p>The masked area is not prescribed. Its size and location vary with the task and with the base model's objective; the supplementary material reports the placement for every model.</p></div>
+      <div class="lim"><h3><svg class="lic" viewBox="0 0 24 24" fill="none" stroke="#2e9e6b" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="#2e9e6b"/><circle cx="16" cy="16" r="1.3" fill="#2e9e6b"/><circle cx="12" cy="12" r="1.3" fill="#2e9e6b"/></svg>Evaluation scale</h3><p>Each condition uses the 50 official test queries (one query = 2 points) and a single training seed, following the protocol of the base model.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BIBTEX ============ -->
+<section id="bibtex">
+  <div class="wrap reveal">
+    <div class="kicker">Citation</div>
+    <h2>BibTeX</h2>
+    <div class="bib"><button id="copyBib">Copy</button><pre id="bibText">@article{lensjepa,
+  title   = {LeNS-JEPA: Robust Latent World Models via Learned Nuisance Separation},
+  author  = {Lee, Minsun and Yu, Gwangyeol and Jeong, Jongheon},
+  journal = {Under review},
+  year    = {2026}
+}</pre></div>
+  </div>
+</section>
+
+<footer>
+  <p>All numbers are copied from the paper. Videos replay the recorded actions of the test runs in the simulator; they are illustrative examples chosen by a fixed rule, and the evidence is the full 50-query result.</p>
+</footer>
+
+<div class="lightbox" id="lightbox"><img alt=""></div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="static/js/data.js"></script>
+<script src="static/js/manifest.js"></script>
+<script src="static/js/main.js"></script>
+</body>
+</html>

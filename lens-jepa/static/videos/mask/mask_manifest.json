@@ -1,0 +1,215 @@
+{
+ "title": "Learned patch mask during training (LeNS-JEPA)",
+ "created": "2026-11-15",
+ "mask": {
+  "definition": "patch scorer (LayerNorm(384) -> Linear(384,64) -> GELU -> Linear(64,1)) on frozen DINOv2-S/14 final patch tokens; hard mask = logit > 0",
+  "grid": "16x16 patches of 14x14 px on 224x224 frames",
+  "use": "masked patches are hidden from the predictive encoder during training only; inference uses all patches",
+  "overlay": "masked patches tinted #F2B134 at alpha 0.5 on the clean frame, with a darker edge"
+ },
+ "frame_rule": "first three frames (cohort indices 0, 1, 2) of the fixed 512-frame clean validation cohort used in the mask analyses: official-window validation windows in split order, excluding episodes of the test split, first observation of each window; rule fixed before rendering, no frame selection by mask appearance",
+ "curve": {
+  "quantity": "fraction of input patches hidden by the hard mask in training batches (train.mask_hard), logged every 50 updates",
+  "drawn": "light line = every 50 updates; dark line #6E5BA6 = centred rolling median over 11 log points (550 updates); revealed up to the cursor",
+  "note": "the curve is measured on training batches, the overlays on the three fixed validation frames; levels can differ at a single snapshot"
+ },
+ "timeline": {
+  "fps": 30,
+  "start_hold_s": 0.6,
+  "sweep_s": 11.0,
+  "pause_at_tworoom_reported_s": 1.0,
+  "end_hold_s": 1.6,
+  "snapshot_rule": "shown snapshot = latest scorer snapshot at or before the current epoch (first snapshot before it exists), updated at 15 Hz; cursor and \"epoch x.x\" label give that snapshot's epoch (update / updates per epoch)",
+  "tworoom_and_combined_pause": "1.0 s pause at TwoRoom epoch 6 (reported checkpoint)"
+ },
+ "encoding": {
+  "codec": "H.264 High, yuv420p, bt709 tv range",
+  "crf": 23,
+  "preset": "slow",
+  "faststart": true,
+  "audio": false,
+  "width": 960
+ },
+ "combined": {
+  "video": "all_mask_evolution.mp4",
+  "poster": "all_mask_evolution.jpg",
+  "poster_frame": "last frame (epoch 10 for all three tasks)",
+  "duration_s": 14.2,
+  "n_video_frames": 426,
+  "resolution": "960x750",
+  "layout": "TwoRoom, PushT, Reacher stacked; synchronised by epoch"
+ },
+ "tasks": {
+  "tworoom": {
+   "task": "TwoRoom",
+   "video": "tworoom_mask_evolution.mp4",
+   "poster": "tworoom_mask_evolution.jpg",
+   "poster_frame": "reported checkpoint (epoch 6), shown during the 1.0 s pause",
+   "duration_s": 14.2,
+   "n_video_frames": 426,
+   "resolution": "960x540",
+   "updates_per_epoch": 5138,
+   "reported_epoch": 6,
+   "reported_update": 30828,
+   "frames_shown": [
+    {
+     "cohort_index": 0,
+     "episode_id": 9346,
+     "val_window_index": 682458
+    },
+    {
+     "cohort_index": 1,
+     "episode_id": 6861,
+     "val_window_index": 500521
+    },
+    {
+     "cohort_index": 2,
+     "episode_id": 4882,
+     "val_window_index": 356146
+    }
+   ],
+   "scorer_snapshots": {
+    "count": 112,
+    "first_update": 500,
+    "last_update": 51380,
+    "first_epoch": 0.0973,
+    "last_epoch": 10.0,
+    "interval": "every 500 updates plus each epoch end",
+    "gaps_over_500_updates": 0,
+    "shown_in_video": 106
+   },
+   "training_curve": {
+    "points": 1030,
+    "first_update": 1,
+    "last_update": 51350,
+    "logged_every_updates": 50,
+    "gaps_over_50_updates": 0
+   },
+   "mask_fraction_at_reported_checkpoint": {
+    "shown_frames_mean": 0.1029,
+    "shown_frames_each": [
+     0.0742,
+     0.0547,
+     0.1797
+    ],
+    "validation_cohort_512": 0.096,
+    "training_curve_median_550_updates": 0.102,
+    "training_mean_last_500_updates": 0.2755
+   }
+  },
+  "pusht": {
+   "task": "PushT",
+   "video": "pusht_mask_evolution.mp4",
+   "poster": "pusht_mask_evolution.jpg",
+   "poster_frame": "last frame = reported checkpoint (epoch 10)",
+   "duration_s": 13.2,
+   "n_video_frames": 396,
+   "resolution": "960x540",
+   "updates_per_epoch": 13933,
+   "reported_epoch": 10,
+   "reported_update": 139330,
+   "frames_shown": [
+    {
+     "cohort_index": 0,
+     "episode_id": 8936,
+     "val_window_index": 937915
+    },
+    {
+     "cohort_index": 1,
+     "episode_id": 4393,
+     "val_window_index": 457449
+    },
+    {
+     "cohort_index": 2,
+     "episode_id": 12387,
+     "val_window_index": 1319408
+    }
+   ],
+   "scorer_snapshots": {
+    "count": 291,
+    "first_update": 500,
+    "last_update": 139330,
+    "first_epoch": 0.0359,
+    "last_epoch": 10.0,
+    "interval": "every 500 updates plus each epoch end",
+    "gaps_over_500_updates": 0,
+    "shown_in_video": 165
+   },
+   "training_curve": {
+    "points": 2789,
+    "first_update": 1,
+    "last_update": 139300,
+    "logged_every_updates": 50,
+    "gaps_over_50_updates": 0
+   },
+   "mask_fraction_at_reported_checkpoint": {
+    "shown_frames_mean": 0.0156,
+    "shown_frames_each": [
+     0.0195,
+     0.0156,
+     0.0117
+    ],
+    "validation_cohort_512": 0.0137,
+    "training_curve_median_550_updates": 0.014,
+    "training_mean_last_500_updates": 0.0137
+   }
+  },
+  "reacher": {
+   "task": "Reacher",
+   "video": "reacher_mask_evolution.mp4",
+   "poster": "reacher_mask_evolution.jpg",
+   "poster_frame": "last frame = reported checkpoint (epoch 10)",
+   "duration_s": 13.2,
+   "n_video_frames": 396,
+   "resolution": "960x540",
+   "updates_per_epoch": 12796,
+   "reported_epoch": 10,
+   "reported_update": 127960,
+   "frames_shown": [
+    {
+     "cohort_index": 0,
+     "episode_id": 6137,
+     "val_window_index": 1117033
+    },
+    {
+     "cohort_index": 1,
+     "episode_id": 9802,
+     "val_window_index": 1784099
+    },
+    {
+     "cohort_index": 2,
+     "episode_id": 873,
+     "val_window_index": 158911
+    }
+   ],
+   "scorer_snapshots": {
+    "count": 268,
+    "first_update": 500,
+    "last_update": 127960,
+    "first_epoch": 0.0391,
+    "last_epoch": 10.0,
+    "interval": "every 500 updates plus each epoch end",
+    "gaps_over_500_updates": 0,
+    "shown_in_video": 165
+   },
+   "training_curve": {
+    "points": 2562,
+    "first_update": 1,
+    "last_update": 127950,
+    "logged_every_updates": 50,
+    "gaps_over_50_updates": 0
+   },
+   "mask_fraction_at_reported_checkpoint": {
+    "shown_frames_mean": 0.0443,
+    "shown_frames_each": [
+     0.0469,
+     0.0391,
+     0.0469
+    ],
+    "validation_cohort_512": 0.0363,
+    "training_curve_median_550_updates": 0.035,
+    "training_mean_last_500_updates": 0.035
+   }
+  }
+ }
+}

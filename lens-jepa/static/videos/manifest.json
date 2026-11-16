@@ -1,0 +1,1864 @@
+{
+ "version": 1,
+ "methods": {
+  "lewm": "LeWM",
+  "ours": "LeWM + LeNS-JEPA"
+ },
+ "protocol": {
+  "evaluation": "Official Test50 episodes (LeWM eval.py seed-42 sample), 50-step planning budget, goal 25 steps ahead. In each shift condition only the observation is shifted; the goal image is clean.",
+  "video": "Replay of the actions executed in the recorded Test run inside the native simulator; no re-planning and no model inference. Panels show the model-input frame of that condition; the centre shows the goal image given to both models. A successful episode stops at its success step (official evaluation does not step it further).",
+  "fidelity": "A clip is kept only if, for both models, replaying all 50 episodes of that condition reproduces the recorded success vector exactly (and the per-step physical trace).",
+  "layout": "left: LeWM | centre: goal (not shifted) | right: LeWM + LeNS-JEPA"
+ },
+ "selection_rules": {
+  "demo": "Pre-registered: for each (task, shift), the lowest-index official Test50 episode where LeWM + LeNS-JEPA succeeds and LeWM fails. If no such episode exists, the cell is skipped.",
+  "failure": "Pre-registered fairness clip: for each task, the lowest-index Test50 episode where LeWM succeeds and LeWM + LeNS-JEPA fails, under the shift of that task's first available demo clip (order Gray, Hue, Blur, Noise, C-B).",
+  "clean": "In-distribution (no shift): for each task, the lowest-index Test50 episode where both models succeed."
+ },
+ "models": {
+  "tworoom": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "4200091e9e73ca73"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 6,
+    "checkpoint_sha256_prefix": "0e2d1c1ecae51844"
+   }
+  },
+  "pusht": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "08a0b303b0ef2f62"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "20b4d17e5fe22ed6"
+   }
+  },
+  "reacher": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "cf798c07c876bb63"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "36bc6dd96e50b42a"
+   }
+  },
+  "cube": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "be9338ee34fa97f7"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 5,
+    "checkpoint_sha256_prefix": "ae4cc39bfdb71c91"
+   }
+  }
+ },
+ "clips": [
+  {
+   "id": "demo/tworoom_gray",
+   "kind": "demo",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "demo/tworoom_gray.mp4",
+   "poster": "demo/tworoom_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 98791,
+   "poster_bytes": 38693,
+   "test_index": 0,
+   "dataset_episode": 644,
+   "start_step": 42,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 22,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/tworoom_hue",
+   "kind": "demo",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "video": "demo/tworoom_hue.mp4",
+   "poster": "demo/tworoom_hue.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 100665,
+   "poster_bytes": 39067,
+   "test_index": 1,
+   "dataset_episode": 687,
+   "start_step": 68,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 30,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 9,
+    "lewm_only": 10,
+    "both": 25,
+    "neither": 6
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/tworoom_blur",
+   "kind": "demo",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "video": "demo/tworoom_blur.mp4",
+   "poster": "demo/tworoom_blur.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 100949,
+   "poster_bytes": 36925,
+   "test_index": 0,
+   "dataset_episode": 644,
+   "start_step": 42,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 19,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 14,
+    "lewm_only": 1,
+    "both": 34,
+    "neither": 1
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/tworoom_noise",
+   "kind": "demo",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "video": "demo/tworoom_noise.mp4",
+   "poster": "demo/tworoom_noise.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 698928,
+   "poster_bytes": 59231,
+   "test_index": 1,
+   "dataset_episode": 687,
+   "start_step": 68,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 22,
+   "condition_test50": {
+    "lewm": {
+     "k": 45,
+     "n": 50,
+     "percent": 90.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 3,
+    "lewm_only": 0,
+    "both": 45,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 45,
+     "k_replay": 45,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/tworoom_cb",
+   "kind": "demo",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "video": "demo/tworoom_cb.mp4",
+   "poster": "demo/tworoom_cb.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 101221,
+   "poster_bytes": 37414,
+   "test_index": 0,
+   "dataset_episode": 644,
+   "start_step": 42,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 18,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 37,
+     "n": 50,
+     "percent": 74.0
+    },
+    "ours_only": 19,
+    "lewm_only": 1,
+    "both": 18,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 37,
+     "k_replay": 37,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "failure/tworoom_gray",
+   "kind": "failure",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "failure/tworoom_gray.mp4",
+   "poster": "failure/tworoom_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 98497,
+   "poster_bytes": 38782,
+   "test_index": 12,
+   "dataset_episode": 3558,
+   "start_step": 57,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 23,
+   "ours_success_step": null,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/tworoom_clean",
+   "kind": "clean",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "video": "demo/tworoom_clean.mp4",
+   "poster": "demo/tworoom_clean.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 6.4,
+   "last_step_shown": 23,
+   "bytes": 65928,
+   "poster_bytes": 39727,
+   "test_index": 0,
+   "dataset_episode": 644,
+   "start_step": 42,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 19,
+   "ours_success_step": 23,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 4,
+    "lewm_only": 0,
+    "both": 44,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/pusht_gray",
+   "kind": "demo",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "demo/pusht_gray.mp4",
+   "poster": "demo/pusht_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 111815,
+   "poster_bytes": 32123,
+   "test_index": 18,
+   "dataset_episode": 8408,
+   "start_step": 89,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 7,
+   "condition_test50": {
+    "lewm": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours_only": 1,
+    "lewm_only": 1,
+    "both": 0,
+    "neither": 48
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/pusht_hue",
+   "kind": "demo",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "video": "demo/pusht_hue.mp4",
+   "poster": "demo/pusht_hue.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 127014,
+   "poster_bytes": 33087,
+   "test_index": 1,
+   "dataset_episode": 1316,
+   "start_step": 129,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 30,
+   "condition_test50": {
+    "lewm": {
+     "k": 15,
+     "n": 50,
+     "percent": 30.0
+    },
+    "ours": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours_only": 25,
+    "lewm_only": 4,
+    "both": 11,
+    "neither": 10
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 15,
+     "k_replay": 15,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/pusht_blur",
+   "kind": "demo",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "video": "demo/pusht_blur.mp4",
+   "poster": "demo/pusht_blur.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 119851,
+   "poster_bytes": 31696,
+   "test_index": 0,
+   "dataset_episode": 1235,
+   "start_step": 36,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 16,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 42,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/pusht_noise",
+   "kind": "demo",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "video": "demo/pusht_noise.mp4",
+   "poster": "demo/pusht_noise.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 948154,
+   "poster_bytes": 54859,
+   "test_index": 1,
+   "dataset_episode": 1316,
+   "start_step": 129,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "condition_test50": {
+    "lewm": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours_only": 13,
+    "lewm_only": 3,
+    "both": 31,
+    "neither": 3
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/pusht_cb",
+   "kind": "demo",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "video": "demo/pusht_cb.mp4",
+   "poster": "demo/pusht_cb.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 116816,
+   "poster_bytes": 32014,
+   "test_index": 29,
+   "dataset_episode": 12591,
+   "start_step": 155,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 24,
+   "condition_test50": {
+    "lewm": {
+     "k": 2,
+     "n": 50,
+     "percent": 4.0
+    },
+    "ours": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours_only": 1,
+    "lewm_only": 2,
+    "both": 0,
+    "neither": 47
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 2,
+     "k_replay": 2,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "failure/pusht_gray",
+   "kind": "failure",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "failure/pusht_gray.mp4",
+   "poster": "failure/pusht_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 113733,
+   "poster_bytes": 32520,
+   "test_index": 29,
+   "dataset_episode": 12591,
+   "start_step": 155,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 6,
+   "ours_success_step": null,
+   "condition_test50": {
+    "lewm": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours_only": 1,
+    "lewm_only": 1,
+    "both": 0,
+    "neither": 48
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/pusht_clean",
+   "kind": "clean",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "video": "demo/pusht_clean.mp4",
+   "poster": "demo/pusht_clean.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 5.0,
+   "last_step_shown": 16,
+   "bytes": 75447,
+   "poster_bytes": 35204,
+   "test_index": 0,
+   "dataset_episode": 1235,
+   "start_step": 36,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 15,
+   "ours_success_step": 16,
+   "condition_test50": {
+    "lewm": {
+     "k": 49,
+     "n": 50,
+     "percent": 98.0
+    },
+    "ours": {
+     "k": 49,
+     "n": 50,
+     "percent": 98.0
+    },
+    "ours_only": 1,
+    "lewm_only": 1,
+    "both": 48,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 49,
+     "k_replay": 49,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 49,
+     "k_replay": 49,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/reacher_gray",
+   "kind": "demo",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "demo/reacher_gray.mp4",
+   "poster": "demo/reacher_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 146390,
+   "poster_bytes": 35510,
+   "test_index": 0,
+   "dataset_episode": 638,
+   "start_step": 29,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 21,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/reacher_hue",
+   "kind": "demo",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "video": "demo/reacher_hue.mp4",
+   "poster": "demo/reacher_hue.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 189904,
+   "poster_bytes": 38118,
+   "test_index": 1,
+   "dataset_episode": 679,
+   "start_step": 34,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 16,
+   "condition_test50": {
+    "lewm": {
+     "k": 4,
+     "n": 50,
+     "percent": 8.0
+    },
+    "ours": {
+     "k": 5,
+     "n": 50,
+     "percent": 10.0
+    },
+    "ours_only": 4,
+    "lewm_only": 3,
+    "both": 1,
+    "neither": 42
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 4,
+     "k_replay": 4,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 5,
+     "k_replay": 5,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/reacher_blur",
+   "kind": "demo",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "video": "demo/reacher_blur.mp4",
+   "poster": "demo/reacher_blur.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 153039,
+   "poster_bytes": 34940,
+   "test_index": 0,
+   "dataset_episode": 638,
+   "start_step": 29,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 45,
+   "condition_test50": {
+    "lewm": {
+     "k": 26,
+     "n": 50,
+     "percent": 52.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 13,
+    "lewm_only": 8,
+    "both": 18,
+    "neither": 11
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 26,
+     "k_replay": 26,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/reacher_noise",
+   "kind": "demo",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "video": "demo/reacher_noise.mp4",
+   "poster": "demo/reacher_noise.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 1881583,
+   "poster_bytes": 68341,
+   "test_index": 0,
+   "dataset_episode": 638,
+   "start_step": 29,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 43,
+   "condition_test50": {
+    "lewm": {
+     "k": 28,
+     "n": 50,
+     "percent": 56.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 10,
+    "lewm_only": 4,
+    "both": 24,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 28,
+     "k_replay": 28,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/reacher_cb",
+   "kind": "demo",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "video": "demo/reacher_cb.mp4",
+   "poster": "demo/reacher_cb.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 151680,
+   "poster_bytes": 34238,
+   "test_index": 16,
+   "dataset_episode": 4388,
+   "start_step": 117,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 33,
+   "condition_test50": {
+    "lewm": {
+     "k": 8,
+     "n": 50,
+     "percent": 16.0
+    },
+    "ours": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours_only": 1,
+    "lewm_only": 8,
+    "both": 0,
+    "neither": 41
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 8,
+     "k_replay": 8,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "failure/reacher_gray",
+   "kind": "failure",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "failure/reacher_gray.mp4",
+   "poster": "failure/reacher_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 147694,
+   "poster_bytes": 35871,
+   "test_index": 7,
+   "dataset_episode": 1652,
+   "start_step": 49,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 32,
+   "ours_success_step": null,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/reacher_clean",
+   "kind": "clean",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "video": "demo/reacher_clean.mp4",
+   "poster": "demo/reacher_clean.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 5.4,
+   "last_step_shown": 18,
+   "bytes": 85136,
+   "poster_bytes": 38378,
+   "test_index": 2,
+   "dataset_episode": 859,
+   "start_step": 76,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 18,
+   "ours_success_step": 13,
+   "condition_test50": {
+    "lewm": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours_only": 12,
+    "lewm_only": 2,
+    "both": 23,
+    "neither": 13
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/cube_gray",
+   "kind": "demo",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "demo/cube_gray.mp4",
+   "poster": "demo/cube_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 237298,
+   "poster_bytes": 39665,
+   "test_index": 4,
+   "dataset_episode": 921,
+   "start_step": 61,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 27,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 17,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/cube_hue",
+   "kind": "demo",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "video": "demo/cube_hue.mp4",
+   "poster": "demo/cube_hue.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 291145,
+   "poster_bytes": 44295,
+   "test_index": 10,
+   "dataset_episode": 2272,
+   "start_step": 63,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 6,
+   "condition_test50": {
+    "lewm": {
+     "k": 20,
+     "n": 50,
+     "percent": 40.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 5,
+    "lewm_only": 2,
+    "both": 18,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 20,
+     "k_replay": 20,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/cube_blur",
+   "kind": "demo",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "video": "demo/cube_blur.mp4",
+   "poster": "demo/cube_blur.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 210347,
+   "poster_bytes": 39039,
+   "test_index": 29,
+   "dataset_episode": 6779,
+   "start_step": 32,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 14,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 30,
+     "n": 50,
+     "percent": 60.0
+    },
+    "ours_only": 1,
+    "lewm_only": 6,
+    "both": 29,
+    "neither": 14
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 30,
+     "k_replay": 30,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/cube_noise",
+   "kind": "demo",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "video": "demo/cube_noise.mp4",
+   "poster": "demo/cube_noise.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 1611290,
+   "poster_bytes": 72259,
+   "test_index": 29,
+   "dataset_episode": 6779,
+   "start_step": 32,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 19,
+   "condition_test50": {
+    "lewm": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours": {
+     "k": 32,
+     "n": 50,
+     "percent": 64.0
+    },
+    "ours_only": 1,
+    "lewm_only": 5,
+    "both": 31,
+    "neither": 13
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 32,
+     "k_replay": 32,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/cube_cb",
+   "kind": "demo",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "video": "demo/cube_cb.mp4",
+   "poster": "demo/cube_cb.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 213614,
+   "poster_bytes": 37542,
+   "test_index": 5,
+   "dataset_episode": 941,
+   "start_step": 132,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 5,
+   "condition_test50": {
+    "lewm": {
+     "k": 16,
+     "n": 50,
+     "percent": 32.0
+    },
+    "ours": {
+     "k": 24,
+     "n": 50,
+     "percent": 48.0
+    },
+    "ours_only": 8,
+    "lewm_only": 0,
+    "both": 16,
+    "neither": 26
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 16,
+     "k_replay": 16,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 24,
+     "k_replay": 24,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "failure/cube_gray",
+   "kind": "failure",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "video": "failure/cube_gray.mp4",
+   "poster": "failure/cube_gray.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 234539,
+   "poster_bytes": 40996,
+   "test_index": 37,
+   "dataset_episode": 7783,
+   "start_step": 146,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 3,
+   "ours_success_step": null,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 17,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    }
+   }
+  },
+  {
+   "id": "demo/cube_clean",
+   "kind": "clean",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "video": "demo/cube_clean.mp4",
+   "poster": "demo/cube_clean.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 2.0,
+   "last_step_shown": 1,
+   "bytes": 40259,
+   "poster_bytes": 44696,
+   "test_index": 2,
+   "dataset_episode": 859,
+   "start_step": 76,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 1,
+   "ours_success_step": 1,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 2,
+    "lewm_only": 6,
+    "both": 29,
+    "neither": 13
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true
+    }
+   }
+  }
+ ],
+ "skipped": [],
+ "totals": {
+  "n_clips": 28,
+  "n_demo": 20,
+  "n_failure": 4,
+  "n_clean": 4,
+  "bytes": 9616957
+ }
+}
