@@ -42,11 +42,11 @@
   if (!grid) return;
   if (!GV.length) { grid.innerHTML = '<div class="demo-empty" style="grid-column:1/-1;color:#8f8aa8">Videos are being rendered.</div>'; return; }
   const MODELS = [['all', 'All models'], ['lewm', 'LeWM'], ['gawm', 'GAWM'], ['smwm', 'SMWM']].filter(([k]) => k === 'all' || GV.some((c) => c.base === k));
-  const TASKS = [['all', 'All tasks'], ['tworoom', 'TwoRoom'], ['pusht', 'PushT'], ['cube', 'Cube'], ['reacher', 'Reacher']];
+  const TASKS = [['all', 'All tasks'], ['tworoom', 'TwoRoom'], ['pusht', 'PushT'], ['reacher', 'Reacher']];
   const KINDS = [['success', 'Successes'], ['severity', 'Stronger shifts'], ['clean', 'InD'], ['failure', 'Failure cases']].filter(([k]) => GV.some((c) => c.kind === k));
   const st = { model: 'all', task: 'all', kind: 'success' };
   const NAME = { lewm: 'LeWM', gawm: 'GAWM', smwm: 'SMWM' };
-  const TN = { tworoom: 'TwoRoom', pusht: 'PushT', cube: 'Cube', reacher: 'Reacher' };
+  const TN = { tworoom: 'TwoRoom', pusht: 'PushT', reacher: 'Reacher' };
   const SN = { gray: 'Gray', hue: 'Hue', blur: 'Blur', noise: 'Noise', cb: 'Color–brightness', clean: 'InD' };
   function render() {
     const L = GV.filter((c) => (st.model === 'all' || c.base === st.model) && (st.task === 'all' || c.task === st.task) && c.kind === st.kind);

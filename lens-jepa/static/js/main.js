@@ -76,18 +76,18 @@
   /* ---------- main table ---------- */
   function buildTable() {
     const t = $('#mainTable');
-    const cols = ['TwoRoom', 'PushT', 'Cube', 'Reacher', 'Mean'];
+    const cols = D.tasks.concat(['Mean']);
     let h = '<thead><tr><th rowspan="2">Method</th>' + cols.map((c) => `<th colspan="2">${c}</th>`).join('') + '</tr><tr>' +
       cols.map(() => '<th>InD ↑</th><th>OoD Avg. ↑</th>').join('') + '</tr></thead><tbody>';
-    const vals = D.main.map((r) => [r.ind[0], r.ood[0], r.ind[1], r.ood[1], r.ind[2], r.ood[2], r.ind[3], r.ood[3], r.mean[0], r.mean[1]]);
+    const vals = D.main.map((r) => D.tasks.map((_, i) => [r.ind[i], r.ood[i]]).flat().concat([r.mean[0], r.mean[1]]));
     const best = [], second = [];
-    for (let j = 0; j < 10; j++) {
+    for (let j = 0; j < vals[0].length; j++) {
       const u = Array.from(new Set(vals.map((v) => v[j]))).sort((a, b) => b - a);
       best.push(u[0]); second.push(u[1]);
     }
-    const groups = { 0: 'Latent world models', 4: 'LeWM base', 6: 'GAWM base', 8: 'SMWM base' };
+    const groups = {}; D.main.forEach((r, i) => { if (i === 0) groups[i] = 'Latent world models'; if (['LeWM', 'GAWM', 'SMWM'].includes(r.name)) groups[i] = r.name + ' base'; });
     D.main.forEach((r, i) => {
-      if (groups[i]) h += `<tr class="group"><td colspan="11">${groups[i]}</td></tr>`;
+      if (groups[i]) h += `<tr class="group"><td colspan="${1 + 2 * cols.length}">${groups[i]}</td></tr>`;
       const ours = r.name.endsWith('+ Ours');
       const label = ours ? r.name.replace('+ Ours', '+ LeNS-JEPA') : (r.name === 'GAWM (public)' ? 'GAWM' : r.name);
       h += `<tr class="${ours ? 'ours' : ''}"><td>${label}</td>`;
@@ -160,7 +160,7 @@
       el('line', { x1: L, x2: W - R, y1: yy, y2: yy, stroke: '#eeebf5' }, svg);
       el('text', { x: L - 8, y: yy + 4, 'text-anchor': 'end', 'font-size': 12, fill: '#8a879a' }, svg).textContent = y;
     }
-    const gw = (W - L - R) / 4;
+    const gw = (W - L - R) / D.tasks.length;
     D.tasks.forEach((task, ti) => {
       const g0 = L + gw * ti;
       if (ti) el('line', { x1: g0, x2: g0, y1: T - 10, y2: T + ph, stroke: '#e3dff0', 'stroke-dasharray': '4 4' }, svg);
@@ -187,7 +187,7 @@
   }));
 
   /* ---------- demo player ---------- */
-  const TASKS = [['tworoom', 'TwoRoom'], ['pusht', 'PushT'], ['cube', 'Cube'], ['reacher', 'Reacher']];
+  const TASKS = [['tworoom', 'TwoRoom'], ['pusht', 'PushT'], ['reacher', 'Reacher']];
   const SHIFTS = [['gray', 'Gray'], ['hue', 'Hue'], ['blur', 'Blur'], ['noise', 'Noise'], ['cb', 'Color–brightness'], ['clean', 'InD']];
   const state = { task: 'tworoom', shift: 'gray', fail: false };
   const clips = (VM && VM.clips) || [];

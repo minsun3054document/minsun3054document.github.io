@@ -1,7 +1,7 @@
 {
  "generated_kst": "2026-11-16 21:17 KST",
  "style": "white background, rounded tiles (radius 14 px, 2-px #DEDEDE outline), 2× nearest-neighbour upscale (224 → 448 px), JPEG quality 88; mask tiles = input | input with masked patches tinted #F2B134 (alpha 0.55) and a 2-px #A86A00 patch edge; 16×16 grid of 14-px patches",
- "note_ko": "mask는 학습 전용(training-only) scorer의 hard mask(logit > 0, frozen DINOv2-S final token 위 patch scorer)이며 inference에는 쓰이지 않는다. mask_lewm = paper Fig. 3과 같은 training-time scorer·같은 규칙(앞 8개), mask_gawm = 선택된 GA-WM + LeNS-JEPA checkpoint의 저장된 mask. Cube는 main-table scorer의 coverage가 40 % 미만이라 mask_lewm 규칙에 맞는 frame이 없다.",
+ "note_ko": "mask는 학습 전용(training-only) scorer의 hard mask(logit > 0, frozen DINOv2-S final token 위 patch scorer)이며 inference에는 쓰이지 않는다. mask_lewm = paper Fig. 3과 같은 training-time scorer·같은 규칙(앞 8개), mask_gawm = 선택된 GA-WM + LeNS-JEPA checkpoint의 저장된 mask.",
  "counts": {
   "mask_lewm/tworoom": {
    "images": 8,
@@ -15,10 +15,6 @@
    "images": 8,
    "qualifying_frames": 403
   },
-  "mask_lewm/cube": {
-   "images": 0,
-   "qualifying_frames": 0
-  },
   "mask_gawm/tworoom": {
    "images": 6,
    "qualifying_frames": 224
@@ -28,8 +24,8 @@
    "qualifying_frames": 512
   }
  },
- "total_bytes": 2526211,
- "n_images": 48,
+ "total_bytes": 2126108,
+ "n_images": 45,
  "images": [
   {
    "file": "shifts/tworoom_0.jpg",
@@ -318,150 +314,6 @@
    "width": 2816,
    "height": 536,
    "bytes": 75222
-  },
-  {
-   "file": "shifts/cube_0.jpg",
-   "group": "shifts",
-   "task": "Cube",
-   "cohort_index": 0,
-   "dataset_episode": 6137,
-   "window_index": 1117033,
-   "conditions": [
-    {
-     "label": "Clean",
-     "key": "clean",
-     "op": "no shift"
-    },
-    {
-     "label": "Gray",
-     "key": "grayscale",
-     "op": "grayscale (ITU-R 601 luma, 3 channels)"
-    },
-    {
-     "label": "Hue",
-     "key": "hue60",
-     "op": "hue rotation 60° in YIQ space"
-    },
-    {
-     "label": "Blur",
-     "key": "blur1",
-     "op": "Gaussian blur, σ = 1 px at 224×224"
-    },
-    {
-     "label": "Noise",
-     "key": "noise0p03",
-     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
-    },
-    {
-     "label": "Color–brightness",
-     "key": "color_brightness",
-     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
-    }
-   ],
-   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
-   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
-   "coverage_pct": null,
-   "agent_overlap": null,
-   "checkpoint": null,
-   "width": 2816,
-   "height": 536,
-   "bytes": 134504
-  },
-  {
-   "file": "shifts/cube_1.jpg",
-   "group": "shifts",
-   "task": "Cube",
-   "cohort_index": 7,
-   "dataset_episode": 5019,
-   "window_index": 913579,
-   "conditions": [
-    {
-     "label": "Clean",
-     "key": "clean",
-     "op": "no shift"
-    },
-    {
-     "label": "Gray",
-     "key": "grayscale",
-     "op": "grayscale (ITU-R 601 luma, 3 channels)"
-    },
-    {
-     "label": "Hue",
-     "key": "hue60",
-     "op": "hue rotation 60° in YIQ space"
-    },
-    {
-     "label": "Blur",
-     "key": "blur1",
-     "op": "Gaussian blur, σ = 1 px at 224×224"
-    },
-    {
-     "label": "Noise",
-     "key": "noise0p03",
-     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
-    },
-    {
-     "label": "Color–brightness",
-     "key": "color_brightness",
-     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
-    }
-   ],
-   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
-   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
-   "coverage_pct": null,
-   "agent_overlap": null,
-   "checkpoint": null,
-   "width": 2816,
-   "height": 536,
-   "bytes": 143537
-  },
-  {
-   "file": "shifts/cube_2.jpg",
-   "group": "shifts",
-   "task": "Cube",
-   "cohort_index": 14,
-   "dataset_episode": 111,
-   "window_index": 20295,
-   "conditions": [
-    {
-     "label": "Clean",
-     "key": "clean",
-     "op": "no shift"
-    },
-    {
-     "label": "Gray",
-     "key": "grayscale",
-     "op": "grayscale (ITU-R 601 luma, 3 channels)"
-    },
-    {
-     "label": "Hue",
-     "key": "hue60",
-     "op": "hue rotation 60° in YIQ space"
-    },
-    {
-     "label": "Blur",
-     "key": "blur1",
-     "op": "Gaussian blur, σ = 1 px at 224×224"
-    },
-    {
-     "label": "Noise",
-     "key": "noise0p03",
-     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
-    },
-    {
-     "label": "Color–brightness",
-     "key": "color_brightness",
-     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
-    }
-   ],
-   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
-   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
-   "coverage_pct": null,
-   "agent_overlap": null,
-   "checkpoint": null,
-   "width": 2816,
-   "height": 536,
-   "bytes": 122062
   },
   {
    "file": "shifts/reacher_0.jpg",
