@@ -1,5 +1,5 @@
 {
- "generated_kst": "2026-11-16 09:34 KST",
+ "generated_kst": "2026-11-16 21:17 KST",
  "style": "white background, rounded tiles (radius 14 px, 2-px #DEDEDE outline), 2× nearest-neighbour upscale (224 → 448 px), JPEG quality 88; mask tiles = input | input with masked patches tinted #F2B134 (alpha 0.55) and a 2-px #A86A00 patch edge; 16×16 grid of 14-px patches",
  "note_ko": "mask는 학습 전용(training-only) scorer의 hard mask(logit > 0, frozen DINOv2-S final token 위 patch scorer)이며 inference에는 쓰이지 않는다. mask_lewm = paper Fig. 3과 같은 training-time scorer·같은 규칙(앞 8개), mask_gawm = 선택된 GA-WM + LeNS-JEPA checkpoint의 저장된 mask. Cube는 main-table scorer의 coverage가 40 % 미만이라 mask_lewm 규칙에 맞는 frame이 없다.",
  "counts": {
@@ -25,10 +25,10 @@
   },
   "mask_gawm/pusht": {
    "images": 6,
-   "qualifying_frames": 330
+   "qualifying_frames": 512
   }
  },
- "total_bytes": 2466518,
+ "total_bytes": 2526211,
  "n_images": 48,
  "images": [
   {
@@ -1540,8 +1540,8 @@
    "window_index": 937915,
    "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
    "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
-   "coverage_pct": 16.797,
-   "masked_patches": 43,
+   "coverage_pct": 46.875,
+   "masked_patches": 120,
    "agent_overlap_patches": 0,
    "agent_overlap": false,
    "agent_patches": 1,
@@ -1552,16 +1552,16 @@
    "checkpoint": {
     "method": "GA-WM + LeNS-JEPA",
     "task": "PushT",
-    "world_model_loss_weight_beta": 0.5,
+    "world_model_loss_weight_beta": 1.0,
     "reconstruction_weight": 0.1,
-    "idn_weight": 1.0,
-    "epoch": 9,
-    "optimizer_updates": 125397,
-    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+    "idn_weight": 3.0,
+    "epoch": 7,
+    "optimizer_updates": 97531,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 1, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 7 (97,531 updates)"
    },
    "width": 900,
    "height": 448,
-   "bytes": 26499
+   "bytes": 38154
   },
   {
    "file": "mask_gawm/pusht_1.jpg",
@@ -1572,8 +1572,8 @@
    "window_index": 457449,
    "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
    "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
-   "coverage_pct": 28.906,
-   "masked_patches": 74,
+   "coverage_pct": 38.281,
+   "masked_patches": 98,
    "agent_overlap_patches": 0,
    "agent_overlap": false,
    "agent_patches": 1,
@@ -1584,19 +1584,51 @@
    "checkpoint": {
     "method": "GA-WM + LeNS-JEPA",
     "task": "PushT",
-    "world_model_loss_weight_beta": 0.5,
+    "world_model_loss_weight_beta": 1.0,
     "reconstruction_weight": 0.1,
-    "idn_weight": 1.0,
-    "epoch": 9,
-    "optimizer_updates": 125397,
-    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+    "idn_weight": 3.0,
+    "epoch": 7,
+    "optimizer_updates": 97531,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 1, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 7 (97,531 updates)"
    },
    "width": 900,
    "height": 448,
-   "bytes": 30283
+   "bytes": 37517
   },
   {
    "file": "mask_gawm/pusht_2.jpg",
+   "group": "mask_gawm",
+   "task": "PushT",
+   "cohort_index": 2,
+   "dataset_episode": 12387,
+   "window_index": 1319408,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 21.484,
+   "masked_patches": 55,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 1,
+   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
+   "mask_source_note": "mask saved on all 512 cohort frames",
+   "block_overlap_patches": 0,
+   "block_patches": 10,
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 3.0,
+    "epoch": 7,
+    "optimizer_updates": 97531,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 1, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 7 (97,531 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 30053
+  },
+  {
+   "file": "mask_gawm/pusht_3.jpg",
    "group": "mask_gawm",
    "task": "PushT",
    "cohort_index": 3,
@@ -1604,8 +1636,8 @@
    "window_index": 1458900,
    "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
    "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
-   "coverage_pct": 10.156,
-   "masked_patches": 26,
+   "coverage_pct": 32.422,
+   "masked_patches": 83,
    "agent_overlap_patches": 0,
    "agent_overlap": false,
    "agent_patches": 2,
@@ -1616,19 +1648,19 @@
    "checkpoint": {
     "method": "GA-WM + LeNS-JEPA",
     "task": "PushT",
-    "world_model_loss_weight_beta": 0.5,
+    "world_model_loss_weight_beta": 1.0,
     "reconstruction_weight": 0.1,
-    "idn_weight": 1.0,
-    "epoch": 9,
-    "optimizer_updates": 125397,
-    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+    "idn_weight": 3.0,
+    "epoch": 7,
+    "optimizer_updates": 97531,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 1, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 7 (97,531 updates)"
    },
    "width": 900,
    "height": 448,
-   "bytes": 23805
+   "bytes": 35815
   },
   {
-   "file": "mask_gawm/pusht_3.jpg",
+   "file": "mask_gawm/pusht_4.jpg",
    "group": "mask_gawm",
    "task": "PushT",
    "cohort_index": 4,
@@ -1636,8 +1668,8 @@
    "window_index": 1044697,
    "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
    "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
-   "coverage_pct": 16.797,
-   "masked_patches": 43,
+   "coverage_pct": 41.406,
+   "masked_patches": 106,
    "agent_overlap_patches": 0,
    "agent_overlap": false,
    "agent_patches": 2,
@@ -1648,19 +1680,19 @@
    "checkpoint": {
     "method": "GA-WM + LeNS-JEPA",
     "task": "PushT",
-    "world_model_loss_weight_beta": 0.5,
+    "world_model_loss_weight_beta": 1.0,
     "reconstruction_weight": 0.1,
-    "idn_weight": 1.0,
-    "epoch": 9,
-    "optimizer_updates": 125397,
-    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+    "idn_weight": 3.0,
+    "epoch": 7,
+    "optimizer_updates": 97531,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 1, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 7 (97,531 updates)"
    },
    "width": 900,
    "height": 448,
-   "bytes": 28047
+   "bytes": 39431
   },
   {
-   "file": "mask_gawm/pusht_4.jpg",
+   "file": "mask_gawm/pusht_5.jpg",
    "group": "mask_gawm",
    "task": "PushT",
    "cohort_index": 5,
@@ -1668,8 +1700,8 @@
    "window_index": 13359,
    "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
    "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
-   "coverage_pct": 8.203,
-   "masked_patches": 21,
+   "coverage_pct": 46.875,
+   "masked_patches": 120,
    "agent_overlap_patches": 0,
    "agent_overlap": false,
    "agent_patches": 1,
@@ -1680,48 +1712,16 @@
    "checkpoint": {
     "method": "GA-WM + LeNS-JEPA",
     "task": "PushT",
-    "world_model_loss_weight_beta": 0.5,
+    "world_model_loss_weight_beta": 1.0,
     "reconstruction_weight": 0.1,
-    "idn_weight": 1.0,
-    "epoch": 9,
-    "optimizer_updates": 125397,
-    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+    "idn_weight": 3.0,
+    "epoch": 7,
+    "optimizer_updates": 97531,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 1, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 7 (97,531 updates)"
    },
    "width": 900,
    "height": 448,
-   "bytes": 24343
-  },
-  {
-   "file": "mask_gawm/pusht_5.jpg",
-   "group": "mask_gawm",
-   "task": "PushT",
-   "cohort_index": 6,
-   "dataset_episode": 6189,
-   "window_index": 658879,
-   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
-   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
-   "coverage_pct": 20.312,
-   "masked_patches": 52,
-   "agent_overlap_patches": 0,
-   "agent_overlap": false,
-   "agent_patches": 2,
-   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
-   "mask_source_note": "mask saved on all 512 cohort frames",
-   "block_overlap_patches": 0,
-   "block_patches": 9,
-   "checkpoint": {
-    "method": "GA-WM + LeNS-JEPA",
-    "task": "PushT",
-    "world_model_loss_weight_beta": 0.5,
-    "reconstruction_weight": 0.1,
-    "idn_weight": 1.0,
-    "epoch": 9,
-    "optimizer_updates": 125397,
-    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
-   },
-   "width": 900,
-   "height": 448,
-   "bytes": 27169
+   "bytes": 38869
   }
  ]
 }
