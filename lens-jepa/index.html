@@ -23,6 +23,7 @@
     <a href="#mask">Mask</a>
     <a href="#results">Results</a>
     <a href="#plugin">Plug-in</a>
+    <a href="#gallery">Gallery</a>
     <a href="#analysis">Analysis</a>
     <a href="#limitations">Limitations</a>
     <a href="#bibtex">BibTeX</a>
@@ -64,6 +65,11 @@
       <img class="zoomable" src="static/images/teaser.png" alt="Teaser figure">
       <figcaption><b>Figure 1.</b> Appearance shifts move the latent of a standard JEPA world model even when the state is unchanged. LeNS-JEPA separates a predictive latent <span class="m">z_s</span> from a nuisance latent <span class="m">z_n</span> during training.</figcaption>
     </figure>
+    <div class="video-card" style="margin-top:22px">
+      <div class="head"><h3 style="margin:0">The five appearance shifts</h3><div class="seg" id="shiftTaskSeg"></div></div>
+      <div class="strip-stage"><button class="nav-arrow left" id="stripPrev" aria-label="previous">‹</button><img id="stripImg" alt="appearance shifts"><button class="nav-arrow right" id="stripNext" aria-label="next">›</button></div>
+      <div class="foot">The same validation frame under each test-time shift. Training sees only clean frames; the goal image stays clean at test time.</div>
+    </div>
   </div>
 </section>
 
@@ -120,6 +126,11 @@
       <div id="maskStage"><div class="demo-empty" style="color:#8f8aa8">Videos are being rendered.</div></div>
       <div class="foot" id="maskFoot">The masked fraction is not prescribed: it rises and falls with the balance among the objectives during training.</div>
     </div>
+    <div class="video-card" style="margin-top:22px">
+      <div class="head"><h3 style="margin:0">Mask gallery</h3><div class="seg" id="maskGalSeg"></div></div>
+      <div class="mask-grid" id="maskGrid"></div>
+      <div class="foot" id="maskGalFoot"></div>
+    </div>
     <figure class="card">
       <img class="zoomable" src="static/images/mask_dynamics.png" alt="Mask dynamics">
       <figcaption><b>Mask statistics over training.</b> Top: fraction of masked patches recorded during training (light) and its rolling median (dark), log scale. Bottom: share of masked patches on task objects (points) against the share of the image those objects occupy (dotted). On PushT and Reacher the mask becomes less active late in training; on Cube the reported model barely masks.</figcaption>
@@ -165,6 +176,22 @@
       <div class="mini"><div class="big">+45.2%</div><div class="sub">GAWM, TwoRoom OoD (58.4 → 84.8)</div></div>
       <div class="mini"><div class="big">+50.0%</div><div class="sub">SMWM, TwoRoom OoD (60.8 → 91.2)</div></div>
     </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery">
+  <div class="wrap reveal">
+    <div class="kicker">Gallery</div>
+    <h2>More rollouts</h2>
+    <p class="lead">Replays of recorded test-time actions for every task, shift and base model. Hover to play, click to enlarge. Examples are chosen by fixed rules stated with each clip; failure cases are included.</p>
+    <div class="gal-filters">
+      <div class="seg" id="galModel"></div>
+      <div class="seg" id="galTask"></div>
+      <div class="seg" id="galKind"></div>
+    </div>
+    <div class="gal-count" id="galCount"></div>
+    <div class="gal-grid" id="galGrid"></div>
   </div>
 </section>
 
@@ -230,10 +257,12 @@
 </footer>
 
 <div class="lightbox" id="lightbox"><img alt=""></div>
+<div class="vmodal" id="vmodal"><div class="vbox"><button class="vclose" id="vclose" aria-label="close">×</button><video id="vplayer" controls autoplay muted loop playsinline></video><div class="vinfo" id="vinfo"></div></div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="static/js/data.js"></script>
 <script src="static/js/manifest.js"></script>
 <script src="static/js/main.js"></script>
+<script src="static/js/gallery.js"></script>
 </body>
 </html>

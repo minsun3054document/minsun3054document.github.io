@@ -1,0 +1,1727 @@
+{
+ "generated_kst": "2026-11-16 09:34 KST",
+ "style": "white background, rounded tiles (radius 14 px, 2-px #DEDEDE outline), 2× nearest-neighbour upscale (224 → 448 px), JPEG quality 88; mask tiles = input | input with masked patches tinted #F2B134 (alpha 0.55) and a 2-px #A86A00 patch edge; 16×16 grid of 14-px patches",
+ "note_ko": "mask는 학습 전용(training-only) scorer의 hard mask(logit > 0, frozen DINOv2-S final token 위 patch scorer)이며 inference에는 쓰이지 않는다. mask_lewm = paper Fig. 3과 같은 training-time scorer·같은 규칙(앞 8개), mask_gawm = 선택된 GA-WM + LeNS-JEPA checkpoint의 저장된 mask. Cube는 main-table scorer의 coverage가 40 % 미만이라 mask_lewm 규칙에 맞는 frame이 없다.",
+ "counts": {
+  "mask_lewm/tworoom": {
+   "images": 8,
+   "qualifying_frames": 206
+  },
+  "mask_lewm/pusht": {
+   "images": 8,
+   "qualifying_frames": 366
+  },
+  "mask_lewm/reacher": {
+   "images": 8,
+   "qualifying_frames": 403
+  },
+  "mask_lewm/cube": {
+   "images": 0,
+   "qualifying_frames": 0
+  },
+  "mask_gawm/tworoom": {
+   "images": 6,
+   "qualifying_frames": 224
+  },
+  "mask_gawm/pusht": {
+   "images": 6,
+   "qualifying_frames": 330
+  }
+ },
+ "total_bytes": 2466518,
+ "n_images": 48,
+ "images": [
+  {
+   "file": "shifts/tworoom_0.jpg",
+   "group": "shifts",
+   "task": "TwoRoom",
+   "cohort_index": 0,
+   "dataset_episode": 9346,
+   "window_index": 682458,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 94646
+  },
+  {
+   "file": "shifts/tworoom_1.jpg",
+   "group": "shifts",
+   "task": "TwoRoom",
+   "cohort_index": 7,
+   "dataset_episode": 4625,
+   "window_index": 337211,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 94248
+  },
+  {
+   "file": "shifts/tworoom_2.jpg",
+   "group": "shifts",
+   "task": "TwoRoom",
+   "cohort_index": 14,
+   "dataset_episode": 3278,
+   "window_index": 238939,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 94414
+  },
+  {
+   "file": "shifts/pusht_0.jpg",
+   "group": "shifts",
+   "task": "PushT",
+   "cohort_index": 0,
+   "dataset_episode": 8936,
+   "window_index": 937915,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 76254
+  },
+  {
+   "file": "shifts/pusht_1.jpg",
+   "group": "shifts",
+   "task": "PushT",
+   "cohort_index": 7,
+   "dataset_episode": 8501,
+   "window_index": 894235,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 80528
+  },
+  {
+   "file": "shifts/pusht_2.jpg",
+   "group": "shifts",
+   "task": "PushT",
+   "cohort_index": 14,
+   "dataset_episode": 101,
+   "window_index": 9194,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 75222
+  },
+  {
+   "file": "shifts/cube_0.jpg",
+   "group": "shifts",
+   "task": "Cube",
+   "cohort_index": 0,
+   "dataset_episode": 6137,
+   "window_index": 1117033,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 134504
+  },
+  {
+   "file": "shifts/cube_1.jpg",
+   "group": "shifts",
+   "task": "Cube",
+   "cohort_index": 7,
+   "dataset_episode": 5019,
+   "window_index": 913579,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 143537
+  },
+  {
+   "file": "shifts/cube_2.jpg",
+   "group": "shifts",
+   "task": "Cube",
+   "cohort_index": 14,
+   "dataset_episode": 111,
+   "window_index": 20295,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 122062
+  },
+  {
+   "file": "shifts/reacher_0.jpg",
+   "group": "shifts",
+   "task": "Reacher",
+   "cohort_index": 0,
+   "dataset_episode": 6137,
+   "window_index": 1117033,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 115544
+  },
+  {
+   "file": "shifts/reacher_1.jpg",
+   "group": "shifts",
+   "task": "Reacher",
+   "cohort_index": 7,
+   "dataset_episode": 5019,
+   "window_index": 913579,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 114339
+  },
+  {
+   "file": "shifts/reacher_2.jpg",
+   "group": "shifts",
+   "task": "Reacher",
+   "cohort_index": 14,
+   "dataset_episode": 111,
+   "window_index": 20295,
+   "conditions": [
+    {
+     "label": "Clean",
+     "key": "clean",
+     "op": "no shift"
+    },
+    {
+     "label": "Gray",
+     "key": "grayscale",
+     "op": "grayscale (ITU-R 601 luma, 3 channels)"
+    },
+    {
+     "label": "Hue",
+     "key": "hue60",
+     "op": "hue rotation 60° in YIQ space"
+    },
+    {
+     "label": "Blur",
+     "key": "blur1",
+     "op": "Gaussian blur, σ = 1 px at 224×224"
+    },
+    {
+     "label": "Noise",
+     "key": "noise0p03",
+     "op": "additive Gaussian noise, std 0.03 on the [0,1] scale (fixed per image)"
+    },
+    {
+     "label": "Color–brightness",
+     "key": "color_brightness",
+     "op": "brightness ×0.55, saturation ×0.5, contrast ×0.85"
+    }
+   ],
+   "rule": "Fixed 512-frame validation cohort (first official-window validation windows, test episodes excluded, frame offset 0); cohort indices 0, 7, 14.",
+   "rule_ko": "고정 512-frame validation cohort(official-window validation window 순서, test episode 제외, frame offset 0)의 cohort index 0, 7, 14.",
+   "coverage_pct": null,
+   "agent_overlap": null,
+   "checkpoint": null,
+   "width": 2816,
+   "height": 536,
+   "bytes": 115274
+  },
+  {
+   "file": "mask_lewm/tworoom_0.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 3,
+   "dataset_episode": 1494,
+   "window_index": 108424,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 46.875,
+   "masked_patches": 120,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 20,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 6,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 35946
+  },
+  {
+   "file": "mask_lewm/tworoom_1.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 4,
+   "dataset_episode": 7582,
+   "window_index": 553013,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 50.391,
+   "masked_patches": 129,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 35015
+  },
+  {
+   "file": "mask_lewm/tworoom_2.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 6,
+   "dataset_episode": 2274,
+   "window_index": 165639,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 51.953,
+   "masked_patches": 133,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 20,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 6,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 35255
+  },
+  {
+   "file": "mask_lewm/tworoom_3.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 7,
+   "dataset_episode": 4625,
+   "window_index": 337211,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 41.797,
+   "masked_patches": 107,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 33602
+  },
+  {
+   "file": "mask_lewm/tworoom_4.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 8,
+   "dataset_episode": 8999,
+   "window_index": 656593,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 50.781,
+   "masked_patches": 130,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 20,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 6,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 36294
+  },
+  {
+   "file": "mask_lewm/tworoom_5.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 9,
+   "dataset_episode": 5064,
+   "window_index": 369353,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 46.875,
+   "masked_patches": 120,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 33986
+  },
+  {
+   "file": "mask_lewm/tworoom_6.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 10,
+   "dataset_episode": 9562,
+   "window_index": 698503,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 41.016,
+   "masked_patches": 105,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 19,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 5,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 32946
+  },
+  {
+   "file": "mask_lewm/tworoom_7.jpg",
+   "group": "mask_lewm",
+   "task": "TwoRoom",
+   "cohort_index": 13,
+   "dataset_episode": 5597,
+   "window_index": 408484,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 42.188,
+   "masked_patches": 108,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "red agent patches (color key, ≥1 px) dilated by one patch (3×3)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 0.3,
+    "training_step": 21500,
+    "epoch_approx": 4.18,
+    "updates_per_epoch": 5138,
+    "description": "TwoRoom, LeWM + LeNS-JEPA (β = 0.3), training-time scorer snapshot at step 21,500 (≈ epoch 4.18); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 33383
+  },
+  {
+   "file": "mask_lewm/pusht_0.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 0,
+   "dataset_episode": 8936,
+   "window_index": 937915,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 62.5,
+   "masked_patches": 160,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 17,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 3,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 39871
+  },
+  {
+   "file": "mask_lewm/pusht_1.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 1,
+   "dataset_episode": 4393,
+   "window_index": 457449,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 59.375,
+   "masked_patches": 152,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 15,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 1,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 39897
+  },
+  {
+   "file": "mask_lewm/pusht_2.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 3,
+   "dataset_episode": 13604,
+   "window_index": 1458900,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 50.781,
+   "masked_patches": 130,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 3,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 38623
+  },
+  {
+   "file": "mask_lewm/pusht_3.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 4,
+   "dataset_episode": 10116,
+   "window_index": 1044697,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 60.938,
+   "masked_patches": 156,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 19,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 2,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 42989
+  },
+  {
+   "file": "mask_lewm/pusht_4.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 5,
+   "dataset_episode": 139,
+   "window_index": 13359,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 54.688,
+   "masked_patches": 140,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 18,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 40325
+  },
+  {
+   "file": "mask_lewm/pusht_5.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 6,
+   "dataset_episode": 6189,
+   "window_index": 658879,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 58.203,
+   "masked_patches": 149,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 18,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 39589
+  },
+  {
+   "file": "mask_lewm/pusht_6.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 8,
+   "dataset_episode": 16670,
+   "window_index": 1782509,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 53.906,
+   "masked_patches": 138,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 2,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 36836
+  },
+  {
+   "file": "mask_lewm/pusht_7.jpg",
+   "group": "mask_lewm",
+   "task": "PushT",
+   "cohort_index": 11,
+   "dataset_episode": 9105,
+   "window_index": 950290,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 44.141,
+   "masked_patches": 113,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 20,
+   "protected_object_definition": "blue pusher and T-block patches (color key, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 3,
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 1.0,
+    "training_step": 102000,
+    "epoch_approx": 7.32,
+    "updates_per_epoch": 13933,
+    "description": "PushT, LeWM + LeNS-JEPA (β = 1.0), training-time scorer snapshot at step 102,000 (≈ epoch 7.32); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 38325
+  },
+  {
+   "file": "mask_lewm/reacher_0.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 0,
+   "dataset_episode": 6137,
+   "window_index": 1117033,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 60.547,
+   "masked_patches": 155,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 17,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 43568
+  },
+  {
+   "file": "mask_lewm/reacher_1.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 1,
+   "dataset_episode": 9802,
+   "window_index": 1784099,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 59.375,
+   "masked_patches": 152,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 14,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 41139
+  },
+  {
+   "file": "mask_lewm/reacher_2.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 2,
+   "dataset_episode": 873,
+   "window_index": 158911,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 55.859,
+   "masked_patches": 143,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 41729
+  },
+  {
+   "file": "mask_lewm/reacher_3.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 3,
+   "dataset_episode": 3707,
+   "window_index": 674819,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 55.078,
+   "masked_patches": 141,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 11,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 41582
+  },
+  {
+   "file": "mask_lewm/reacher_4.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 4,
+   "dataset_episode": 2948,
+   "window_index": 536546,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 41.016,
+   "masked_patches": 105,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 15,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 39094
+  },
+  {
+   "file": "mask_lewm/reacher_5.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 5,
+   "dataset_episode": 4490,
+   "window_index": 817340,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 55.469,
+   "masked_patches": 142,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 16,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 42818
+  },
+  {
+   "file": "mask_lewm/reacher_6.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 6,
+   "dataset_episode": 8601,
+   "window_index": 1565491,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 44.531,
+   "masked_patches": 114,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 13,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 39113
+  },
+  {
+   "file": "mask_lewm/reacher_7.jpg",
+   "group": "mask_lewm",
+   "task": "Reacher",
+   "cohort_index": 7,
+   "dataset_episode": 5019,
+   "window_index": 913579,
+   "rule": "Fig. 3 rule on the fixed 512-frame validation cohort: zero masked protected-object patches, mask coverage 40–85 %, at least 2 object patches; the first 8 qualifying cohort indices (Fig. 3 instead takes the one closest to 65 %). Hard mask = scorer logit > 0; no mask edits.",
+   "rule_ko": "Fig. 3 규칙(고정 512-frame validation cohort): 보호 object patch 가림 0, mask coverage 40–85 %, object patch ≥ 2 → 조건을 만족하는 cohort index 앞 8개 (Fig. 3은 그중 65 %에 가장 가까운 1개). hard mask = scorer logit > 0, mask 수정 없음.",
+   "coverage_pct": 46.094,
+   "masked_patches": 118,
+   "object_overlap_patches": 0,
+   "protected_object_patches": 14,
+   "protected_object_definition": "arm and target patches (|frame − median training background| > 30, dilated 5 px, ≥1 px)",
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_overlap_note": "Reacher: agent = arm+target estimate (same as protected object)",
+   "is_fig3_example": false,
+   "checkpoint": {
+    "method": "LeWM + LeNS-JEPA",
+    "task": "Reacher",
+    "world_model_loss_weight_beta": 0.5,
+    "training_step": 71000,
+    "epoch_approx": 5.55,
+    "updates_per_epoch": 12796,
+    "description": "Reacher, LeWM + LeNS-JEPA (β = 0.5), training-time scorer snapshot at step 71,000 (≈ epoch 5.55); same scorer as paper Fig. 3"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 39550
+  },
+  {
+   "file": "mask_gawm/tworoom_0.jpg",
+   "group": "mask_gawm",
+   "task": "TwoRoom",
+   "cohort_index": 0,
+   "dataset_episode": 9346,
+   "window_index": 682458,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 5.078,
+   "masked_patches": 13,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 2,
+   "agent_definition": "agent = red-agent patches (≥ 20 key px)",
+   "mask_source_note": "mask saved on the first 256 cohort frames (identical pixels to cohort indices 0–255)",
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 3.0,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 3.0,
+    "epoch": 8,
+    "optimizer_updates": 41104,
+    "description": "TwoRoom, GA-WM + LeNS-JEPA (β = 3, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 8 (41,104 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 20149
+  },
+  {
+   "file": "mask_gawm/tworoom_1.jpg",
+   "group": "mask_gawm",
+   "task": "TwoRoom",
+   "cohort_index": 1,
+   "dataset_episode": 6861,
+   "window_index": 500521,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 5.078,
+   "masked_patches": 13,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "agent_definition": "agent = red-agent patches (≥ 20 key px)",
+   "mask_source_note": "mask saved on the first 256 cohort frames (identical pixels to cohort indices 0–255)",
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 3.0,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 3.0,
+    "epoch": 8,
+    "optimizer_updates": 41104,
+    "description": "TwoRoom, GA-WM + LeNS-JEPA (β = 3, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 8 (41,104 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 20155
+  },
+  {
+   "file": "mask_gawm/tworoom_2.jpg",
+   "group": "mask_gawm",
+   "task": "TwoRoom",
+   "cohort_index": 2,
+   "dataset_episode": 4882,
+   "window_index": 356146,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 7.031,
+   "masked_patches": 18,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 3,
+   "agent_definition": "agent = red-agent patches (≥ 20 key px)",
+   "mask_source_note": "mask saved on the first 256 cohort frames (identical pixels to cohort indices 0–255)",
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 3.0,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 3.0,
+    "epoch": 8,
+    "optimizer_updates": 41104,
+    "description": "TwoRoom, GA-WM + LeNS-JEPA (β = 3, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 8 (41,104 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 21679
+  },
+  {
+   "file": "mask_gawm/tworoom_3.jpg",
+   "group": "mask_gawm",
+   "task": "TwoRoom",
+   "cohort_index": 3,
+   "dataset_episode": 1494,
+   "window_index": 108424,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 6.25,
+   "masked_patches": 16,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 2,
+   "agent_definition": "agent = red-agent patches (≥ 20 key px)",
+   "mask_source_note": "mask saved on the first 256 cohort frames (identical pixels to cohort indices 0–255)",
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 3.0,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 3.0,
+    "epoch": 8,
+    "optimizer_updates": 41104,
+    "description": "TwoRoom, GA-WM + LeNS-JEPA (β = 3, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 8 (41,104 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 20966
+  },
+  {
+   "file": "mask_gawm/tworoom_4.jpg",
+   "group": "mask_gawm",
+   "task": "TwoRoom",
+   "cohort_index": 4,
+   "dataset_episode": 7582,
+   "window_index": 553013,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 6.641,
+   "masked_patches": 17,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 3,
+   "agent_definition": "agent = red-agent patches (≥ 20 key px)",
+   "mask_source_note": "mask saved on the first 256 cohort frames (identical pixels to cohort indices 0–255)",
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 3.0,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 3.0,
+    "epoch": 8,
+    "optimizer_updates": 41104,
+    "description": "TwoRoom, GA-WM + LeNS-JEPA (β = 3, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 8 (41,104 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 21041
+  },
+  {
+   "file": "mask_gawm/tworoom_5.jpg",
+   "group": "mask_gawm",
+   "task": "TwoRoom",
+   "cohort_index": 5,
+   "dataset_episode": 6028,
+   "window_index": 440255,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 5.859,
+   "masked_patches": 15,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 4,
+   "agent_definition": "agent = red-agent patches (≥ 20 key px)",
+   "mask_source_note": "mask saved on the first 256 cohort frames (identical pixels to cohort indices 0–255)",
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "TwoRoom",
+    "world_model_loss_weight_beta": 3.0,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 3.0,
+    "epoch": 8,
+    "optimizer_updates": 41104,
+    "description": "TwoRoom, GA-WM + LeNS-JEPA (β = 3, reconstruction weight 0.1, ID_n weight 3), selected checkpoint epoch 8 (41,104 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 20335
+  },
+  {
+   "file": "mask_gawm/pusht_0.jpg",
+   "group": "mask_gawm",
+   "task": "PushT",
+   "cohort_index": 0,
+   "dataset_episode": 8936,
+   "window_index": 937915,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 16.797,
+   "masked_patches": 43,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 1,
+   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
+   "mask_source_note": "mask saved on all 512 cohort frames",
+   "block_overlap_patches": 0,
+   "block_patches": 12,
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 0.5,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 1.0,
+    "epoch": 9,
+    "optimizer_updates": 125397,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 26499
+  },
+  {
+   "file": "mask_gawm/pusht_1.jpg",
+   "group": "mask_gawm",
+   "task": "PushT",
+   "cohort_index": 1,
+   "dataset_episode": 4393,
+   "window_index": 457449,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 28.906,
+   "masked_patches": 74,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 1,
+   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
+   "mask_source_note": "mask saved on all 512 cohort frames",
+   "block_overlap_patches": 0,
+   "block_patches": 12,
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 0.5,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 1.0,
+    "epoch": 9,
+    "optimizer_updates": 125397,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 30283
+  },
+  {
+   "file": "mask_gawm/pusht_2.jpg",
+   "group": "mask_gawm",
+   "task": "PushT",
+   "cohort_index": 3,
+   "dataset_episode": 13604,
+   "window_index": 1458900,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 10.156,
+   "masked_patches": 26,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 2,
+   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
+   "mask_source_note": "mask saved on all 512 cohort frames",
+   "block_overlap_patches": 0,
+   "block_patches": 10,
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 0.5,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 1.0,
+    "epoch": 9,
+    "optimizer_updates": 125397,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 23805
+  },
+  {
+   "file": "mask_gawm/pusht_3.jpg",
+   "group": "mask_gawm",
+   "task": "PushT",
+   "cohort_index": 4,
+   "dataset_episode": 10116,
+   "window_index": 1044697,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 16.797,
+   "masked_patches": 43,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 2,
+   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
+   "mask_source_note": "mask saved on all 512 cohort frames",
+   "block_overlap_patches": 0,
+   "block_patches": 12,
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 0.5,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 1.0,
+    "epoch": 9,
+    "optimizer_updates": 125397,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 28047
+  },
+  {
+   "file": "mask_gawm/pusht_4.jpg",
+   "group": "mask_gawm",
+   "task": "PushT",
+   "cohort_index": 5,
+   "dataset_episode": 139,
+   "window_index": 13359,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 8.203,
+   "masked_patches": 21,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 1,
+   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
+   "mask_source_note": "mask saved on all 512 cohort frames",
+   "block_overlap_patches": 0,
+   "block_patches": 12,
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 0.5,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 1.0,
+    "epoch": 9,
+    "optimizer_updates": 125397,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 24343
+  },
+  {
+   "file": "mask_gawm/pusht_5.jpg",
+   "group": "mask_gawm",
+   "task": "PushT",
+   "cohort_index": 6,
+   "dataset_episode": 6189,
+   "window_index": 658879,
+   "rule": "Fixed validation cohort; hard mask (scorer logit > 0) covers ≥ 5 % of the 256 patches and masks no agent patch; first 6 by cohort index. No mask edits.",
+   "rule_ko": "고정 validation cohort; hard mask(scorer logit > 0) coverage ≥ 5 %, agent patch 가림 0 → cohort index 앞 6개. mask 수정 없음.",
+   "coverage_pct": 20.312,
+   "masked_patches": 52,
+   "agent_overlap_patches": 0,
+   "agent_overlap": false,
+   "agent_patches": 2,
+   "agent_definition": "agent = blue pusher patches (mask-health region heuristic)",
+   "mask_source_note": "mask saved on all 512 cohort frames",
+   "block_overlap_patches": 0,
+   "block_patches": 9,
+   "checkpoint": {
+    "method": "GA-WM + LeNS-JEPA",
+    "task": "PushT",
+    "world_model_loss_weight_beta": 0.5,
+    "reconstruction_weight": 0.1,
+    "idn_weight": 1.0,
+    "epoch": 9,
+    "optimizer_updates": 125397,
+    "description": "PushT, GA-WM + LeNS-JEPA (β = 0.5, reconstruction weight 0.1, ID_n weight 1), selected checkpoint epoch 9 (125,397 updates)"
+   },
+   "width": 900,
+   "height": 448,
+   "bytes": 27169
+  }
+ ]
+}

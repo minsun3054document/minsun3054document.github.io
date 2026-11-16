@@ -1,6 +1,7 @@
 {
  "title": "Learned patch mask during training (LeNS-JEPA)",
  "created": "2026-11-15",
+ "updated": "2026-11-16 (v02: no checkpoint marks, no pause, poster rule)",
  "mask": {
   "definition": "patch scorer (LayerNorm(384) -> Linear(384,64) -> GELU -> Linear(64,1)) on frozen DINOv2-S/14 final patch tokens; hard mask = logit > 0",
   "grid": "16x16 patches of 14x14 px on 224x224 frames",
@@ -8,6 +9,7 @@
   "overlay": "masked patches tinted #F2B134 at alpha 0.5 on the clean frame, with a darker edge"
  },
  "frame_rule": "first three frames (cohort indices 0, 1, 2) of the fixed 512-frame clean validation cohort used in the mask analyses: official-window validation windows in split order, excluding episodes of the test split, first observation of each window; rule fixed before rendering, no frame selection by mask appearance",
+ "poster_rule": "per-task clip: the video frame showing the scorer snapshot with the largest mean hard-mask fraction over the 3 shown frames (earliest snapshot on ties); combined clip: the video frame with the largest mean hard-mask fraction over all 9 shown frames (3 frames x 3 tasks; earliest frame on ties)",
  "curve": {
   "quantity": "fraction of input patches hidden by the hard mask in training batches (train.mask_hard), logged every 50 updates",
   "drawn": "light line = every 50 updates; dark line #6E5BA6 = centred rolling median over 11 log points (550 updates); revealed up to the cursor",
@@ -17,10 +19,8 @@
   "fps": 30,
   "start_hold_s": 0.6,
   "sweep_s": 11.0,
-  "pause_at_tworoom_reported_s": 1.0,
   "end_hold_s": 1.6,
-  "snapshot_rule": "shown snapshot = latest scorer snapshot at or before the current epoch (first snapshot before it exists), updated at 15 Hz; cursor and \"epoch x.x\" label give that snapshot's epoch (update / updates per epoch)",
-  "tworoom_and_combined_pause": "1.0 s pause at TwoRoom epoch 6 (reported checkpoint)"
+  "snapshot_rule": "shown snapshot = latest scorer snapshot at or before the current epoch (first snapshot before it exists), updated at 15 Hz; cursor and \"epoch x.x\" label give that snapshot's epoch (update / updates per epoch)"
  },
  "encoding": {
   "codec": "H.264 High, yuv420p, bt709 tv range",
@@ -33,24 +33,41 @@
  "combined": {
   "video": "all_mask_evolution.mp4",
   "poster": "all_mask_evolution.jpg",
-  "poster_frame": "last frame (epoch 10 for all three tasks)",
-  "duration_s": 14.2,
-  "n_video_frames": 426,
+  "duration_s": 13.2,
+  "n_video_frames": 396,
   "resolution": "960x750",
-  "layout": "TwoRoom, PushT, Reacher stacked; synchronised by epoch"
+  "layout": "TwoRoom, PushT, Reacher stacked; synchronised by epoch",
+  "poster_frame": {
+   "video_time_s": 0.0,
+   "mask_fraction_mean_9_frames": 0.5864,
+   "per_task": {
+    "TwoRoom": {
+     "update": 500,
+     "epoch": 0.0973,
+     "mask_fraction_shown_frames_mean": 0.3802
+    },
+    "PushT": {
+     "update": 500,
+     "epoch": 0.0359,
+     "mask_fraction_shown_frames_mean": 0.7578
+    },
+    "Reacher": {
+     "update": 500,
+     "epoch": 0.0391,
+     "mask_fraction_shown_frames_mean": 0.6211
+    }
+   }
+  }
  },
  "tasks": {
   "tworoom": {
    "task": "TwoRoom",
    "video": "tworoom_mask_evolution.mp4",
    "poster": "tworoom_mask_evolution.jpg",
-   "poster_frame": "reported checkpoint (epoch 6), shown during the 1.0 s pause",
-   "duration_s": 14.2,
-   "n_video_frames": 426,
+   "duration_s": 13.2,
+   "n_video_frames": 396,
    "resolution": "960x540",
    "updates_per_epoch": 5138,
-   "reported_epoch": 6,
-   "reported_update": 30828,
    "frames_shown": [
     {
      "cohort_index": 0,
@@ -85,29 +102,27 @@
     "logged_every_updates": 50,
     "gaps_over_50_updates": 0
    },
-   "mask_fraction_at_reported_checkpoint": {
-    "shown_frames_mean": 0.1029,
-    "shown_frames_each": [
-     0.0742,
-     0.0547,
-     0.1797
+   "poster_snapshot": {
+    "update": 17500,
+    "epoch": 3.406,
+    "video_time_s": 4.333,
+    "mask_fraction_shown_frames_mean": 0.9453,
+    "mask_fraction_shown_frames_each": [
+     0.9609,
+     0.957,
+     0.918
     ],
-    "validation_cohort_512": 0.096,
-    "training_curve_median_550_updates": 0.102,
-    "training_mean_last_500_updates": 0.2755
+    "mask_fraction_validation_cohort_512": 0.9019
    }
   },
   "pusht": {
    "task": "PushT",
    "video": "pusht_mask_evolution.mp4",
    "poster": "pusht_mask_evolution.jpg",
-   "poster_frame": "last frame = reported checkpoint (epoch 10)",
    "duration_s": 13.2,
    "n_video_frames": 396,
    "resolution": "960x540",
    "updates_per_epoch": 13933,
-   "reported_epoch": 10,
-   "reported_update": 139330,
    "frames_shown": [
     {
      "cohort_index": 0,
@@ -142,29 +157,27 @@
     "logged_every_updates": 50,
     "gaps_over_50_updates": 0
    },
-   "mask_fraction_at_reported_checkpoint": {
-    "shown_frames_mean": 0.0156,
-    "shown_frames_each": [
-     0.0195,
-     0.0156,
-     0.0117
+   "poster_snapshot": {
+    "update": 500,
+    "epoch": 0.0359,
+    "video_time_s": 0.0,
+    "mask_fraction_shown_frames_mean": 0.7578,
+    "mask_fraction_shown_frames_each": [
+     0.7891,
+     0.7734,
+     0.7109
     ],
-    "validation_cohort_512": 0.0137,
-    "training_curve_median_550_updates": 0.014,
-    "training_mean_last_500_updates": 0.0137
+    "mask_fraction_validation_cohort_512": 0.7436
    }
   },
   "reacher": {
    "task": "Reacher",
    "video": "reacher_mask_evolution.mp4",
    "poster": "reacher_mask_evolution.jpg",
-   "poster_frame": "last frame = reported checkpoint (epoch 10)",
    "duration_s": 13.2,
    "n_video_frames": 396,
    "resolution": "960x540",
    "updates_per_epoch": 12796,
-   "reported_epoch": 10,
-   "reported_update": 127960,
    "frames_shown": [
     {
      "cohort_index": 0,
@@ -199,16 +212,17 @@
     "logged_every_updates": 50,
     "gaps_over_50_updates": 0
    },
-   "mask_fraction_at_reported_checkpoint": {
-    "shown_frames_mean": 0.0443,
-    "shown_frames_each": [
-     0.0469,
-     0.0391,
-     0.0469
+   "poster_snapshot": {
+    "update": 86500,
+    "epoch": 6.7599,
+    "video_time_s": 8.0,
+    "mask_fraction_shown_frames_mean": 0.7096,
+    "mask_fraction_shown_frames_each": [
+     0.7109,
+     0.6992,
+     0.7188
     ],
-    "validation_cohort_512": 0.0363,
-    "training_curve_median_550_updates": 0.035,
-    "training_mean_last_500_updates": 0.035
+    "mask_fraction_validation_cohort_512": 0.6701
    }
   }
  }
