@@ -14,6 +14,13 @@
   };
   const fmt = (v, d = 1) => (v === null || v === undefined ? '–' : Number(v).toFixed(d));
   const rel = (b, o) => (b === 0 ? null : ((o - b) / b) * 100);
+  const GRAD = '<defs><linearGradient id="gOurs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#5b21b6"/></linearGradient></defs>';
+  function pill(svg, cx, cy, txt, d, fs) {
+    const col = d > 0.05 ? '#16a34a' : (d < -0.05 ? '#fee2e2' : '#a1a1aa'); const tc = d < -0.05 ? '#b91c1c' : '#fff';
+    const w = txt.length * fs * 0.62 + 12, h = fs + 8;
+    el('rect', { x: cx - w / 2, y: cy - h + 4, width: w, height: h, rx: h / 2, fill: col }, svg);
+    el('text', { x: cx, y: cy - 1, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: tc }, svg).textContent = txt;
+  }
 
   /* ---------- KaTeX for inline math ---------- */
   function renderMath() {
@@ -89,7 +96,7 @@
         let g = '';
         if (ours) {
           const d = rel(vals[i - 1][j], v);
-          if (d !== null) g = `<span class="gain ${d < -0.05 ? 'neg' : (Math.abs(d) < 0.05 ? 'zero' : '')}">${d >= 0 ? '+' : ''}${d.toFixed(1)}%</span>`;
+          if (d !== null) g = `<span class="gain ${d < -0.05 ? 'neg' : (Math.abs(d) < 0.05 ? 'zero' : (d >= 20 ? 'big' : ''))}">${d < -0.05 ? '▼ ' : (Math.abs(d) < 0.05 ? '' : '▲ ')}${d >= 0 ? '+' : ''}${d.toFixed(1)}%</span>`;
         }
         h += `<td class="${cls}"><span class="v">${fmt(v, 2)}</span>${g}</td>`;
       });
@@ -98,10 +105,24 @@
     t.innerHTML = h + '</tbody>';
   }
 
+  /* ---------- headline delta cards ---------- */
+  function deltaCards() {
+    const lw = D.main.find((r) => r.name === 'LeWM'), ou = D.main.find((r) => r.name === 'LeWM + Ours');
+    const items = D.tasks.map((t, i) => [t, lw.ood[i], ou.ood[i], false]).concat([['Mean', lw.mean[1], ou.mean[1], true]]);
+    $('#deltaCards').innerHTML = items.map(([t, b, o, m]) => {
+      const d = rel(b, o);
+      return `<div class="delta ${m ? 'mean' : ''}"><div class="t">${t} · OoD</div><div class="p">${d >= 0 ? '+' : ''}${d.toFixed(1)}<small>%</small></div>` +
+        `<div class="ba">${b.toFixed(1)} → <b>${o.toFixed(1)}</b></div><div class="bars"><div class="bar2 b"><i data-w="${b}"></i></div><div class="bar2 o"><i data-w="${o}"></i></div></div>` +
+        `<div class="lg"><span>LeWM</span><span>+ LeNS-JEPA</span></div></div>`;
+    }).join('');
+    const ob = new IntersectionObserver((en) => en.forEach((e) => { if (e.isIntersecting) { $$('#deltaCards i').forEach((x) => (x.style.width = x.dataset.w + '%')); ob.disconnect(); } }), { threshold: 0.3 });
+    ob.observe($('#deltaCards'));
+  }
+
   /* ---------- per-shift chart ---------- */
   function shiftChart() {
     const svg = $('#shiftChart');
-    svg.innerHTML = '';
+    svg.innerHTML = GRAD;
     const tasks = D.tasks, shifts = D.shifts;
     const avg = (name) => shifts.map((_, k) => tasks.reduce((s, t) => s + D.conditions[t][name][k], 0) / tasks.length);
     const a = avg('LeWM'), b = avg('LeWM + Ours');
@@ -114,15 +135,15 @@
     const gw = (W - L - R) / shifts.length, bw = Math.min(46, gw * 0.3);
     shifts.forEach((s, k) => {
       const cx = L + gw * (k + 0.5);
-      [[a[k], '#cfcbe0', -1], [b[k], '#6e5ba6', 1]].forEach(([v, c, side]) => {
+      [[a[k], '#cbd5e1', -1], [b[k], 'url(#gOurs)', 1]].forEach(([v, c, side]) => {
         const x = cx + (side < 0 ? -bw - 3 : 3), h = ph * v / 100;
         const r = el('rect', { x, y: T + ph, width: bw, height: 0, rx: 5, fill: c, class: 'bar' }, svg);
         requestAnimationFrame(() => setTimeout(() => { r.setAttribute('y', T + ph - h); r.setAttribute('height', h); }, 80 * k));
-        el('text', { x: x + bw / 2, y: T + ph - h - 6, 'text-anchor': 'middle', 'font-size': 12.5, 'font-weight': 700, fill: side > 0 ? '#6e5ba6' : '#8a879a' }, svg).textContent = v.toFixed(1);
+        el('text', { x: x + bw / 2, y: T + ph - h - 6, 'text-anchor': 'middle', 'font-size': 12.5, 'font-weight': 700, fill: side > 0 ? '#6d28d9' : '#64748b' }, svg).textContent = v.toFixed(1);
       });
       const d = rel(a[k], b[k]);
       el('text', { x: cx, y: H - 18, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: '#14121c' }, svg).textContent = s;
-      el('text', { x: cx, y: H - 3, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: d >= 0 ? '#2e9e6b' : '#c2453b' }, svg).textContent = `${d >= 0 ? '+' : ''}${d.toFixed(1)}%`;
+      pill(svg, cx, H + 16, `${d > 0.05 ? '▲ +' : (d < -0.05 ? '▼ ' : '')}${d.toFixed(1)}%`, d, 13);
     });
   }
 
@@ -130,7 +151,7 @@
   let metric = 'ood';
   function pluginChart() {
     const svg = $('#pluginChart');
-    svg.innerHTML = '';
+    svg.innerHTML = GRAD;
     const bases = [['LeWM', 'LeWM + Ours'], ['GAWM', 'GAWM + Ours'], ['SMWM', 'SMWM + Ours']];
     const row = (n) => D.main.find((r) => r.name === n);
     const W = 1000, H = 360, L = 40, R = 8, T = 34, B = 56, ph = H - T - B;
@@ -148,7 +169,7 @@
       bases.forEach(([bn, on], bi) => {
         const cx = g0 + sw * (bi + 0.5);
         const bv = row(bn)[metric][ti], ov = row(on)[metric][ti];
-        [[bv, '#d9d5e8', -1], [ov, '#9488ba', 1]].forEach(([v, c, side]) => {
+        [[bv, '#cbd5e1', -1], [ov, 'url(#gOurs)', 1]].forEach(([v, c, side]) => {
           const x = cx + (side < 0 ? -bw - 2 : 2), h = ph * v / 100;
           const r = el('rect', { x, y: T + ph, width: bw, height: 0, rx: 4, fill: c, class: 'bar' }, svg);
           requestAnimationFrame(() => setTimeout(() => { r.setAttribute('y', T + ph - h); r.setAttribute('height', h); }, 40 * (ti * 3 + bi)));
@@ -156,7 +177,7 @@
         });
         const d = rel(bv, ov);
         el('text', { x: cx, y: H - 30, 'text-anchor': 'middle', 'font-size': 12.5, 'font-weight': 600, fill: '#3c3a48' }, svg).textContent = bn;
-        el('text', { x: cx, y: H - 12, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 700, fill: d > 0 ? '#2e9e6b' : (d < 0 ? '#c2453b' : '#8a879a') }, svg).textContent = `${d > 0 ? '+' : ''}${d.toFixed(1)}%`;
+        pill(svg, cx, H - 4, `${d > 0.05 ? '▲ +' : (d < -0.05 ? '▼ ' : '')}${d.toFixed(1)}%`, d, 11.5);
       });
     });
   }
@@ -267,6 +288,7 @@
   /* ---------- go ---------- */
   renderMath();
   buildTable();
+  deltaCards();
   initDemo();
   initMosaic();
   initMask();

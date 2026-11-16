@@ -133,15 +133,16 @@
     <div class="kicker">Results</div>
     <h2>Higher OoD success, base model unchanged</h2>
     <p class="lead">Planning success on four simulated environments (TwoRoom, PushT, OGBench Cube, Reacher). OoD Avg. is the mean over grayscale, hue, blur, noise and color–brightness shifts. Training uses unperturbed trajectories only.</p>
+    <div class="deltas" id="deltaCards"></div>
     <div class="table-wrap"><table class="res" id="mainTable"></table></div>
-    <p class="table-note">Bold: best, underline: second best per column. Green / red under the LeNS-JEPA rows: change relative to the base model directly above. 50 test queries per condition (one query = 2 points), single training seed.</p>
+    <p class="table-note">Bold: best, underline: second best per column. Badges under the LeNS-JEPA rows: relative change versus the base model directly above (▲ higher, ▼ lower). 50 test queries per condition (one query = 2 points), single training seed.</p>
 
     <div class="chart-card">
       <div class="chart-head">
         <h3 style="margin:0">Per-shift success, mean over the four tasks</h3>
-        <div class="legend"><span><i style="background:#cfcbe0"></i>LeWM</span><span><i style="background:#6e5ba6"></i>LeWM + LeNS-JEPA</span></div>
+        <div class="legend"><span><i style="background:#cbd5e1"></i>LeWM</span><span><i style="background:#7c3aed"></i>LeWM + LeNS-JEPA</span></div>
       </div>
-      <svg class="chart" id="shiftChart" viewBox="0 0 900 300"></svg>
+      <svg class="chart" id="shiftChart" viewBox="0 0 900 318"></svg>
     </div>
   </div>
 </section>
@@ -155,7 +156,7 @@
     <div class="chart-card">
       <div class="chart-head">
         <div class="seg" id="metricSeg"><button class="on" data-m="ood">OoD Avg.</button><button data-m="ind">InD</button></div>
-        <div class="legend"><span><i style="background:#d9d5e8"></i>Base model</span><span><i style="background:#9488ba"></i>Base + LeNS-JEPA</span></div>
+        <div class="legend"><span><i style="background:#cbd5e1"></i>Base model</span><span><i style="background:#7c3aed"></i>Base + LeNS-JEPA</span></div>
       </div>
       <svg class="chart" id="pluginChart" viewBox="0 0 1000 360"></svg>
     </div>
