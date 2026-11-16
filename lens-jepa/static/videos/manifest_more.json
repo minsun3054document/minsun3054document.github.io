@@ -1,0 +1,5618 @@
+{
+ "version": 1,
+ "extends": "manifest.json",
+ "methods": {
+  "lewm": "LeWM",
+  "ours": "LeWM + LeNS-JEPA"
+ },
+ "protocol": {
+  "evaluation": "Official Test50 queries (LeWM eval.py seed-42 sample), 50-step planning budget, goal 25 steps ahead. In each shift condition only the observation is shifted; the goal image is clean.",
+  "video": "Replay of the actions executed in the recorded Test run inside the native simulator; no re-planning and no model inference. Panels show the model-input frame of that condition (same appearance operation as the Test hook); the centre shows the goal image given to both models. A successful episode stops at its success step.",
+  "fidelity": "A clip is kept only if, for both models, replaying all 50 queries of that condition reproduces the recorded success vector exactly (and the per-step physical trace and initial simulator state).",
+  "severity_runs": "Strength clips replay the strength-sweep Test50 runs of the paper figure (same weights as the main table, same protocol, CPU execution); their rates are those of that sweep level.",
+  "layout": "left: LeWM | centre: goal (not shifted) | right: LeWM + LeNS-JEPA",
+  "paths": "src and poster are relative to the project page root."
+ },
+ "selection_rules": {
+  "gallery": "For each task and observation shift (Gray, Hue, Blur, Noise, C-B): official Test50 queries where LeWM + LeNS-JEPA succeeds and LeWM fails, excluding the query already shown as the featured demo clip, and requiring that LeWM + LeNS-JEPA needs at least 8 environment steps to succeed (no trivial starts); up to 4 such queries in ascending Test index. If fewer exist, all eligible queries are shown.",
+  "clean2": "In-distribution (no shift): for each task, the first two Test50 queries (ascending index) where both models succeed and LeWM + LeNS-JEPA needs at least 10 environment steps.",
+  "failure2": "Honesty clips: for each task, up to 2 further Test50 queries where LeWM succeeds and LeWM + LeNS-JEPA fails (excluding the existing failure clip), taking shifts in the order Gray, Hue, Blur, Noise, C-B and then ascending index.",
+  "severity": "Shift-strength sweeps of the paper with the same LeWM / LeWM + LeNS-JEPA weights (TwoRoom blur sigma in {0, 0.5, 1, 1.5, 2, 3, 4} px; PushT hue rotation in {0, 30, 60, 90, 120, 180} degrees; Reacher noise std in {0, 0.01, 0.02, 0.03, 0.06, 0.09, 0.12, 0.20}). For each task, the strongest level with at least one query where LeWM + LeNS-JEPA succeeds and LeWM fails; up to 2 such queries, lowest Test indices first. Cube has no strength sweep."
+ },
+ "models": {
+  "tworoom": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "4200091e9e73ca73"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 6,
+    "checkpoint_sha256_prefix": "0e2d1c1ecae51844"
+   }
+  },
+  "pusht": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "08a0b303b0ef2f62"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "20b4d17e5fe22ed6"
+   }
+  },
+  "reacher": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "cf798c07c876bb63"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "36bc6dd96e50b42a"
+   }
+  },
+  "cube": {
+   "lewm": {
+    "name": "LeWM",
+    "note": "reproduced LeWM, final epoch",
+    "epoch": 10,
+    "checkpoint_sha256_prefix": "be9338ee34fa97f7"
+   },
+   "ours": {
+    "name": "LeWM + LeNS-JEPA",
+    "note": "same LeWM architecture and inference; LeNS-JEPA is used only in training",
+    "epoch": 5,
+    "checkpoint_sha256_prefix": "ae4cc39bfdb71c91"
+   }
+  }
+ },
+ "strength_sweeps": {
+  "tworoom": [
+   {
+    "level": 0.0,
+    "label": "blur σ = 0 px",
+    "lewm_percent": 86.0,
+    "ours_percent": 96.0,
+    "ours_only": 5,
+    "lewm_only": 0
+   },
+   {
+    "level": 0.5,
+    "label": "blur σ = 0.5 px",
+    "lewm_percent": 80.0,
+    "ours_percent": 96.0,
+    "ours_only": 9,
+    "lewm_only": 1
+   },
+   {
+    "level": 1.0,
+    "label": "blur σ = 1 px",
+    "lewm_percent": 66.0,
+    "ours_percent": 94.0,
+    "ours_only": 15,
+    "lewm_only": 1
+   },
+   {
+    "level": 1.5,
+    "label": "blur σ = 1.5 px",
+    "lewm_percent": 58.0,
+    "ours_percent": 94.0,
+    "ours_only": 19,
+    "lewm_only": 1
+   },
+   {
+    "level": 2.0,
+    "label": "blur σ = 2 px",
+    "lewm_percent": 62.0,
+    "ours_percent": 94.0,
+    "ours_only": 16,
+    "lewm_only": 0
+   },
+   {
+    "level": 3.0,
+    "label": "blur σ = 3 px",
+    "lewm_percent": 36.0,
+    "ours_percent": 94.0,
+    "ours_only": 29,
+    "lewm_only": 0
+   },
+   {
+    "level": 4.0,
+    "label": "blur σ = 4 px",
+    "lewm_percent": 34.0,
+    "ours_percent": 94.0,
+    "ours_only": 31,
+    "lewm_only": 1
+   }
+  ],
+  "pusht": [
+   {
+    "level": 0.0,
+    "label": "hue shift 0°",
+    "lewm_percent": 96.0,
+    "ours_percent": 94.0,
+    "ours_only": 1,
+    "lewm_only": 2
+   },
+   {
+    "level": 30.0,
+    "label": "hue shift 30°",
+    "lewm_percent": 92.0,
+    "ours_percent": 98.0,
+    "ours_only": 4,
+    "lewm_only": 1
+   },
+   {
+    "level": 60.0,
+    "label": "hue shift 60°",
+    "lewm_percent": 30.0,
+    "ours_percent": 64.0,
+    "ours_only": 20,
+    "lewm_only": 3
+   },
+   {
+    "level": 90.0,
+    "label": "hue shift 90°",
+    "lewm_percent": 2.0,
+    "ours_percent": 2.0,
+    "ours_only": 1,
+    "lewm_only": 1
+   },
+   {
+    "level": 120.0,
+    "label": "hue shift 120°",
+    "lewm_percent": 2.0,
+    "ours_percent": 4.0,
+    "ours_only": 2,
+    "lewm_only": 1
+   },
+   {
+    "level": 180.0,
+    "label": "hue shift 180°",
+    "lewm_percent": 2.0,
+    "ours_percent": 0.0,
+    "ours_only": 0,
+    "lewm_only": 1
+   }
+  ],
+  "reacher": [
+   {
+    "level": 0.0,
+    "label": "noise std = 0.00",
+    "lewm_percent": 54.0,
+    "ours_percent": 72.0,
+    "ours_only": 13,
+    "lewm_only": 4
+   },
+   {
+    "level": 0.01,
+    "label": "noise std = 0.01",
+    "lewm_percent": 58.0,
+    "ours_percent": 72.0,
+    "ours_only": 11,
+    "lewm_only": 4
+   },
+   {
+    "level": 0.02,
+    "label": "noise std = 0.02",
+    "lewm_percent": 62.0,
+    "ours_percent": 70.0,
+    "ours_only": 11,
+    "lewm_only": 7
+   },
+   {
+    "level": 0.03,
+    "label": "noise std = 0.03",
+    "lewm_percent": 50.0,
+    "ours_percent": 70.0,
+    "ours_only": 15,
+    "lewm_only": 5
+   },
+   {
+    "level": 0.06,
+    "label": "noise std = 0.06",
+    "lewm_percent": 42.0,
+    "ours_percent": 70.0,
+    "ours_only": 21,
+    "lewm_only": 7
+   },
+   {
+    "level": 0.09,
+    "label": "noise std = 0.09",
+    "lewm_percent": 28.0,
+    "ours_percent": 68.0,
+    "ours_only": 22,
+    "lewm_only": 2
+   },
+   {
+    "level": 0.12,
+    "label": "noise std = 0.12",
+    "lewm_percent": 34.0,
+    "ours_percent": 64.0,
+    "ours_only": 21,
+    "lewm_only": 6
+   },
+   {
+    "level": 0.2,
+    "label": "noise std = 0.20",
+    "lewm_percent": 20.0,
+    "ours_percent": 58.0,
+    "ours_only": 22,
+    "lewm_only": 3
+   }
+  ]
+ },
+ "clips": [
+  {
+   "id": "gallery/tworoom_gray_1",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/tworoom_gray_1.mp4",
+   "poster": "static/videos/gallery/tworoom_gray_1.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 99047,
+   "poster_bytes": 38637,
+   "test_index": 1,
+   "dataset_episode": 687,
+   "start_step": 68,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 18.0,
+   "sr_ours": 50.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_gray_5",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/tworoom_gray_5.mp4",
+   "poster": "static/videos/gallery/tworoom_gray_5.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 99290,
+   "poster_bytes": 38795,
+   "test_index": 5,
+   "dataset_episode": 953,
+   "start_step": 17,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 21,
+   "lewm_step": null,
+   "ours_step": 21,
+   "sr_lewm": 18.0,
+   "sr_ours": 50.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_gray_6",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/tworoom_gray_6.mp4",
+   "poster": "static/videos/gallery/tworoom_gray_6.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 96796,
+   "poster_bytes": 38717,
+   "test_index": 6,
+   "dataset_episode": 1287,
+   "start_step": 72,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 30,
+   "lewm_step": null,
+   "ours_step": 30,
+   "sr_lewm": 18.0,
+   "sr_ours": 50.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_gray_9",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/tworoom_gray_9.mp4",
+   "poster": "static/videos/gallery/tworoom_gray_9.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 99953,
+   "poster_bytes": 38680,
+   "test_index": 9,
+   "dataset_episode": 2019,
+   "start_step": 36,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 11,
+   "lewm_step": null,
+   "ours_step": 11,
+   "sr_lewm": 18.0,
+   "sr_ours": 50.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_hue_5",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/tworoom_hue_5.mp4",
+   "poster": "static/videos/gallery/tworoom_hue_5.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 102108,
+   "poster_bytes": 39059,
+   "test_index": 5,
+   "dataset_episode": 953,
+   "start_step": 17,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 70.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 9,
+    "lewm_only": 10,
+    "both": 25,
+    "neither": 6
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_hue_13",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/tworoom_hue_13.mp4",
+   "poster": "static/videos/gallery/tworoom_hue_13.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 102824,
+   "poster_bytes": 38949,
+   "test_index": 13,
+   "dataset_episode": 3719,
+   "start_step": 39,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 12,
+   "lewm_step": null,
+   "ours_step": 12,
+   "sr_lewm": 70.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 9,
+    "lewm_only": 10,
+    "both": 25,
+    "neither": 6
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_hue_14",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/tworoom_hue_14.mp4",
+   "poster": "static/videos/gallery/tworoom_hue_14.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 101150,
+   "poster_bytes": 38987,
+   "test_index": 14,
+   "dataset_episode": 4032,
+   "start_step": 0,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 21,
+   "lewm_step": null,
+   "ours_step": 21,
+   "sr_lewm": 70.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 9,
+    "lewm_only": 10,
+    "both": 25,
+    "neither": 6
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_hue_28",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/tworoom_hue_28.mp4",
+   "poster": "static/videos/gallery/tworoom_hue_28.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 99038,
+   "poster_bytes": 38958,
+   "test_index": 28,
+   "dataset_episode": 6552,
+   "start_step": 41,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 29,
+   "lewm_step": null,
+   "ours_step": 29,
+   "sr_lewm": 70.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 9,
+    "lewm_only": 10,
+    "both": 25,
+    "neither": 6
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_blur_3",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/tworoom_blur_3.mp4",
+   "poster": "static/videos/gallery/tworoom_blur_3.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 100729,
+   "poster_bytes": 36886,
+   "test_index": 3,
+   "dataset_episode": 905,
+   "start_step": 16,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 18,
+   "lewm_step": null,
+   "ours_step": 18,
+   "sr_lewm": 70.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 14,
+    "lewm_only": 1,
+    "both": 34,
+    "neither": 1
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_blur_8",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/tworoom_blur_8.mp4",
+   "poster": "static/videos/gallery/tworoom_blur_8.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 100072,
+   "poster_bytes": 36897,
+   "test_index": 8,
+   "dataset_episode": 1832,
+   "start_step": 10,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 22,
+   "lewm_step": null,
+   "ours_step": 22,
+   "sr_lewm": 70.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 14,
+    "lewm_only": 1,
+    "both": 34,
+    "neither": 1
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_blur_18",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/tworoom_blur_18.mp4",
+   "poster": "static/videos/gallery/tworoom_blur_18.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 102077,
+   "poster_bytes": 36922,
+   "test_index": 18,
+   "dataset_episode": 4467,
+   "start_step": 38,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 17,
+   "lewm_step": null,
+   "ours_step": 17,
+   "sr_lewm": 70.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 14,
+    "lewm_only": 1,
+    "both": 34,
+    "neither": 1
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_blur_28",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/tworoom_blur_28.mp4",
+   "poster": "static/videos/gallery/tworoom_blur_28.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 100377,
+   "poster_bytes": 36943,
+   "test_index": 28,
+   "dataset_episode": 6552,
+   "start_step": 41,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 19,
+   "lewm_step": null,
+   "ours_step": 19,
+   "sr_lewm": 70.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 14,
+    "lewm_only": 1,
+    "both": 34,
+    "neither": 1
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_noise_14",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/tworoom_noise_14.mp4",
+   "poster": "static/videos/gallery/tworoom_noise_14.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 679269,
+   "poster_bytes": 59342,
+   "test_index": 14,
+   "dataset_episode": 4032,
+   "start_step": 0,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 17,
+   "lewm_step": null,
+   "ours_step": 17,
+   "sr_lewm": 90.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 45,
+     "n": 50,
+     "percent": 90.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 3,
+    "lewm_only": 0,
+    "both": 45,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 45,
+     "k_replay": 45,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_noise_40",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/tworoom_noise_40.mp4",
+   "poster": "static/videos/gallery/tworoom_noise_40.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 640826,
+   "poster_bytes": 59258,
+   "test_index": 40,
+   "dataset_episode": 8241,
+   "start_step": 30,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 10,
+   "lewm_step": null,
+   "ours_step": 10,
+   "sr_lewm": 90.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 45,
+     "n": 50,
+     "percent": 90.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 3,
+    "lewm_only": 0,
+    "both": 45,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 45,
+     "k_replay": 45,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_cb_1",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/tworoom_cb_1.mp4",
+   "poster": "static/videos/gallery/tworoom_cb_1.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 101492,
+   "poster_bytes": 37344,
+   "test_index": 1,
+   "dataset_episode": 687,
+   "start_step": 68,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 38.0,
+   "sr_ours": 74.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 37,
+     "n": 50,
+     "percent": 74.0
+    },
+    "ours_only": 19,
+    "lewm_only": 1,
+    "both": 18,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 37,
+     "k_replay": 37,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_cb_3",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/tworoom_cb_3.mp4",
+   "poster": "static/videos/gallery/tworoom_cb_3.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 99317,
+   "poster_bytes": 37318,
+   "test_index": 3,
+   "dataset_episode": 905,
+   "start_step": 16,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 24,
+   "lewm_step": null,
+   "ours_step": 24,
+   "sr_lewm": 38.0,
+   "sr_ours": 74.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 37,
+     "n": 50,
+     "percent": 74.0
+    },
+    "ours_only": 19,
+    "lewm_only": 1,
+    "both": 18,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 37,
+     "k_replay": 37,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_cb_5",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/tworoom_cb_5.mp4",
+   "poster": "static/videos/gallery/tworoom_cb_5.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 100681,
+   "poster_bytes": 37434,
+   "test_index": 5,
+   "dataset_episode": 953,
+   "start_step": 17,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 38.0,
+   "sr_ours": 74.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 37,
+     "n": 50,
+     "percent": 74.0
+    },
+    "ours_only": 19,
+    "lewm_only": 1,
+    "both": 18,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 37,
+     "k_replay": 37,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/tworoom_cb_7",
+   "kind": "gallery",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/tworoom_cb_7.mp4",
+   "poster": "static/videos/gallery/tworoom_cb_7.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 100382,
+   "poster_bytes": 37466,
+   "test_index": 7,
+   "dataset_episode": 1661,
+   "start_step": 21,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 21,
+   "lewm_step": null,
+   "ours_step": 21,
+   "sr_lewm": 38.0,
+   "sr_ours": 74.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 37,
+     "n": 50,
+     "percent": 74.0
+    },
+    "ours_only": 19,
+    "lewm_only": 1,
+    "both": 18,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 37,
+     "k_replay": 37,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "clean2/tworoom_0",
+   "kind": "clean2",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/tworoom_0.mp4",
+   "poster": "static/videos/clean2/tworoom_0.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 6.4,
+   "last_step_shown": 23,
+   "bytes": 65928,
+   "poster_bytes": 39727,
+   "test_index": 0,
+   "dataset_episode": 644,
+   "start_step": 42,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 19,
+   "ours_success_step": 23,
+   "lewm_step": 19,
+   "ours_step": 23,
+   "sr_lewm": 88.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 4,
+    "lewm_only": 0,
+    "both": 44,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   },
+   "same_query_as_existing_clip": "demo/tworoom_clean"
+  },
+  {
+   "id": "clean2/tworoom_3",
+   "kind": "clean2",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/tworoom_3.mp4",
+   "poster": "static/videos/clean2/tworoom_3.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 6.6,
+   "last_step_shown": 24,
+   "bytes": 65805,
+   "poster_bytes": 39704,
+   "test_index": 3,
+   "dataset_episode": 905,
+   "start_step": 16,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 24,
+   "ours_success_step": 23,
+   "lewm_step": 24,
+   "ours_step": 23,
+   "sr_lewm": 88.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 4,
+    "lewm_only": 0,
+    "both": 44,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/tworoom_gray_17",
+   "kind": "failure2",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/failure2/tworoom_gray_17.mp4",
+   "poster": "static/videos/failure2/tworoom_gray_17.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 96133,
+   "poster_bytes": 38677,
+   "test_index": 17,
+   "dataset_episode": 4445,
+   "start_step": 6,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 35,
+   "ours_success_step": null,
+   "lewm_step": 35,
+   "ours_step": null,
+   "sr_lewm": 18.0,
+   "sr_ours": 50.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/tworoom_gray_38",
+   "kind": "failure2",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/failure2/tworoom_gray_38.mp4",
+   "poster": "static/videos/failure2/tworoom_gray_38.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 99645,
+   "poster_bytes": 38732,
+   "test_index": 38,
+   "dataset_episode": 7826,
+   "start_step": 66,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 25,
+   "ours_success_step": null,
+   "lewm_step": 25,
+   "ours_step": null,
+   "sr_lewm": 18.0,
+   "sr_ours": 50.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours_only": 19,
+    "lewm_only": 3,
+    "both": 6,
+    "neither": 22
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_hue_2",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/pusht_hue_2.mp4",
+   "poster": "static/videos/gallery/pusht_hue_2.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 136175,
+   "poster_bytes": 33516,
+   "test_index": 2,
+   "dataset_episode": 1639,
+   "start_step": 40,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 22,
+   "lewm_step": null,
+   "ours_step": 22,
+   "sr_lewm": 30.0,
+   "sr_ours": 72.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 15,
+     "n": 50,
+     "percent": 30.0
+    },
+    "ours": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours_only": 25,
+    "lewm_only": 4,
+    "both": 11,
+    "neither": 10
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 15,
+     "k_replay": 15,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_hue_3",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/pusht_hue_3.mp4",
+   "poster": "static/videos/gallery/pusht_hue_3.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 131006,
+   "poster_bytes": 33223,
+   "test_index": 3,
+   "dataset_episode": 1694,
+   "start_step": 59,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 24,
+   "lewm_step": null,
+   "ours_step": 24,
+   "sr_lewm": 30.0,
+   "sr_ours": 72.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 15,
+     "n": 50,
+     "percent": 30.0
+    },
+    "ours": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours_only": 25,
+    "lewm_only": 4,
+    "both": 11,
+    "neither": 10
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 15,
+     "k_replay": 15,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_hue_5",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/pusht_hue_5.mp4",
+   "poster": "static/videos/gallery/pusht_hue_5.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 133651,
+   "poster_bytes": 33205,
+   "test_index": 5,
+   "dataset_episode": 1820,
+   "start_step": 13,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 30.0,
+   "sr_ours": 72.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 15,
+     "n": 50,
+     "percent": 30.0
+    },
+    "ours": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours_only": 25,
+    "lewm_only": 4,
+    "both": 11,
+    "neither": 10
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 15,
+     "k_replay": 15,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_hue_6",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/pusht_hue_6.mp4",
+   "poster": "static/videos/gallery/pusht_hue_6.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 121741,
+   "poster_bytes": 32559,
+   "test_index": 6,
+   "dataset_episode": 2635,
+   "start_step": 114,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 17,
+   "lewm_step": null,
+   "ours_step": 17,
+   "sr_lewm": 30.0,
+   "sr_ours": 72.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 15,
+     "n": 50,
+     "percent": 30.0
+    },
+    "ours": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours_only": 25,
+    "lewm_only": 4,
+    "both": 11,
+    "neither": 10
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 15,
+     "k_replay": 15,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_blur_4",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/pusht_blur_4.mp4",
+   "poster": "static/videos/gallery/pusht_blur_4.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 118415,
+   "poster_bytes": 31499,
+   "test_index": 4,
+   "dataset_episode": 1761,
+   "start_step": 19,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 88.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 42,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_blur_5",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/pusht_blur_5.mp4",
+   "poster": "static/videos/gallery/pusht_blur_5.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 114334,
+   "poster_bytes": 30951,
+   "test_index": 5,
+   "dataset_episode": 1820,
+   "start_step": 13,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 88.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 42,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_blur_15",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/pusht_blur_15.mp4",
+   "poster": "static/videos/gallery/pusht_blur_15.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 108065,
+   "poster_bytes": 32341,
+   "test_index": 15,
+   "dataset_episode": 8235,
+   "start_step": 10,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 48,
+   "lewm_step": null,
+   "ours_step": 48,
+   "sr_lewm": 88.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 42,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_blur_22",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/pusht_blur_22.mp4",
+   "poster": "static/videos/gallery/pusht_blur_22.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 113374,
+   "poster_bytes": 30922,
+   "test_index": 22,
+   "dataset_episode": 9864,
+   "start_step": 50,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 88.0,
+   "sr_ours": 96.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours": {
+     "k": 48,
+     "n": 50,
+     "percent": 96.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 42,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 48,
+     "k_replay": 48,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_noise_4",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/pusht_noise_4.mp4",
+   "poster": "static/videos/gallery/pusht_noise_4.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 948779,
+   "poster_bytes": 55455,
+   "test_index": 4,
+   "dataset_episode": 1761,
+   "start_step": 19,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 68.0,
+   "sr_ours": 88.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours_only": 13,
+    "lewm_only": 3,
+    "both": 31,
+    "neither": 3
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_noise_5",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/pusht_noise_5.mp4",
+   "poster": "static/videos/gallery/pusht_noise_5.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 959234,
+   "poster_bytes": 55152,
+   "test_index": 5,
+   "dataset_episode": 1820,
+   "start_step": 13,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 24,
+   "lewm_step": null,
+   "ours_step": 24,
+   "sr_lewm": 68.0,
+   "sr_ours": 88.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours_only": 13,
+    "lewm_only": 3,
+    "both": 31,
+    "neither": 3
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_noise_6",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/pusht_noise_6.mp4",
+   "poster": "static/videos/gallery/pusht_noise_6.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 942260,
+   "poster_bytes": 54692,
+   "test_index": 6,
+   "dataset_episode": 2635,
+   "start_step": 114,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 68.0,
+   "sr_ours": 88.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours_only": 13,
+    "lewm_only": 3,
+    "both": 31,
+    "neither": 3
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/pusht_noise_8",
+   "kind": "gallery",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/pusht_noise_8.mp4",
+   "poster": "static/videos/gallery/pusht_noise_8.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 969506,
+   "poster_bytes": 55810,
+   "test_index": 8,
+   "dataset_episode": 3517,
+   "start_step": 2,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 68.0,
+   "sr_ours": 88.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours": {
+     "k": 44,
+     "n": 50,
+     "percent": 88.0
+    },
+    "ours_only": 13,
+    "lewm_only": 3,
+    "both": 31,
+    "neither": 3
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 44,
+     "k_replay": 44,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "clean2/pusht_0",
+   "kind": "clean2",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/pusht_0.mp4",
+   "poster": "static/videos/clean2/pusht_0.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 5.0,
+   "last_step_shown": 16,
+   "bytes": 75447,
+   "poster_bytes": 35204,
+   "test_index": 0,
+   "dataset_episode": 1235,
+   "start_step": 36,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 15,
+   "ours_success_step": 16,
+   "lewm_step": 15,
+   "ours_step": 16,
+   "sr_lewm": 98.0,
+   "sr_ours": 98.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 49,
+     "n": 50,
+     "percent": 98.0
+    },
+    "ours": {
+     "k": 49,
+     "n": 50,
+     "percent": 98.0
+    },
+    "ours_only": 1,
+    "lewm_only": 1,
+    "both": 48,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 49,
+     "k_replay": 49,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 49,
+     "k_replay": 49,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   },
+   "same_query_as_existing_clip": "demo/pusht_clean"
+  },
+  {
+   "id": "clean2/pusht_1",
+   "kind": "clean2",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/pusht_1.mp4",
+   "poster": "static/videos/clean2/pusht_1.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 6.6,
+   "last_step_shown": 24,
+   "bytes": 79691,
+   "poster_bytes": 33780,
+   "test_index": 1,
+   "dataset_episode": 1316,
+   "start_step": 129,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 24,
+   "ours_success_step": 23,
+   "lewm_step": 24,
+   "ours_step": 23,
+   "sr_lewm": 98.0,
+   "sr_ours": 98.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 49,
+     "n": 50,
+     "percent": 98.0
+    },
+    "ours": {
+     "k": 49,
+     "n": 50,
+     "percent": 98.0
+    },
+    "ours_only": 1,
+    "lewm_only": 1,
+    "both": 48,
+    "neither": 0
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 49,
+     "k_replay": 49,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 49,
+     "k_replay": 49,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/pusht_hue_8",
+   "kind": "failure2",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/failure2/pusht_hue_8.mp4",
+   "poster": "static/videos/failure2/pusht_hue_8.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 121661,
+   "poster_bytes": 34389,
+   "test_index": 8,
+   "dataset_episode": 3517,
+   "start_step": 2,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 49,
+   "ours_success_step": null,
+   "lewm_step": 49,
+   "ours_step": null,
+   "sr_lewm": 30.0,
+   "sr_ours": 72.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 15,
+     "n": 50,
+     "percent": 30.0
+    },
+    "ours": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours_only": 25,
+    "lewm_only": 4,
+    "both": 11,
+    "neither": 10
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 15,
+     "k_replay": 15,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/pusht_hue_10",
+   "kind": "failure2",
+   "task": "pusht",
+   "task_name": "PushT",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/failure2/pusht_hue_10.mp4",
+   "poster": "static/videos/failure2/pusht_hue_10.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 132476,
+   "poster_bytes": 33687,
+   "test_index": 10,
+   "dataset_episode": 4299,
+   "start_step": 20,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 50,
+   "ours_success_step": null,
+   "lewm_step": 50,
+   "ours_step": null,
+   "sr_lewm": 30.0,
+   "sr_ours": 72.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 15,
+     "n": 50,
+     "percent": 30.0
+    },
+    "ours": {
+     "k": 36,
+     "n": 50,
+     "percent": 72.0
+    },
+    "ours_only": 25,
+    "lewm_only": 4,
+    "both": 11,
+    "neither": 10
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 15,
+     "k_replay": 15,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 36,
+     "k_replay": 36,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_gray_2",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/reacher_gray_2.mp4",
+   "poster": "static/videos/gallery/reacher_gray_2.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 147400,
+   "poster_bytes": 35821,
+   "test_index": 2,
+   "dataset_episode": 859,
+   "start_step": 76,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 14.0,
+   "sr_ours": 18.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_gray_13",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/reacher_gray_13.mp4",
+   "poster": "static/videos/gallery/reacher_gray_13.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 145533,
+   "poster_bytes": 35816,
+   "test_index": 13,
+   "dataset_episode": 3707,
+   "start_step": 161,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 20,
+   "lewm_step": null,
+   "ours_step": 20,
+   "sr_lewm": 14.0,
+   "sr_ours": 18.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_gray_18",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/reacher_gray_18.mp4",
+   "poster": "static/videos/gallery/reacher_gray_18.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 147318,
+   "poster_bytes": 36262,
+   "test_index": 18,
+   "dataset_episode": 4456,
+   "start_step": 152,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 11,
+   "lewm_step": null,
+   "ours_step": 11,
+   "sr_lewm": 14.0,
+   "sr_ours": 18.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_gray_26",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/reacher_gray_26.mp4",
+   "poster": "static/videos/gallery/reacher_gray_26.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 147980,
+   "poster_bytes": 35874,
+   "test_index": 26,
+   "dataset_episode": 6316,
+   "start_step": 106,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 10,
+   "lewm_step": null,
+   "ours_step": 10,
+   "sr_lewm": 14.0,
+   "sr_ours": 18.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_hue_31",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/reacher_hue_31.mp4",
+   "poster": "static/videos/gallery/reacher_hue_31.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 186369,
+   "poster_bytes": 38335,
+   "test_index": 31,
+   "dataset_episode": 7005,
+   "start_step": 34,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 20,
+   "lewm_step": null,
+   "ours_step": 20,
+   "sr_lewm": 8.0,
+   "sr_ours": 10.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 4,
+     "n": 50,
+     "percent": 8.0
+    },
+    "ours": {
+     "k": 5,
+     "n": 50,
+     "percent": 10.0
+    },
+    "ours_only": 4,
+    "lewm_only": 3,
+    "both": 1,
+    "neither": 42
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 4,
+     "k_replay": 4,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 5,
+     "k_replay": 5,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_blur_7",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/reacher_blur_7.mp4",
+   "poster": "static/videos/gallery/reacher_blur_7.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 158282,
+   "poster_bytes": 35079,
+   "test_index": 7,
+   "dataset_episode": 1652,
+   "start_step": 49,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 20,
+   "lewm_step": null,
+   "ours_step": 20,
+   "sr_lewm": 52.0,
+   "sr_ours": 62.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 26,
+     "n": 50,
+     "percent": 52.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 13,
+    "lewm_only": 8,
+    "both": 18,
+    "neither": 11
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 26,
+     "k_replay": 26,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_blur_9",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/reacher_blur_9.mp4",
+   "poster": "static/videos/gallery/reacher_blur_9.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 159240,
+   "poster_bytes": 35357,
+   "test_index": 9,
+   "dataset_episode": 2014,
+   "start_step": 113,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 44,
+   "lewm_step": null,
+   "ours_step": 44,
+   "sr_lewm": 52.0,
+   "sr_ours": 62.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 26,
+     "n": 50,
+     "percent": 52.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 13,
+    "lewm_only": 8,
+    "both": 18,
+    "neither": 11
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 26,
+     "k_replay": 26,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_blur_18",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/reacher_blur_18.mp4",
+   "poster": "static/videos/gallery/reacher_blur_18.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 157002,
+   "poster_bytes": 35430,
+   "test_index": 18,
+   "dataset_episode": 4456,
+   "start_step": 152,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 20,
+   "lewm_step": null,
+   "ours_step": 20,
+   "sr_lewm": 52.0,
+   "sr_ours": 62.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 26,
+     "n": 50,
+     "percent": 52.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 13,
+    "lewm_only": 8,
+    "both": 18,
+    "neither": 11
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 26,
+     "k_replay": 26,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_blur_20",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "blur",
+   "shift_name": "Blur",
+   "condition": "blur_obs",
+   "src": "static/videos/gallery/reacher_blur_20.mp4",
+   "poster": "static/videos/gallery/reacher_blur_20.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 157460,
+   "poster_bytes": 34864,
+   "test_index": 20,
+   "dataset_episode": 4504,
+   "start_step": 95,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 28,
+   "lewm_step": null,
+   "ours_step": 28,
+   "sr_lewm": 52.0,
+   "sr_ours": 62.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 26,
+     "n": 50,
+     "percent": 52.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 13,
+    "lewm_only": 8,
+    "both": 18,
+    "neither": 11
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 26,
+     "k_replay": 26,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_noise_1",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/reacher_noise_1.mp4",
+   "poster": "static/videos/gallery/reacher_noise_1.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 1679052,
+   "poster_bytes": 68754,
+   "test_index": 1,
+   "dataset_episode": 679,
+   "start_step": 34,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 56.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 28,
+     "n": 50,
+     "percent": 56.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 10,
+    "lewm_only": 4,
+    "both": 24,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 28,
+     "k_replay": 28,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_noise_8",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/reacher_noise_8.mp4",
+   "poster": "static/videos/gallery/reacher_noise_8.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 1941716,
+   "poster_bytes": 68721,
+   "test_index": 8,
+   "dataset_episode": 1825,
+   "start_step": 82,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 46,
+   "lewm_step": null,
+   "ours_step": 46,
+   "sr_lewm": 56.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 28,
+     "n": 50,
+     "percent": 56.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 10,
+    "lewm_only": 4,
+    "both": 24,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 28,
+     "k_replay": 28,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_noise_9",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/reacher_noise_9.mp4",
+   "poster": "static/videos/gallery/reacher_noise_9.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 1720628,
+   "poster_bytes": 68761,
+   "test_index": 9,
+   "dataset_episode": 2014,
+   "start_step": 113,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 30,
+   "lewm_step": null,
+   "ours_step": 30,
+   "sr_lewm": 56.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 28,
+     "n": 50,
+     "percent": 56.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 10,
+    "lewm_only": 4,
+    "both": 24,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 28,
+     "k_replay": 28,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/reacher_noise_13",
+   "kind": "gallery",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "noise",
+   "shift_name": "Noise",
+   "condition": "noise_obs",
+   "src": "static/videos/gallery/reacher_noise_13.mp4",
+   "poster": "static/videos/gallery/reacher_noise_13.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 1679435,
+   "poster_bytes": 68519,
+   "test_index": 13,
+   "dataset_episode": 3707,
+   "start_step": 161,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 56.0,
+   "sr_ours": 68.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 28,
+     "n": 50,
+     "percent": 56.0
+    },
+    "ours": {
+     "k": 34,
+     "n": 50,
+     "percent": 68.0
+    },
+    "ours_only": 10,
+    "lewm_only": 4,
+    "both": 24,
+    "neither": 12
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 28,
+     "k_replay": 28,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 34,
+     "k_replay": 34,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "clean2/reacher_2",
+   "kind": "clean2",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/reacher_2.mp4",
+   "poster": "static/videos/clean2/reacher_2.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 5.4,
+   "last_step_shown": 18,
+   "bytes": 85002,
+   "poster_bytes": 38378,
+   "test_index": 2,
+   "dataset_episode": 859,
+   "start_step": 76,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 18,
+   "ours_success_step": 13,
+   "lewm_step": 18,
+   "ours_step": 13,
+   "sr_lewm": 50.0,
+   "sr_ours": 70.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours_only": 12,
+    "lewm_only": 2,
+    "both": 23,
+    "neither": 13
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   },
+   "same_query_as_existing_clip": "demo/reacher_clean"
+  },
+  {
+   "id": "clean2/reacher_3",
+   "kind": "clean2",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/reacher_3.mp4",
+   "poster": "static/videos/clean2/reacher_3.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 6.0,
+   "last_step_shown": 21,
+   "bytes": 89641,
+   "poster_bytes": 37909,
+   "test_index": 3,
+   "dataset_episode": 892,
+   "start_step": 85,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 21,
+   "ours_success_step": 21,
+   "lewm_step": 21,
+   "ours_step": 21,
+   "sr_lewm": 50.0,
+   "sr_ours": 70.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 25,
+     "n": 50,
+     "percent": 50.0
+    },
+    "ours": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours_only": 12,
+    "lewm_only": 2,
+    "both": 23,
+    "neither": 13
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 25,
+     "k_replay": 25,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/reacher_gray_10",
+   "kind": "failure2",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/failure2/reacher_gray_10.mp4",
+   "poster": "static/videos/failure2/reacher_gray_10.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 150390,
+   "poster_bytes": 36055,
+   "test_index": 10,
+   "dataset_episode": 2272,
+   "start_step": 63,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 16,
+   "ours_success_step": null,
+   "lewm_step": 16,
+   "ours_step": null,
+   "sr_lewm": 14.0,
+   "sr_ours": 18.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/reacher_gray_11",
+   "kind": "failure2",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/failure2/reacher_gray_11.mp4",
+   "poster": "static/videos/failure2/reacher_gray_11.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 145637,
+   "poster_bytes": 35818,
+   "test_index": 11,
+   "dataset_episode": 2767,
+   "start_step": 101,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 1,
+   "ours_success_step": null,
+   "lewm_step": 1,
+   "ours_step": null,
+   "sr_lewm": 14.0,
+   "sr_ours": 18.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 7,
+     "n": 50,
+     "percent": 14.0
+    },
+    "ours": {
+     "k": 9,
+     "n": 50,
+     "percent": 18.0
+    },
+    "ours_only": 7,
+    "lewm_only": 5,
+    "both": 2,
+    "neither": 36
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 7,
+     "k_replay": 7,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 9,
+     "k_replay": 9,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_gray_19",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/cube_gray_19.mp4",
+   "poster": "static/videos/gallery/cube_gray_19.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 248421,
+   "poster_bytes": 42526,
+   "test_index": 19,
+   "dataset_episode": 4503,
+   "start_step": 137,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 9,
+   "lewm_step": null,
+   "ours_step": 9,
+   "sr_lewm": 38.0,
+   "sr_ours": 46.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 17,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_gray_44",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/gallery/cube_gray_44.mp4",
+   "poster": "static/videos/gallery/cube_gray_44.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 233907,
+   "poster_bytes": 40077,
+   "test_index": 44,
+   "dataset_episode": 8585,
+   "start_step": 133,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 12,
+   "lewm_step": null,
+   "ours_step": 12,
+   "sr_lewm": 38.0,
+   "sr_ours": 46.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 17,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_hue_12",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/cube_hue_12.mp4",
+   "poster": "static/videos/gallery/cube_hue_12.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 281548,
+   "poster_bytes": 43062,
+   "test_index": 12,
+   "dataset_episode": 3545,
+   "start_step": 43,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 32,
+   "lewm_step": null,
+   "ours_step": 32,
+   "sr_lewm": 40.0,
+   "sr_ours": 46.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 20,
+     "n": 50,
+     "percent": 40.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 5,
+    "lewm_only": 2,
+    "both": 18,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 20,
+     "k_replay": 20,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_hue_36",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/cube_hue_36.mp4",
+   "poster": "static/videos/gallery/cube_hue_36.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 257036,
+   "poster_bytes": 39724,
+   "test_index": 36,
+   "dataset_episode": 7739,
+   "start_step": 60,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 10,
+   "lewm_step": null,
+   "ours_step": 10,
+   "sr_lewm": 40.0,
+   "sr_ours": 46.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 20,
+     "n": 50,
+     "percent": 40.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 5,
+    "lewm_only": 2,
+    "both": 18,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 20,
+     "k_replay": 20,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_hue_44",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/gallery/cube_hue_44.mp4",
+   "poster": "static/videos/gallery/cube_hue_44.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 258252,
+   "poster_bytes": 42383,
+   "test_index": 44,
+   "dataset_episode": 8585,
+   "start_step": 133,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 14,
+   "lewm_step": null,
+   "ours_step": 14,
+   "sr_lewm": 40.0,
+   "sr_ours": 46.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 20,
+     "n": 50,
+     "percent": 40.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 5,
+    "lewm_only": 2,
+    "both": 18,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 20,
+     "k_replay": 20,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_cb_12",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/cube_cb_12.mp4",
+   "poster": "static/videos/gallery/cube_cb_12.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 234252,
+   "poster_bytes": 39313,
+   "test_index": 12,
+   "dataset_episode": 3545,
+   "start_step": 43,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 14,
+   "lewm_step": null,
+   "ours_step": 14,
+   "sr_lewm": 32.0,
+   "sr_ours": 48.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 16,
+     "n": 50,
+     "percent": 32.0
+    },
+    "ours": {
+     "k": 24,
+     "n": 50,
+     "percent": 48.0
+    },
+    "ours_only": 8,
+    "lewm_only": 0,
+    "both": 16,
+    "neither": 26
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 16,
+     "k_replay": 16,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 24,
+     "k_replay": 24,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_cb_34",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/cube_cb_34.mp4",
+   "poster": "static/videos/gallery/cube_cb_34.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 211676,
+   "poster_bytes": 38474,
+   "test_index": 34,
+   "dataset_episode": 7580,
+   "start_step": 147,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 20,
+   "lewm_step": null,
+   "ours_step": 20,
+   "sr_lewm": 32.0,
+   "sr_ours": 48.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 16,
+     "n": 50,
+     "percent": 32.0
+    },
+    "ours": {
+     "k": 24,
+     "n": 50,
+     "percent": 48.0
+    },
+    "ours_only": 8,
+    "lewm_only": 0,
+    "both": 16,
+    "neither": 26
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 16,
+     "k_replay": 16,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 24,
+     "k_replay": 24,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_cb_43",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/cube_cb_43.mp4",
+   "poster": "static/videos/gallery/cube_cb_43.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 258053,
+   "poster_bytes": 39072,
+   "test_index": 43,
+   "dataset_episode": 8582,
+   "start_step": 148,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 48,
+   "lewm_step": null,
+   "ours_step": 48,
+   "sr_lewm": 32.0,
+   "sr_ours": 48.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 16,
+     "n": 50,
+     "percent": 32.0
+    },
+    "ours": {
+     "k": 24,
+     "n": 50,
+     "percent": 48.0
+    },
+    "ours_only": 8,
+    "lewm_only": 0,
+    "both": 16,
+    "neither": 26
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 16,
+     "k_replay": 16,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 24,
+     "k_replay": 24,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "gallery/cube_cb_44",
+   "kind": "gallery",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "cb",
+   "shift_name": "C-B",
+   "condition": "color_brightness_obs",
+   "src": "static/videos/gallery/cube_cb_44.mp4",
+   "poster": "static/videos/gallery/cube_cb_44.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 199072,
+   "poster_bytes": 37339,
+   "test_index": 44,
+   "dataset_episode": 8585,
+   "start_step": 133,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 18,
+   "lewm_step": null,
+   "ours_step": 18,
+   "sr_lewm": 32.0,
+   "sr_ours": 48.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 16,
+     "n": 50,
+     "percent": 32.0
+    },
+    "ours": {
+     "k": 24,
+     "n": 50,
+     "percent": 48.0
+    },
+    "ours_only": 8,
+    "lewm_only": 0,
+    "both": 16,
+    "neither": 26
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 16,
+     "k_replay": 16,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 24,
+     "k_replay": 24,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "clean2/cube_5",
+   "kind": "clean2",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/cube_5.mp4",
+   "poster": "static/videos/clean2/cube_5.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 5.2,
+   "last_step_shown": 17,
+   "bytes": 138907,
+   "poster_bytes": 44899,
+   "test_index": 5,
+   "dataset_episode": 941,
+   "start_step": 132,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 17,
+   "ours_success_step": 14,
+   "lewm_step": 17,
+   "ours_step": 14,
+   "sr_lewm": 70.0,
+   "sr_ours": 62.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 2,
+    "lewm_only": 6,
+    "both": 29,
+    "neither": 13
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "clean2/cube_12",
+   "kind": "clean2",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "clean",
+   "shift_name": "Clean (InD)",
+   "condition": "clean",
+   "src": "static/videos/clean2/cube_12.mp4",
+   "poster": "static/videos/clean2/cube_12.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 5.4,
+   "last_step_shown": 18,
+   "bytes": 151583,
+   "poster_bytes": 47515,
+   "test_index": 12,
+   "dataset_episode": 3545,
+   "start_step": 43,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": true,
+   "lewm_success_step": 18,
+   "ours_success_step": 16,
+   "lewm_step": 18,
+   "ours_step": 16,
+   "sr_lewm": 70.0,
+   "sr_ours": 62.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 35,
+     "n": 50,
+     "percent": 70.0
+    },
+    "ours": {
+     "k": 31,
+     "n": 50,
+     "percent": 62.0
+    },
+    "ours_only": 2,
+    "lewm_only": 6,
+    "both": 29,
+    "neither": 13
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 35,
+     "k_replay": 35,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 31,
+     "k_replay": 31,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/cube_gray_43",
+   "kind": "failure2",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "gray",
+   "shift_name": "Gray",
+   "condition": "grayscale_obs",
+   "src": "static/videos/failure2/cube_gray_43.mp4",
+   "poster": "static/videos/failure2/cube_gray_43.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 232079,
+   "poster_bytes": 40445,
+   "test_index": 43,
+   "dataset_episode": 8582,
+   "start_step": 148,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 1,
+   "ours_success_step": null,
+   "lewm_step": 1,
+   "ours_step": null,
+   "sr_lewm": 38.0,
+   "sr_ours": 46.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 19,
+     "n": 50,
+     "percent": 38.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 6,
+    "lewm_only": 2,
+    "both": 17,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 19,
+     "k_replay": 19,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "failure2/cube_hue_4",
+   "kind": "failure2",
+   "task": "cube",
+   "task_name": "Cube",
+   "shift": "hue",
+   "shift_name": "Hue",
+   "condition": "hue_obs",
+   "src": "static/videos/failure2/cube_hue_4.mp4",
+   "poster": "static/videos/failure2/cube_hue_4.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 302486,
+   "poster_bytes": 43210,
+   "test_index": 4,
+   "dataset_episode": 921,
+   "start_step": 61,
+   "goal_offset_steps": 25,
+   "lewm_success": true,
+   "ours_success": false,
+   "lewm_success_step": 6,
+   "ours_success_step": null,
+   "lewm_step": 6,
+   "ours_step": null,
+   "sr_lewm": 40.0,
+   "sr_ours": 46.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 20,
+     "n": 50,
+     "percent": 40.0
+    },
+    "ours": {
+     "k": 23,
+     "n": 50,
+     "percent": 46.0
+    },
+    "ours_only": 5,
+    "lewm_only": 2,
+    "both": 18,
+    "neither": 25
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 20,
+     "k_replay": 20,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 23,
+     "k_replay": 23,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 112,
+     "info_alias_mismatches_tolerated": [
+      "final__target",
+      "initial__privileged/block_0_pos"
+     ],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "earlier_independent_replay_pass": true
+   }
+  },
+  {
+   "id": "severity/tworoom_blur4_0",
+   "kind": "severity",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "strength": {
+    "family": "blur",
+    "parameter": "Gaussian blur sigma in pixels (224 px frame)",
+    "value": 4.0,
+    "label": "blur σ = 4 px",
+    "variant": "blur4",
+    "main_table_level": 1.0,
+    "sweep_levels": [
+     0,
+     0.5,
+     1,
+     1.5,
+     2,
+     3,
+     4
+    ]
+   },
+   "src": "static/videos/severity/tworoom_blur4_0.mp4",
+   "poster": "static/videos/severity/tworoom_blur4_0.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 109468,
+   "poster_bytes": 38509,
+   "test_index": 0,
+   "dataset_episode": 644,
+   "start_step": 42,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 34.0,
+   "sr_ours": 94.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 17,
+     "n": 50,
+     "percent": 34.0
+    },
+    "ours": {
+     "k": 47,
+     "n": 50,
+     "percent": 94.0
+    },
+    "ours_only": 31,
+    "lewm_only": 1,
+    "both": 16,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 17,
+     "k_replay": 17,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 47,
+     "k_replay": 47,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    }
+   }
+  },
+  {
+   "id": "severity/tworoom_blur4_1",
+   "kind": "severity",
+   "task": "tworoom",
+   "task_name": "TwoRoom",
+   "strength": {
+    "family": "blur",
+    "parameter": "Gaussian blur sigma in pixels (224 px frame)",
+    "value": 4.0,
+    "label": "blur σ = 4 px",
+    "variant": "blur4",
+    "main_table_level": 1.0,
+    "sweep_levels": [
+     0,
+     0.5,
+     1,
+     1.5,
+     2,
+     3,
+     4
+    ]
+   },
+   "src": "static/videos/severity/tworoom_blur4_1.mp4",
+   "poster": "static/videos/severity/tworoom_blur4_1.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 109709,
+   "poster_bytes": 38540,
+   "test_index": 1,
+   "dataset_episode": 687,
+   "start_step": 68,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 22,
+   "lewm_step": null,
+   "ours_step": 22,
+   "sr_lewm": 34.0,
+   "sr_ours": 94.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 17,
+     "n": 50,
+     "percent": 34.0
+    },
+    "ours": {
+     "k": 47,
+     "n": 50,
+     "percent": 94.0
+    },
+    "ours_only": 31,
+    "lewm_only": 1,
+    "both": 16,
+    "neither": 2
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 17,
+     "k_replay": 17,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 47,
+     "k_replay": 47,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 48,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    }
+   }
+  },
+  {
+   "id": "severity/pusht_hue120_22",
+   "kind": "severity",
+   "task": "pusht",
+   "task_name": "PushT",
+   "strength": {
+    "family": "hue",
+    "parameter": "YIQ hue rotation in degrees",
+    "value": 120.0,
+    "label": "hue shift 120°",
+    "variant": "hue120",
+    "main_table_level": 60.0,
+    "sweep_levels": [
+     0,
+     30,
+     60,
+     90,
+     120,
+     180
+    ]
+   },
+   "src": "static/videos/severity/pusht_hue120_22.mp4",
+   "poster": "static/videos/severity/pusht_hue120_22.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 132743,
+   "poster_bytes": 33997,
+   "test_index": 22,
+   "dataset_episode": 9864,
+   "start_step": 50,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 25,
+   "lewm_step": null,
+   "ours_step": 25,
+   "sr_lewm": 2.0,
+   "sr_ours": 4.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours": {
+     "k": 2,
+     "n": 50,
+     "percent": 4.0
+    },
+    "ours_only": 2,
+    "lewm_only": 1,
+    "both": 0,
+    "neither": 47
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 2,
+     "k_replay": 2,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    }
+   }
+  },
+  {
+   "id": "severity/pusht_hue120_44",
+   "kind": "severity",
+   "task": "pusht",
+   "task_name": "PushT",
+   "strength": {
+    "family": "hue",
+    "parameter": "YIQ hue rotation in degrees",
+    "value": 120.0,
+    "label": "hue shift 120°",
+    "variant": "hue120",
+    "main_table_level": 60.0,
+    "sweep_levels": [
+     0,
+     30,
+     60,
+     90,
+     120,
+     180
+    ]
+   },
+   "src": "static/videos/severity/pusht_hue120_44.mp4",
+   "poster": "static/videos/severity/pusht_hue120_44.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 117982,
+   "poster_bytes": 32937,
+   "test_index": 44,
+   "dataset_episode": 16019,
+   "start_step": 72,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 13,
+   "lewm_step": null,
+   "ours_step": 13,
+   "sr_lewm": 2.0,
+   "sr_ours": 4.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 1,
+     "n": 50,
+     "percent": 2.0
+    },
+    "ours": {
+     "k": 2,
+     "n": 50,
+     "percent": 4.0
+    },
+    "ours_only": 2,
+    "lewm_only": 1,
+    "both": 0,
+    "neither": 47
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 1,
+     "k_replay": 1,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 2,
+     "k_replay": 2,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 40,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    }
+   }
+  },
+  {
+   "id": "severity/reacher_noise0p2_3",
+   "kind": "severity",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "strength": {
+    "family": "noise",
+    "parameter": "additive Gaussian pixel noise, std on the [0, 1] RGB scale",
+    "value": 0.2,
+    "label": "noise std = 0.20",
+    "variant": "noise0p2",
+    "main_table_level": 0.03,
+    "sweep_levels": [
+     0,
+     0.01,
+     0.02,
+     0.03,
+     0.06,
+     0.09,
+     0.12,
+     0.2
+    ]
+   },
+   "src": "static/videos/severity/reacher_noise0p2_3.mp4",
+   "poster": "static/videos/severity/reacher_noise0p2_3.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 5023556,
+   "poster_bytes": 150482,
+   "test_index": 3,
+   "dataset_episode": 892,
+   "start_step": 85,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 32,
+   "lewm_step": null,
+   "ours_step": 32,
+   "sr_lewm": 20.0,
+   "sr_ours": 58.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 10,
+     "n": 50,
+     "percent": 20.0
+    },
+    "ours": {
+     "k": 29,
+     "n": 50,
+     "percent": 58.0
+    },
+    "ours_only": 22,
+    "lewm_only": 3,
+    "both": 7,
+    "neither": 18
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 10,
+     "k_replay": 10,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 29,
+     "k_replay": 29,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    }
+   }
+  },
+  {
+   "id": "severity/reacher_noise0p2_7",
+   "kind": "severity",
+   "task": "reacher",
+   "task_name": "Reacher",
+   "strength": {
+    "family": "noise",
+    "parameter": "additive Gaussian pixel noise, std on the [0, 1] RGB scale",
+    "value": 0.2,
+    "label": "noise std = 0.20",
+    "variant": "noise0p2",
+    "main_table_level": 0.03,
+    "sweep_levels": [
+     0,
+     0.01,
+     0.02,
+     0.03,
+     0.06,
+     0.09,
+     0.12,
+     0.2
+    ]
+   },
+   "src": "static/videos/severity/reacher_noise0p2_7.mp4",
+   "poster": "static/videos/severity/reacher_noise0p2_7.jpg",
+   "width": 960,
+   "height": 448,
+   "fps": 10,
+   "duration_s": 11.8,
+   "last_step_shown": 50,
+   "bytes": 4559402,
+   "poster_bytes": 150637,
+   "test_index": 7,
+   "dataset_episode": 1652,
+   "start_step": 49,
+   "goal_offset_steps": 25,
+   "lewm_success": false,
+   "ours_success": true,
+   "lewm_success_step": null,
+   "ours_success_step": 23,
+   "lewm_step": null,
+   "ours_step": 23,
+   "sr_lewm": 20.0,
+   "sr_ours": 58.0,
+   "condition_test50": {
+    "lewm": {
+     "k": 10,
+     "n": 50,
+     "percent": 20.0
+    },
+    "ours": {
+     "k": 29,
+     "n": 50,
+     "percent": 58.0
+    },
+    "ours_only": 22,
+    "lewm_only": 3,
+    "both": 7,
+    "neither": 18
+   },
+   "replay_fidelity": {
+    "lewm": {
+     "k_recorded": 10,
+     "k_replay": 10,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    },
+    "ours": {
+     "k_recorded": 29,
+     "k_replay": 29,
+     "success_vector_equal_50of50": true,
+     "physical_trace_max_abs_diff": 0.0,
+     "trace_keys_compared": 58,
+     "info_alias_mismatches_tolerated": [],
+     "raw_initial_physics_equal": true,
+     "fidelity_pass": true
+    }
+   }
+  }
+ ],
+ "skipped": [
+  {
+   "kind": "gallery",
+   "task": "tworoom",
+   "condition": "noise",
+   "reason": "only 2 of 4: 2 eligible (3 LeWM-fail / LeNS-JEPA-success, minus featured clip, minus 0 with < 8 steps)"
+  },
+  {
+   "kind": "gallery",
+   "task": "pusht",
+   "condition": "gray",
+   "reason": "no eligible query: 1 LeWM-fail / LeNS-JEPA-success queries in Test50, one is the featured clip, 0 need fewer than 8 steps"
+  },
+  {
+   "kind": "gallery",
+   "task": "pusht",
+   "condition": "cb",
+   "reason": "no eligible query: 1 LeWM-fail / LeNS-JEPA-success queries in Test50, one is the featured clip, 0 need fewer than 8 steps"
+  },
+  {
+   "kind": "gallery",
+   "task": "reacher",
+   "condition": "hue",
+   "reason": "only 1 of 4: 1 eligible (4 LeWM-fail / LeNS-JEPA-success, minus featured clip, minus 2 with < 8 steps)"
+  },
+  {
+   "kind": "gallery",
+   "task": "reacher",
+   "condition": "cb",
+   "reason": "no eligible query: 1 LeWM-fail / LeNS-JEPA-success queries in Test50, one is the featured clip, 0 need fewer than 8 steps"
+  },
+  {
+   "kind": "gallery",
+   "task": "cube",
+   "condition": "gray",
+   "reason": "only 2 of 4: 2 eligible (6 LeWM-fail / LeNS-JEPA-success, minus featured clip, minus 3 with < 8 steps)"
+  },
+  {
+   "kind": "gallery",
+   "task": "cube",
+   "condition": "hue",
+   "reason": "only 3 of 4: 3 eligible (5 LeWM-fail / LeNS-JEPA-success, minus featured clip, minus 1 with < 8 steps)"
+  },
+  {
+   "kind": "gallery",
+   "task": "cube",
+   "condition": "blur",
+   "reason": "no eligible query: 1 LeWM-fail / LeNS-JEPA-success queries in Test50, one is the featured clip, 0 need fewer than 8 steps"
+  },
+  {
+   "kind": "gallery",
+   "task": "cube",
+   "condition": "noise",
+   "reason": "no eligible query: 1 LeWM-fail / LeNS-JEPA-success queries in Test50, one is the featured clip, 0 need fewer than 8 steps"
+  },
+  {
+   "kind": "severity",
+   "task": "cube",
+   "reason": "the paper has no shift-strength sweep for Cube"
+  }
+ ],
+ "totals": {
+  "n_clips": 74,
+  "n_gallery": 52,
+  "n_clean2": 8,
+  "n_failure2": 8,
+  "n_severity": 6,
+  "per_task": {
+   "tworoom": {
+    "gallery": 18,
+    "clean2": 2,
+    "failure2": 2,
+    "severity": 2
+   },
+   "pusht": {
+    "gallery": 12,
+    "clean2": 2,
+    "failure2": 2,
+    "severity": 2
+   },
+   "reacher": {
+    "gallery": 13,
+    "clean2": 2,
+    "failure2": 2,
+    "severity": 2
+   },
+   "cube": {
+    "gallery": 9,
+    "clean2": 2,
+    "failure2": 2,
+    "severity": 0
+   }
+  },
+  "bytes": 33645682
+ }
+}
