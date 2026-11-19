@@ -60,6 +60,11 @@
     <div class="kicker">Overview</div>
     <h2>Keep the state, route the nuisance elsewhere.</h2>
     <p class="lead">JEPA world models plan by comparing latent states. When background color, texture, brightness, blur or noise change at test time, the latent moves even though the physical state does not, and planning fails. LeNS-JEPA adds a <b>training-only</b> nuisance pathway to an existing world model so that its predictive latent depends less on appearance, using clean trajectories only.</p>
+    <div class="video-card" style="margin:18px 0 22px">
+      <div class="head"><h3 style="margin:0">At a glance (26 s)</h3></div>
+      <video src="static/videos/highlight/highlight.mp4" poster="static/videos/highlight/highlight_poster.jpg" autoplay muted loop playsinline controls preload="metadata" style="background:#0e0c1d"></video>
+      <div class="foot">Same test episode and goal on both sides; the observation is shifted at test time and the goal is not. Training sees only clean frames, and the same checkpoint is used for every shift. Example episodes follow a fixed rule (first test episode where ours succeeds and LeWM fails); rates are over 50 test episodes per shift.</div>
+    </div>
     <div class="tldr"><b>TL;DR.</b> A learned patch mask hides nuisance patches from the predictive encoder and routes their features to an auxiliary nuisance latent <span class="m">z_n</span>. Both latents reconstruct the full observation, so masked content is kept rather than discarded, and an action-adversarial critic keeps state out of the nuisance path. At inference the base model encodes the full image exactly as before.</div>
     <figure class="card">
       <img class="zoomable" src="static/images/teaser.png" alt="Teaser figure">
