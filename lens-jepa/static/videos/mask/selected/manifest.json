@@ -1,0 +1,167 @@
+{
+  "title": "Selected learned-mask excerpts",
+  "description": "Selected excerpts of learned masks on three fixed validation frames per task. Amber marks masked patches. Masking is used only during training.",
+  "scientific_content": "Original validation frames and original amber overlays are retained. Only temporal selection, spatial crop, exact twofold frame repetition (0.5x playback), video recompression, and row stacking for the combined clip are applied.",
+  "overlay_original": {
+    "color": "#F2B134",
+    "alpha": 0.5,
+    "edge_color": "#B57E10"
+  },
+  "new_overlay_added": false,
+  "mask_values_modified": false,
+  "playback_speed_changed": true,
+  "playback_speed": 0.5,
+  "frame_interpolation": false,
+  "epoch_labels_curves_axes_in_output": false,
+  "selection_note": "Short, contiguous intervals with visible mask activity. These do not show all training or a common epoch across tasks.",
+  "clips": [
+    {
+      "key": "tworoom",
+      "name": "TwoRoom",
+      "src": "tworoom_mask_excerpt.mp4",
+      "poster": "tworoom_mask_excerpt.jpg",
+      "source": "../tworoom_mask_evolution.mp4",
+      "source_sha256": "d495a9ef6f1e8f1ca3dc65acd0e48818f71b2a8b427ebb8c717f6b3edc4ba52d",
+      "source_fps": 30,
+      "source_frame_start": 178,
+      "source_frame_end_exclusive": 232,
+      "source_start_s": 5.933333333333334,
+      "source_end_s": 7.733333333333333,
+      "crop": {
+        "x": 24,
+        "y": 50,
+        "w": 912,
+        "h": 288
+      },
+      "fps": 30,
+      "n_frames": 108,
+      "duration_s": 3.6,
+      "source_duration_s": 1.8,
+      "playback_speed": 0.5,
+      "frame_repeat_factor": 2,
+      "resolution": "912x288",
+      "output_sha256": "719a27d650a52e21bd86017785d21df1515fa5f1f579879601c6df055dc1442f",
+      "poster_sha256": "abd91ad6856785355180b188be2577d184798b04c409804bda3b99e89d12a9ce"
+    },
+    {
+      "key": "pusht",
+      "name": "PushT",
+      "src": "pusht_mask_excerpt.mp4",
+      "poster": "pusht_mask_excerpt.jpg",
+      "source": "../pusht_mask_evolution.mp4",
+      "source_sha256": "53d8896a0b06a9e109edfdcd707226b3f6e389fe6bb08bf35b915f73be8ec876",
+      "source_fps": 30,
+      "source_frame_start": 150,
+      "source_frame_end_exclusive": 204,
+      "source_start_s": 5.0,
+      "source_end_s": 6.8,
+      "crop": {
+        "x": 24,
+        "y": 50,
+        "w": 912,
+        "h": 288
+      },
+      "fps": 30,
+      "n_frames": 108,
+      "duration_s": 3.6,
+      "source_duration_s": 1.8,
+      "playback_speed": 0.5,
+      "frame_repeat_factor": 2,
+      "resolution": "912x288",
+      "output_sha256": "c83d7005080df2cd2f0180b7fbeb53f1d6254d87282532192c753c2a4f78e1b4",
+      "poster_sha256": "7d165a5957ebadbfae4fb2a0b17c7562622ce3672c5fefcdb5d315104c823f5c"
+    },
+    {
+      "key": "reacher",
+      "name": "Reacher",
+      "src": "reacher_mask_excerpt.mp4",
+      "poster": "reacher_mask_excerpt.jpg",
+      "source": "../reacher_mask_evolution.mp4",
+      "source_sha256": "a50146b9f567cb53d1f13e87c5775b7dbcb49d527448d85f50d60ec51907f2c9",
+      "source_fps": 30,
+      "source_frame_start": 186,
+      "source_frame_end_exclusive": 240,
+      "source_start_s": 6.2,
+      "source_end_s": 8.0,
+      "crop": {
+        "x": 24,
+        "y": 50,
+        "w": 912,
+        "h": 288
+      },
+      "fps": 30,
+      "n_frames": 108,
+      "duration_s": 3.6,
+      "source_duration_s": 1.8,
+      "playback_speed": 0.5,
+      "frame_repeat_factor": 2,
+      "resolution": "912x288",
+      "output_sha256": "0be9c7e137157e0f9e4d5d16a6016e880968ed283df8b7f29c7677b8388d7fa6",
+      "poster_sha256": "3f45895fbc139af0ec560e8079feaf1ad6c0561a81227b4016b7b7599628a37b"
+    },
+    {
+      "key": "all",
+      "name": "All three tasks",
+      "src": "all_mask_excerpt.mp4",
+      "poster": "all_mask_excerpt.jpg",
+      "rows_top_to_bottom": [
+        {
+          "task": "tworoom",
+          "source": "../tworoom_mask_evolution.mp4",
+          "source_sha256": "d495a9ef6f1e8f1ca3dc65acd0e48818f71b2a8b427ebb8c717f6b3edc4ba52d",
+          "source_frame_start": 178,
+          "source_frame_end_exclusive": 232,
+          "source_start_s": 5.933333333333334,
+          "source_end_s": 7.733333333333333,
+          "crop": {
+            "x": 24,
+            "y": 50,
+            "w": 912,
+            "h": 288
+          }
+        },
+        {
+          "task": "pusht",
+          "source": "../pusht_mask_evolution.mp4",
+          "source_sha256": "53d8896a0b06a9e109edfdcd707226b3f6e389fe6bb08bf35b915f73be8ec876",
+          "source_frame_start": 150,
+          "source_frame_end_exclusive": 204,
+          "source_start_s": 5.0,
+          "source_end_s": 6.8,
+          "crop": {
+            "x": 24,
+            "y": 50,
+            "w": 912,
+            "h": 288
+          }
+        },
+        {
+          "task": "reacher",
+          "source": "../reacher_mask_evolution.mp4",
+          "source_sha256": "a50146b9f567cb53d1f13e87c5775b7dbcb49d527448d85f50d60ec51907f2c9",
+          "source_frame_start": 186,
+          "source_frame_end_exclusive": 240,
+          "source_start_s": 6.2,
+          "source_end_s": 8.0,
+          "crop": {
+            "x": 24,
+            "y": 50,
+            "w": 912,
+            "h": 288
+          }
+        }
+      ],
+      "synchronized_training_epoch": false,
+      "composition": "Independent selected temporal excerpts, stacked TwoRoom / PushT / Reacher; aligned only in output playback time.",
+      "fps": 30,
+      "n_frames": 108,
+      "duration_s": 3.6,
+      "source_duration_s": 1.8,
+      "playback_speed": 0.5,
+      "frame_repeat_factor": 2,
+      "resolution": "912x864",
+      "output_sha256": "d69c1e1df7bcc4d7c5bc43298d5bf1f97153fa9a949ec95f8d59c30c962b565a",
+      "poster_sha256": "36f0b8b3d0b1e03fd16c3a5f74eb3d665d6381a2a3e6f60a605150c270d1b8cb"
+    }
+  ]
+}

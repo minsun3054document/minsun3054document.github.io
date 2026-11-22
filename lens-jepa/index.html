@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<link rel="stylesheet" href="static/css/style.css?v=27eed940f1">
+<link rel="stylesheet" href="static/css/style.css?v=dc79b482d4">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236e5ba6'/><rect x='12' y='12' width='12' height='12' rx='2' fill='%23f2b134'/><rect x='40' y='12' width='12' height='12' rx='2' fill='%23fff'/><rect x='26' y='26' width='12' height='12' rx='2' fill='%23f2b134'/><rect x='12' y='40' width='12' height='12' rx='2' fill='%23fff'/><rect x='40' y='40' width='12' height='12' rx='2' fill='%23f2b134'/></svg>">
 </head>
 <body>
@@ -50,7 +50,7 @@
 
     <div class="hero-video" id="heroHighlight">
       <div class="hero-video-head"><span>LeNS-JEPA in 26 seconds</span><a href="#demo">Explore the comparisons</a></div>
-      <video src="static/videos/highlight/highlight.mp4" poster="static/videos/highlight/highlight_poster.jpg" autoplay muted loop playsinline controls preload="metadata" data-visible-autoplay aria-label="26-second overview of LeNS-JEPA planning under appearance shifts"></video>
+      <video src="static/videos/highlight/selected/highlight_refined.mp4" poster="static/videos/highlight/selected/highlight_refined_poster.jpg" autoplay muted loop playsinline controls preload="metadata" data-visible-autoplay aria-label="26-second overview of LeNS-JEPA planning under appearance shifts"></video>
       <p>Same initial state and clean goal. LeWM is on the left. LeWM + LeNS-JEPA is on the right.</p>
     </div>
     <p class="mosaic-intro">Three tasks, side by side. Selected successful comparisons under appearance shifts.</p>
@@ -108,26 +108,21 @@
 <section id="mask">
   <div class="wrap reveal">
     <div class="kicker">Learned mask</div>
-    <h2>Watch the mask learn</h2>
-    <p class="lead">The learned patch mask changes over training. Follow three fixed validation frames through the training checkpoints, or compare all three tasks at once.</p>
+    <h2>Learned patch masks</h2>
+    <p class="lead">Selected excerpts show learned masks on fixed validation frames from TwoRoom, PushT, and Reacher.</p>
     <div class="video-card" id="maskVideoCard">
-      <div class="head"><h3>Mask evolution during training</h3><div class="seg" id="maskSeg" aria-label="Mask evolution task"></div></div>
+      <div class="head"><h3>Learned masks in motion</h3><div class="seg" id="maskSeg" aria-label="Mask example task"></div></div>
       <div id="maskStage"></div>
-      <div class="mask-timeline" id="maskTimeline" aria-label="Training timeline"></div>
-      <div class="foot" id="maskFoot">Masks on three fixed validation frames across training checkpoints. The curve shows the masked fraction in training batches.</div>
+      <div class="foot" id="maskFoot">Selected excerpts of learned masks on three fixed validation frames per task. Amber marks masked patches. Masking is used only during training.</div>
     </div>
     <div class="video-card mask-gallery-card">
-      <div class="head"><h3>Explore learned masks</h3><div class="seg" id="maskGalSeg" aria-label="Mask examples by base model and task"></div></div>
+      <div class="head"><h3>Explore LeWM masks</h3><div class="seg" id="maskGalSeg" aria-label="Mask examples by base model and task"></div></div>
       <div class="mask-grid" id="maskGrid"></div>
       <div class="foot" id="maskGalFoot"></div>
     </div>
     <figure class="card">
       <img class="zoomable" src="static/images/mask_examples.png?v=c17e2451f0" alt="Mask examples">
       <figcaption><b>Learned masks.</b> Examples of learned patch masks on validation frames. Each pair shows a frame (left) and the same frame with the masked patches in amber (right), which are routed to the nuisance pathway. The number above each pair is the fraction of masked patches.</figcaption>
-    </figure>
-    <figure class="card">
-      <img class="zoomable" loading="lazy" src="static/images/mask_dynamics.png" alt="Masked patch fractions and task-object overlap over training on TwoRoom, PushT, and Reacher">
-      <figcaption><b>Mask statistics over training.</b> Top: fraction of masked patches recorded on training batches (light) and its rolling median (dark). Bottom: share of masked patches on task objects (points), compared with the share of the image those objects occupy (dotted). The videos above show fixed validation frames. Their masked fractions can differ from the training-batch curve.</figcaption>
     </figure>
   </div>
 </section>
@@ -200,7 +195,7 @@
     <div class="kicker">Plug-in</div>
     <h2>A plug-in on three base models</h2>
     <p class="lead">LeNS-JEPA is applied to LeWM, SMWM, and GAWM while retaining each base model’s dynamics predictor and training objective. OoD Avg. rises on most tasks, most strongly on TwoRoom, while InD success is largely retained.</p>
-    <figure class="card"><img class="zoomable" src="static/images/plugin_gain.png?v=bf7a5a6ba1" alt="InD and OoD planning success for LeWM, SMWM, and GAWM, with and without LeNS-JEPA"><figcaption><b>Plug-in results.</b> LeNS-JEPA as a plug-in on three base models. InD and OoD Avg. planning success of LeWM, SMWM, and GAWM on the three tasks, without and with LeNS-JEPA. The number above each pair is the relative gain (%) with respect to the corresponding base model. OoD Avg. increases in most cases, while InD success is largely preserved.</figcaption></figure>
+    <figure class="card"><img class="zoomable" src="static/images/plugin_gain_web.png?v=900e043ca9" alt="InD and OoD planning success for LeWM, SMWM, and GAWM, with and without LeNS-JEPA"><figcaption><b>Plug-in results.</b> LeNS-JEPA as a plug-in on three base models. InD and OoD Avg. planning success of LeWM, SMWM, and GAWM on the three tasks, without and with LeNS-JEPA. The number above each pair is the relative gain (%) with respect to the corresponding base model. OoD Avg. increases in most cases, while InD success is largely preserved.</figcaption></figure>
         <div class="chart-card">
       <div class="chart-head">
         <div class="seg" id="metricSeg"><button class="on" data-m="ood">OoD Avg.</button><button data-m="ind">InD</button></div>
@@ -294,7 +289,7 @@
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script src="static/js/data.js?v=0a75469932"></script>
 <script src="static/js/manifest.js"></script>
-<script src="static/js/main.js?v=6cd89bb505"></script>
-<script src="static/js/gallery.js?v=df22f3c767"></script>
+<script src="static/js/main.js?v=67abfd0797"></script>
+<script src="static/js/gallery.js?v=2f5ac5551d"></script>
 </body>
 </html>

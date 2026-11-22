@@ -46,7 +46,8 @@
   });
   const GRAD = '<defs><linearGradient id="gOurs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9488BA"/><stop offset="1" stop-color="#9488BA"/></linearGradient></defs>';
   function pill(svg, cx, cy, txt, d, fs) {
-    const col = d > 0.05 ? '#16a34a' : (d < -0.05 ? '#fee2e2' : '#a1a1aa'); const tc = d < -0.05 ? '#b91c1c' : '#fff';
+    const col = d > 0.05 ? '#16a34a' : '#f1f0f5';
+    const tc = d > 0.05 ? '#fff' : '#6c6a79';
     const w = txt.length * fs * 0.62 + 12, h = fs + 8;
     el('rect', { x: cx - w / 2, y: cy - h + 4, width: w, height: h, rx: h / 2, fill: col }, svg);
     el('text', { x: cx, y: cy - 1, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, fill: tc }, svg).textContent = txt;
@@ -132,7 +133,7 @@
         if (ours) {
           const arm = j === 6 ? 'ind' : 'ood';
           const d = j < 6 ? rel(vals[i - 1][j], v) : rel(D.main[i - 1][arm].reduce((s, x) => s + x, 0), r[arm].reduce((s, x) => s + x, 0));
-          if (d !== null) g = `<span class="gain ${d < -0.05 ? 'neg' : (Math.abs(d) < 0.05 ? 'zero' : (d >= 20 ? 'big' : ''))}">${d < -0.05 ? '▼ ' : (Math.abs(d) < 0.05 ? '' : '▲ ')}${d >= 0 ? '+' : ''}${d.toFixed(1)}%</span>`;
+          if (d !== null) g = `<span class="gain ${d < -0.05 ? 'neg' : (Math.abs(d) < 0.05 ? 'zero' : (d >= 20 ? 'big' : ''))}">${d >= 0 ? '+' : ''}${d.toFixed(1)}%</span>`;
         }
         h += `<td class="${cls}"><span class="v">${fmt(v, 2)}</span>${g}</td>`;
       });
@@ -194,7 +195,7 @@
       });
       const d = rel(a[k], b[k]);
       el('text', { x: cx, y: H - 18, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: '#14121c' }, svg).textContent = s;
-      pill(svg, cx, H + 16, `${d > 0.05 ? '▲ +' : (d < -0.05 ? '▼ ' : '')}${d.toFixed(1)}%`, d, 13);
+      pill(svg, cx, H + 16, `${d > 0.05 ? '+' : ''}${d.toFixed(1)}%`, d, 13);
     });
   }
 
@@ -228,7 +229,7 @@
         });
         const d = rel(bv, ov);
         el('text', { x: cx, y: H - 30, 'text-anchor': 'middle', 'font-size': 12.5, 'font-weight': 600, fill: '#3c3a48' }, svg).textContent = bn;
-        pill(svg, cx, H - 4, `${d > 0.05 ? '▲ +' : (d < -0.05 ? '▼ ' : '')}${d.toFixed(1)}%`, d, 11.5);
+        pill(svg, cx, H - 4, `${d > 0.05 ? '+' : ''}${d.toFixed(1)}%`, d, 11.5);
       });
     });
   }
@@ -313,15 +314,13 @@
     $$('.mosaic-tile', m).forEach((a) => a.addEventListener('click', () => { state.task = a.dataset.task; state.shift = a.dataset.shift; state.fail = false; renderDemo(); }));
   }
 
-  /* ---------- mask videos ---------- */
+  /* ---------- selected mask excerpts ---------- */
   function initMask() {
     const items = [['all', 'All three tasks'], ['tworoom', 'TwoRoom'], ['pusht', 'PushT'], ['reacher', 'Reacher']];
-    const avail = (MM && MM.clips) || [];
     const seg = $('#maskSeg');
-    if (!seg || !avail.length) return;
-    const updates = { tworoom: ['TwoRoom', '51,380'], pusht: ['PushT', '139,330'], reacher: ['Reacher', '127,960'] };
-    let cur = avail.some((c) => c.key === 'all') ? 'all' : avail[0].key;
-    buildSeg(seg, items.filter(([k]) => avail.some((c) => c.key === k)), 'mask', (k) => { cur = k; show(); });
+    if (!seg) return;
+    let cur = 'all';
+    buildSeg(seg, items, 'mask', (k) => { cur = k; show(); });
     function show() {
       const previous = $('#maskStage video');
       if (previous) stopWatching(previous);
@@ -329,14 +328,13 @@
         b.classList.toggle('on', b.dataset.k === cur);
         b.setAttribute('aria-pressed', String(b.dataset.k === cur));
       });
-      const c = avail.find((x) => x.key === cur);
-      $('#maskStage').innerHTML = `<video src="${c.src}" poster="${c.poster || ''}" muted loop playsinline controls preload="metadata" aria-label="${cur === 'all' ? 'Three-task' : updates[cur][0]} learned mask evolution through training checkpoints"></video>`;
+      const name = items.find(([key]) => key === cur)[1];
+      const prefix = `static/videos/mask/selected/${cur}_mask_excerpt`;
+      $('#maskStage').innerHTML = `<video src="${prefix}.mp4" poster="${prefix}.jpg" muted loop playsinline controls preload="metadata" aria-label="${name} selected learned-mask excerpt"></video>`;
       const video = $('#maskStage video');
       watchPlayback(video);
       video.addEventListener('error', () => { $('#maskFoot').textContent = 'This video could not be loaded. Reload the page to try again.'; }, { once: true });
-      const tasks = cur === 'all' ? Object.keys(updates) : [cur];
-      $('#maskTimeline').innerHTML = '<span class="timeline-label">Training: 0–10 epochs</span>' + tasks.map((key) => `<span>${updates[key][0]} · ${updates[key][1]} updates</span>`).join('');
-      $('#maskFoot').textContent = 'Masks on three fixed validation frames per task across training checkpoints. The epoch label identifies the checkpoint. The curve shows the masked-patch fraction in training batches. Masking is used only during training.';
+      $('#maskFoot').textContent = 'Selected excerpts of learned masks on three fixed validation frames per task. Amber marks masked patches. Masking is used only during training.' + (cur === 'all' ? ' Top to bottom: TwoRoom, PushT, Reacher.' : '');
     }
     show();
   }
