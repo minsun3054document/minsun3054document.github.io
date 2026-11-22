@@ -4,7 +4,7 @@ Source for https://minsun3054document.github.io/lens-jepa/. Open `index.html` in
 
 The abstract, numerical results, and paper figures follow the confirmed main paper. The page leads with recorded planning videos, learned-mask examples, and comparisons across LeWM, SMWM, and GAWM.
 
-Mask players show selected excerpts of saved scorer outputs on three fixed validation frames per task. The displayed clips are cropped from the original recordings. Amber marks masked patches. The frame gallery shows selected LeWM examples. Original recordings and excerpt metadata remain in the video assets.
+Mask players show selected excerpts of saved scorer outputs on three fixed validation frames per task. The displayed clips are cropped from the original recordings. The excerpts play at half speed. Amber marks masked patches. The frame gallery shows selected LeWM examples. Original recordings and excerpt metadata remain in the video assets.
 
 Planning videos replay the recorded test actions. Gallery tiles show selected successful comparisons. Open a tile to see the condition-level success rates over all 50 test queries.
 

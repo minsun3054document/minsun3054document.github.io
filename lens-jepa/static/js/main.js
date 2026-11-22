@@ -334,7 +334,7 @@
       const video = $('#maskStage video');
       watchPlayback(video);
       video.addEventListener('error', () => { $('#maskFoot').textContent = 'This video could not be loaded. Reload the page to try again.'; }, { once: true });
-      $('#maskFoot').textContent = 'Selected excerpts of learned masks on three fixed validation frames per task. Amber marks masked patches. Masking is used only during training.' + (cur === 'all' ? ' Top to bottom: TwoRoom, PushT, Reacher.' : '');
+      $('#maskFoot').textContent = 'The clips show selected training intervals with visible masks on three fixed validation frames per task. Playback is at half speed. Amber marks masked patches. Masking is used only during training.' + (cur === 'all' ? ' Top to bottom: TwoRoom, PushT, Reacher.' : '');
     }
     show();
   }
