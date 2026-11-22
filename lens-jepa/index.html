@@ -49,8 +49,8 @@
     </div>
 
     <div class="hero-video" id="heroHighlight">
-      <div class="hero-video-head"><span>LeNS-JEPA in 26 seconds</span><a href="#demo">Explore the comparisons</a></div>
-      <video src="static/videos/highlight/selected/highlight_refined.mp4" poster="static/videos/highlight/selected/highlight_refined_poster.jpg" autoplay muted loop playsinline controls preload="metadata" data-visible-autoplay aria-label="26-second overview of LeNS-JEPA planning under appearance shifts"></video>
+      <div class="hero-video-head"><span>LeNS-JEPA overview</span><a href="#demo">Explore the comparisons</a></div>
+      <video src="static/videos/highlight/selected/highlight_overview.mp4" poster="static/videos/highlight/selected/highlight_overview_poster.jpg" autoplay muted loop playsinline controls preload="metadata" data-visible-autoplay aria-label="Overview of LeNS-JEPA planning under appearance shifts"></video>
       <p>Same initial state and clean goal. LeWM is on the left. LeWM + LeNS-JEPA is on the right.</p>
     </div>
     <p class="mosaic-intro">Three tasks, side by side. Selected successful comparisons under appearance shifts.</p>
@@ -69,7 +69,7 @@
 <section id="overview">
   <div class="wrap reveal">
     <div class="kicker">Overview</div>
-    <h2>A <span class="keep-together">training-only</span> nuisance pathway for robust latent planning</h2>
+    <h2>Robust latent planning</h2>
     <p class="lead">JEPA world models learn <span class="keep-together">action-conditioned</span> dynamics in compact latent spaces. When <span class="keep-together">dynamics-relevant</span> information and <span class="keep-together">task-irrelevant</span> appearance share a single scene representation, visual distribution shifts can degrade latent prediction and planning. LeNS-JEPA adds a <span class="keep-together">training-only</span> nuisance pathway, using clean trajectories, to make the predictive latent less sensitive to appearance.</p>
     <div class="tldr"><b>Summary.</b> Learned patch masking encourages complementary roles for a predictive latent <span class="m">z_s</span> and an auxiliary nuisance latent <span class="m">z_n</span>. The two jointly reconstruct features of the original observation, while an <span class="keep-together">action-adversarial</span> signal discourages <span class="keep-together">action-predictive</span> content in <span class="m">z_n</span>. At inference, the base model encodes the full observation.</div>
     <figure class="card">
@@ -215,7 +215,7 @@
 <section id="method">
   <div class="wrap reveal">
     <div class="kicker">Method</div>
-    <h2>A training-only nuisance pathway</h2>
+    <h2>Training with a nuisance pathway</h2>
     <p class="lead">LeNS-JEPA adds a training-only nuisance pathway to the base world model, keeping its objective <span class="m">\mathcal{L}_{\mathrm{wm}}</span>, and its planner. It only requires that the encoder takes patch tokens, so that selected patches can be masked and the gradient of <span class="m">\mathcal{L}_{\mathrm{wm}}</span> reaches the mask.</p>
     <figure class="card">
       <img class="zoomable" src="static/images/method_overview.png?v=19c44c36a4" alt="Method overview">
@@ -290,6 +290,6 @@
 <script src="static/js/data.js?v=0a75469932"></script>
 <script src="static/js/manifest.js"></script>
 <script src="static/js/main.js?v=1a701b333d"></script>
-<script src="static/js/gallery.js?v=2f5ac5551d"></script>
+<script src="static/js/gallery.js?v=8ed7a62f8b"></script>
 </body>
 </html>

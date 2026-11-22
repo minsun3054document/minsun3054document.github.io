@@ -47,7 +47,7 @@
   const st = { model: 'all', task: 'all', kind: 'success', limit: pageSize };
   const NAME = { lewm: 'LeWM', gawm: 'GAWM', smwm: 'SMWM' };
   const TN = { tworoom: 'TwoRoom', pusht: 'PushT', reacher: 'Reacher' };
-  const SN = { gray: 'Gray', hue: 'Hue', blur: 'Blur', noise: 'Noise', cb: 'Color–brightness', clean: 'InD' };
+  const SN = { gray: 'Gray', hue: 'Hue', blur: 'Blur', noise: 'Noise', cb: 'Color and brightness', clean: 'InD' };
   const playback = window.LENS_PLAYBACK;
   function makeTile(c, featured) {
     const cond = c.strength || SN[c.shift] || c.shift || '';
