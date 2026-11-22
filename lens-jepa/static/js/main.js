@@ -57,6 +57,15 @@
     if (!window.katex) return;
     $$('.m').forEach((s) => {
       try { window.katex.render(s.textContent, s, { throwOnError: false }); } catch (e) { /* keep text */ }
+      const following = s.nextSibling;
+      const punctuation = following && following.nodeType === Node.TEXT_NODE && /^[.,:!?]/.exec(following.textContent);
+      if (punctuation) {
+        const phrase = document.createElement('span');
+        phrase.className = 'keep-together';
+        s.before(phrase);
+        phrase.append(s, document.createTextNode(punctuation[0]));
+        following.textContent = following.textContent.slice(punctuation[0].length);
+      }
     });
   }
 
@@ -327,7 +336,7 @@
       video.addEventListener('error', () => { $('#maskFoot').textContent = 'This video could not be loaded. Reload the page to try again.'; }, { once: true });
       const tasks = cur === 'all' ? Object.keys(updates) : [cur];
       $('#maskTimeline').innerHTML = '<span class="timeline-label">Training: 0–10 epochs</span>' + tasks.map((key) => `<span>${updates[key][0]} · ${updates[key][1]} updates</span>`).join('');
-      $('#maskFoot').textContent = 'Masks on three fixed validation frames per task across training checkpoints. The epoch label identifies the checkpoint; the curve shows the masked-patch fraction in training batches. Masking is used only during training.';
+      $('#maskFoot').textContent = 'Masks on three fixed validation frames per task across training checkpoints. The epoch label identifies the checkpoint. The curve shows the masked-patch fraction in training batches. Masking is used only during training.';
     }
     show();
   }

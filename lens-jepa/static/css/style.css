@@ -144,9 +144,12 @@ section { padding: 84px 24px; }
 section:nth-of-type(even) { background: #fff; }
 .wrap { max-width: var(--maxw); margin: 0 auto; }
 .kicker { text-transform: uppercase; letter-spacing: 2.2px; font-size: 12.5px; font-weight: 700; color: var(--brand); }
-h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(30px, 4vw, 42px); line-height: 1.15; letter-spacing: -.6px; margin: 8px 0 14px; }
+h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(30px, 4vw, 42px); line-height: 1.2; letter-spacing: -.6px; margin: 8px 0 14px; text-wrap: balance; }
 h3 { font-family: "Space Grotesk", sans-serif; font-size: 21px; margin: 0 0 8px; letter-spacing: -.2px; }
-.lead { font-size: 18px; color: var(--ink-2); max-width: 860px; }
+.lead { font-size: 18px; color: var(--ink-2); max-width: 860px; text-wrap: pretty; }
+.keep-together { white-space: nowrap; }
+#overview h2 { max-width: 30ch; }
+#overview .lead { max-width: 76ch; }
 .tldr {
   margin-top: 26px; padding: 22px 26px; border-radius: var(--radius);
   background: linear-gradient(135deg, #f4f1ff, #fff7e8); border: 1px solid #ebe5fb; font-size: 17.5px;

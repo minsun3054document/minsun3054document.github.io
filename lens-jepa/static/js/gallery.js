@@ -27,14 +27,14 @@
     const keys = []; mg.forEach((x) => { const key = x.group + '|' + x.task; if (!keys.includes(key)) keys.push(key); });
     const label = (key) => { const [g, t] = key.split('|'); return (g === 'mask_lewm' ? 'LeWM · ' : 'GAWM · ') + t; };
     const foot = {
-      mask_lewm: 'LeWM + LeNS-JEPA, training-time scorer. Validation frames selected with no masked object patch and 40–85% coverage. Left: input; right: masked patches in amber.',
-      mask_gawm: 'GAWM + LeNS-JEPA at the reported checkpoint: frames whose mask covers at least 5% of the patches and none of the agent. Left: input; right: masked patches in amber.'};
+      mask_lewm: 'LeWM + LeNS-JEPA, training-time scorer. Validation frames selected with no masked object patch and 40–85% coverage. The input is on the left. Masked patches appear in amber on the right.',
+      mask_gawm: 'GAWM + LeNS-JEPA at the reported checkpoint: frames whose mask covers at least 5% of the patches and none of the agent. The input is on the left. Masked patches appear in amber on the right.'};
     const show = (key) => {
       const L = mg.filter((x) => x.group + '|' + x.task === key);
       $('#maskGrid').innerHTML = L.map((x) => `<figure><img src="static/images/gallery/${x.file}" alt="mask"><figcaption><span>frame ${x.cohort_index}</span><span>${x.coverage_pct !== undefined ? 'mask ' + Number(x.coverage_pct).toFixed(1) + '%' : ''}</span></figcaption></figure>`).join('');
       $$('#maskGrid img').forEach((im) => im.addEventListener('click', () => { const lb = $('#lightbox'); lb.querySelector('img').src = im.src; lb.classList.add('open'); }));
       const g = key.split('|')[0], t = key.split('|')[1];
-      $('#maskGalFoot').textContent = foot[g] + (t === 'Reacher' ? ' The Reacher arm is orange; the amber tint marks only background patches here.' : '');
+      $('#maskGalFoot').textContent = foot[g] + (t === 'Reacher' ? ' The Reacher arm is orange. The amber tint marks only background patches here.' : '');
     };
     seg($('#maskGalSeg'), keys.map((k) => [k, label(k)]), keys[0], show);
     show(keys[0]);
