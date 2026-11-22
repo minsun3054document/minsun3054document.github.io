@@ -14,7 +14,37 @@
   };
   const fmt = (v, d = 1) => (v === null || v === undefined ? '–' : Number(v).toFixed(d));
   const rel = (b, o) => (b === 0 ? null : ((o - b) / b) * 100);
-  const GRAD = '<defs><linearGradient id="gOurs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#5b21b6"/></linearGradient></defs>';
+  const watchedVideos = new Map();
+  function updatePlayback(video, visible) {
+    watchedVideos.set(video, visible);
+    if (visible && !document.hidden && !$('#vmodal.open')) {
+      if (video.dataset.src && !video.getAttribute('src')) video.src = video.dataset.src;
+      video.play().catch(() => {});
+    } else video.pause();
+  }
+  const playbackObserver = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, intersectionRatio, isIntersecting }) => {
+      updatePlayback(target, isIntersecting && intersectionRatio >= 0.3);
+    });
+  }, { threshold: [0, 0.3] });
+  function watchPlayback(video) {
+    watchedVideos.set(video, false);
+    playbackObserver.observe(video);
+  }
+  function stopWatching(video) {
+    video.pause();
+    playbackObserver.unobserve(video);
+    watchedVideos.delete(video);
+  }
+  function resumeVisible() {
+    watchedVideos.forEach((visible, video) => updatePlayback(video, visible));
+  }
+  window.LENS_PLAYBACK = { observe: watchPlayback, unobserve: stopWatching, resumeVisible };
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) $$('video').forEach((video) => video.pause());
+    else resumeVisible();
+  });
+  const GRAD = '<defs><linearGradient id="gOurs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9488BA"/><stop offset="1" stop-color="#9488BA"/></linearGradient></defs>';
   function pill(svg, cx, cy, txt, d, fs) {
     const col = d > 0.05 ? '#16a34a' : (d < -0.05 ? '#fee2e2' : '#a1a1aa'); const tc = d < -0.05 ? '#b91c1c' : '#fff';
     const w = txt.length * fs * 0.62 + 12, h = fs + 8;
@@ -80,11 +110,6 @@
     let h = '<thead><tr><th rowspan="2">Method</th>' + cols.map((c) => `<th colspan="2">${c}</th>`).join('') + '</tr><tr>' +
       cols.map(() => '<th>InD ↑</th><th>OoD Avg. ↑</th>').join('') + '</tr></thead><tbody>';
     const vals = D.main.map((r) => D.tasks.map((_, i) => [r.ind[i], r.ood[i]]).flat().concat([r.mean[0], r.mean[1]]));
-    const best = [], second = [];
-    for (let j = 0; j < vals[0].length; j++) {
-      const u = Array.from(new Set(vals.map((v) => v[j]))).sort((a, b) => b - a);
-      best.push(u[0]); second.push(u[1]);
-    }
     const groups = {}; D.main.forEach((r, i) => { if (i === 0) groups[i] = 'Latent world models'; if (['LeWM', 'GAWM', 'SMWM'].includes(r.name)) groups[i] = r.name + ' base'; });
     D.main.forEach((r, i) => {
       if (groups[i]) h += `<tr class="group"><td colspan="${1 + 2 * cols.length}">${groups[i]}</td></tr>`;
@@ -92,10 +117,12 @@
       const label = ours ? r.name.replace('+ Ours', '+ LeNS-JEPA') : (r.name === 'GAWM (public)' ? 'GAWM' : r.name);
       h += `<tr class="${ours ? 'ours' : ''}"><td>${label}</td>`;
       vals[i].forEach((v, j) => {
-        const cls = v === best[j] ? 'best' : (v === second[j] ? 'second' : '');
+        const pairIndex = ours ? i - 1 : (['LeWM', 'SMWM', 'GAWM'].includes(r.name) ? i + 1 : null);
+        const cls = pairIndex !== null && v >= vals[pairIndex][j] ? 'best' : '';
         let g = '';
         if (ours) {
-          const d = rel(vals[i - 1][j], v);
+          const arm = j === 6 ? 'ind' : 'ood';
+          const d = j < 6 ? rel(vals[i - 1][j], v) : rel(D.main[i - 1][arm].reduce((s, x) => s + x, 0), r[arm].reduce((s, x) => s + x, 0));
           if (d !== null) g = `<span class="gain ${d < -0.05 ? 'neg' : (Math.abs(d) < 0.05 ? 'zero' : (d >= 20 ? 'big' : ''))}">${d < -0.05 ? '▼ ' : (Math.abs(d) < 0.05 ? '' : '▲ ')}${d >= 0 ? '+' : ''}${d.toFixed(1)}%</span>`;
         }
         h += `<td class="${cls}"><span class="v">${fmt(v, 2)}</span>${g}</td>`;
@@ -103,6 +130,21 @@
       h += '</tr>';
     });
     t.innerHTML = h + '</tbody>';
+  }
+
+  function buildConditions() {
+    $('#conditionTables').innerHTML = D.tasks.map((task) => {
+      const rows = D.main.map((r) => {
+        const ours = r.name.endsWith('+ Ours');
+        const label = r.name.replace('+ Ours', '+ LeNS-JEPA');
+        const values = D.conditions[task][r.name];
+        return `<tr class="${ours ? 'ours' : ''}"><td>${label}</td>` +
+          values.map((v) => `<td>${fmt(v, 2)}</td>`).join('') + '</tr>';
+      }).join('');
+      return `<h3>${task}</h3><div class="table-wrap"><table class="res"><thead><tr><th>Method</th>` +
+        D.shifts.concat(['OoD Avg.']).map((s) => `<th>${s} ↑</th>`).join('') +
+        `</tr></thead><tbody>${rows}</tbody></table></div>`;
+    }).join('');
   }
 
   /* ---------- headline delta cards ---------- */
@@ -135,7 +177,7 @@
     const gw = (W - L - R) / shifts.length, bw = Math.min(46, gw * 0.3);
     shifts.forEach((s, k) => {
       const cx = L + gw * (k + 0.5);
-      [[a[k], '#cbd5e1', -1], [b[k], 'url(#gOurs)', 1]].forEach(([v, c, side]) => {
+      [[a[k], '#D9D5E8', -1], [b[k], 'url(#gOurs)', 1]].forEach(([v, c, side]) => {
         const x = cx + (side < 0 ? -bw - 3 : 3), h = ph * v / 100;
         const r = el('rect', { x, y: T + ph, width: bw, height: 0, rx: 5, fill: c, class: 'bar' }, svg);
         requestAnimationFrame(() => setTimeout(() => { r.setAttribute('y', T + ph - h); r.setAttribute('height', h); }, 80 * k));
@@ -152,7 +194,7 @@
   function pluginChart() {
     const svg = $('#pluginChart');
     svg.innerHTML = GRAD;
-    const bases = [['LeWM', 'LeWM + Ours'], ['GAWM', 'GAWM + Ours'], ['SMWM', 'SMWM + Ours']];
+    const bases = [['LeWM', 'LeWM + Ours'], ['SMWM', 'SMWM + Ours'], ['GAWM', 'GAWM + Ours']];
     const row = (n) => D.main.find((r) => r.name === n);
     const W = 1000, H = 360, L = 40, R = 8, T = 34, B = 56, ph = H - T - B;
     for (let y = 0; y <= 100; y += 25) {
@@ -169,7 +211,7 @@
       bases.forEach(([bn, on], bi) => {
         const cx = g0 + sw * (bi + 0.5);
         const bv = row(bn)[metric][ti], ov = row(on)[metric][ti];
-        [[bv, '#cbd5e1', -1], [ov, 'url(#gOurs)', 1]].forEach(([v, c, side]) => {
+        [[bv, '#D9D5E8', -1], [ov, 'url(#gOurs)', 1]].forEach(([v, c, side]) => {
           const x = cx + (side < 0 ? -bw - 2 : 2), h = ph * v / 100;
           const r = el('rect', { x, y: T + ph, width: bw, height: 0, rx: 4, fill: c, class: 'bar' }, svg);
           requestAnimationFrame(() => setTimeout(() => { r.setAttribute('y', T + ph - h); r.setAttribute('height', h); }, 40 * (ti * 3 + bi)));
@@ -198,13 +240,15 @@
     root.innerHTML = '';
     items.forEach(([k, lab]) => {
       const b = document.createElement('button');
-      b.textContent = lab; b.dataset.k = k;
+      b.type = 'button'; b.textContent = lab; b.dataset.k = k;
       b.addEventListener('click', () => { if (!b.disabled) onPick(k); });
       root.appendChild(b);
     });
   }
   function renderDemo() {
     const stage = $('#demoStage'), info = $('#demoInfo');
+    const previous = stage.querySelector('video');
+    if (previous) stopWatching(previous);
     const kind = state.shift === 'clean' ? 'clean' : (state.fail ? 'failure' : 'demo');
     $$('#taskSeg button').forEach((b) => b.classList.toggle('on', b.dataset.k === state.task));
     $$('#shiftSeg button').forEach((b) => {
@@ -218,17 +262,23 @@
       info.innerHTML = '';
       return;
     }
-    stage.innerHTML = `<video src="${c.src}" poster="${c.poster || ''}" autoplay muted loop playsinline controls></video>`;
+    stage.innerHTML = `<video src="${c.src}" poster="${c.poster || ''}" muted loop playsinline controls preload="metadata" data-visible-autoplay></video>`;
     const dv = stage.querySelector('video');
+    dv.setAttribute('aria-label', `${TASKS.find(([key]) => key === state.task)[1]} ${SHIFTS.find(([key]) => key === state.shift)[1]} planning comparison`);
+    watchPlayback(dv);
     dv.addEventListener('error', () => { stage.innerHTML = `<img src="${c.poster}" alt="demo">`; }, true);
     const tag = (ok, who, st) => `<span class="pill ${ok ? 'ok' : 'bad'}">${who}: ${ok ? 'goal at step ' + st : 'fails within 50 steps'}</span>`;
     const sr = (c.sr_lewm !== undefined && c.sr_ours !== undefined) ?
       `<span class="pill neutral">All 50 queries of this condition: LeWM ${c.sr_lewm}% · LeNS-JEPA ${c.sr_ours}%</span>` : '';
     const rule = kind === 'failure' ? 'first test query where LeWM succeeds and LeNS-JEPA fails' :
       (kind === 'clean' ? 'first test query where both succeed (no shift)' : 'first test query where LeNS-JEPA succeeds and LeWM fails');
-    info.innerHTML = `${tag(c.lewm_success, 'LeWM', c.lewm_step)}${tag(c.ours_success, 'LeNS-JEPA', c.ours_step)}${sr}<span style="color:#8a879a">Test query #${c.test_index} · ${rule}</span>`;
+    info.innerHTML = `${tag(c.lewm_success, 'LeWM', c.lewm_step)}${tag(c.ours_success, 'LeNS-JEPA', c.ours_step)}${sr}<details class="clip-details"><summary>Clip details</summary><span>Test query #${c.test_index} · ${rule}. Recorded actions replayed in the simulator.</span></details>`;
   }
   function initDemo() {
+    $('#replayDemo').addEventListener('click', () => {
+      const video = $('#demoStage video');
+      if (video) { video.currentTime = 0; video.play().catch(() => {}); }
+    });
     buildSeg($('#taskSeg'), TASKS, 'task', (k) => {
       state.task = k;
       const kind = state.fail ? 'failure' : 'demo';
@@ -236,12 +286,6 @@
       renderDemo();
     });
     buildSeg($('#shiftSeg'), SHIFTS, 'shift', (k) => { state.shift = k; renderDemo(); });
-    $('#failToggle').addEventListener('change', (e) => {
-      state.fail = e.target.checked;
-      const kind = state.fail ? 'failure' : 'demo';
-      if (state.shift !== 'clean' && !find(state.task, state.shift, kind)) state.shift = firstShift(state.task, kind) || state.shift;
-      renderDemo();
-    });
     if (clips.length && !find(state.task, state.shift, 'demo')) state.shift = firstShift(state.task, 'demo') || 'clean';
     renderDemo();
   }
@@ -249,32 +293,41 @@
   /* ---------- hero mosaic ---------- */
   function initMosaic() {
     const m = $('#heroMosaic');
+    if (!m) return;
     const picks = TASKS.map(([t, lab]) => {
       const s = firstShift(t, 'demo');
       return s ? [find(t, s, 'demo'), lab + ' · ' + SHIFTS.find((x) => x[0] === s)[1]] : null;
     }).filter(Boolean);
     if (!picks.length) { m.style.display = 'none'; return; }
-    m.innerHTML = picks.map(([c, lab]) => `<a class="mosaic-tile" href="#demo" data-task="${c.task}" data-shift="${c.shift}"><video src="${c.src}" poster="${c.poster || ''}" autoplay muted loop playsinline></video><span class="lbl">${lab}</span></a>`).join('');
-    $$('.mosaic-tile', m).forEach((a) => a.addEventListener('click', () => { state.task = a.dataset.task; state.shift = a.dataset.shift; state.fail = false; $('#failToggle').checked = false; renderDemo(); }));
+    m.innerHTML = picks.map(([c, lab]) => `<a class="mosaic-tile" href="#demo" data-task="${c.task}" data-shift="${c.shift}" aria-label="Explore ${lab} planning comparison"><video data-src="${c.src}" poster="${c.poster || ''}" muted loop playsinline preload="none" aria-hidden="true"></video><span class="lbl">${lab}</span></a>`).join('');
+    $$('video', m).forEach(watchPlayback);
+    $$('.mosaic-tile', m).forEach((a) => a.addEventListener('click', () => { state.task = a.dataset.task; state.shift = a.dataset.shift; state.fail = false; renderDemo(); }));
   }
 
   /* ---------- mask videos ---------- */
   function initMask() {
-    const items = [['tworoom', 'TwoRoom'], ['pusht', 'PushT'], ['reacher', 'Reacher'], ['all', 'All']];
-    const avail = MM && MM.clips ? MM.clips : null;
-    const has = (k) => !avail || avail.some((c) => c.key === k);
+    const items = [['all', 'All three tasks'], ['tworoom', 'TwoRoom'], ['pusht', 'PushT'], ['reacher', 'Reacher']];
+    const avail = (MM && MM.clips) || [];
     const seg = $('#maskSeg');
-    let cur = avail ? (avail[0] && avail[0].key) : 'tworoom';
-    buildSeg(seg, items.filter(([k]) => has(k)), 'mask', (k) => { cur = k; show(); });
+    if (!seg || !avail.length) return;
+    const updates = { tworoom: ['TwoRoom', '51,380'], pusht: ['PushT', '139,330'], reacher: ['Reacher', '127,960'] };
+    let cur = avail.some((c) => c.key === 'all') ? 'all' : avail[0].key;
+    buildSeg(seg, items.filter(([k]) => avail.some((c) => c.key === k)), 'mask', (k) => { cur = k; show(); });
     function show() {
-      $$('#maskSeg button').forEach((b) => b.classList.toggle('on', b.dataset.k === cur));
-      const c = avail ? avail.find((x) => x.key === cur) : null;
-      const src = c ? c.src : `static/videos/mask/${cur}_mask_evolution.mp4`;
-      const poster = c ? (c.poster || '') : `static/videos/mask/${cur}_mask_evolution.jpg`;
-      $('#maskStage').innerHTML = `<video src="${src}" poster="${poster}" autoplay muted loop playsinline controls></video>`;
-      const v = $('#maskStage video');
-      v.addEventListener('error', () => { $('#maskStage').innerHTML = `<img src="${poster}" alt="mask evolution">`; }, true);
-      if (c && c.note) $('#maskFoot').textContent = c.note;
+      const previous = $('#maskStage video');
+      if (previous) stopWatching(previous);
+      $$('#maskSeg button').forEach((b) => {
+        b.classList.toggle('on', b.dataset.k === cur);
+        b.setAttribute('aria-pressed', String(b.dataset.k === cur));
+      });
+      const c = avail.find((x) => x.key === cur);
+      $('#maskStage').innerHTML = `<video src="${c.src}" poster="${c.poster || ''}" muted loop playsinline controls preload="metadata" aria-label="${cur === 'all' ? 'Three-task' : updates[cur][0]} learned mask evolution through training checkpoints"></video>`;
+      const video = $('#maskStage video');
+      watchPlayback(video);
+      video.addEventListener('error', () => { $('#maskFoot').textContent = 'This video could not be loaded. Reload the page to try again.'; }, { once: true });
+      const tasks = cur === 'all' ? Object.keys(updates) : [cur];
+      $('#maskTimeline').innerHTML = '<span class="timeline-label">Training: 0–10 epochs</span>' + tasks.map((key) => `<span>${updates[key][0]} · ${updates[key][1]} updates</span>`).join('');
+      $('#maskFoot').textContent = 'Masks on three fixed validation frames per task across training checkpoints. The epoch label identifies the checkpoint; the curve shows the masked-patch fraction in training batches. Masking is used only during training.';
     }
     show();
   }
@@ -288,9 +341,11 @@
   /* ---------- go ---------- */
   renderMath();
   buildTable();
+  buildConditions();
   deltaCards();
   initDemo();
   initMosaic();
+  $$('#heroHighlight video').forEach(watchPlayback);
   initMask();
   const r1 = $('#results .reveal') || $('#results .wrap');
   const charts = new IntersectionObserver((en) => en.forEach((e) => {

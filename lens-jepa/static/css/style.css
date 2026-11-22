@@ -8,7 +8,7 @@
   --brand: #6d28d9;
   --brand-2: #8b5cf6;
   --brand-soft: #f3e8ff;
-  --base: #cbd5e1;
+  --base: #D9D5E8;
   --up: #16a34a;
   --down: #dc2626;
   --amber: #f2b134;
@@ -290,7 +290,7 @@ footer p { max-width: 820px; margin: 6px auto; }
 }
 
 /* ---------- headline deltas ---------- */
-.deltas { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 26px; }
+.deltas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 26px; }
 .delta { position: relative; overflow: hidden; border-radius: 18px; padding: 18px 18px 16px; color: #fff;
   background: linear-gradient(145deg, #4c1d95, #7c3aed); box-shadow: 0 14px 30px rgba(109, 40, 217, .28); }
 .delta.mean { background: linear-gradient(145deg, #065f46, #16a34a); box-shadow: 0 14px 30px rgba(22, 163, 74, .28); }
@@ -346,8 +346,77 @@ footer p { max-width: 820px; margin: 6px auto; }
 @media (max-width: 900px) { .gal-grid { grid-template-columns: repeat(2, 1fr); } .mask-grid { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .gal-grid { grid-template-columns: 1fr; } .strip-stage { padding: 10px 40px; } }
 
-.authors .author { color: #fff; font-size: 19px; font-weight: 600; border-bottom: 1px dashed rgba(255,255,255,.35); }
-.authors a.author:hover { text-decoration: none; border-bottom-color: #f6cf7e; }
-.authors span.author { border-bottom: 0; }
-.authors .sep { margin: 0 12px; color: rgba(255,255,255,.4); }
-.authors .affil { margin-top: 4px; font-size: 15px; color: rgba(255,255,255,.7); }
+/* Paper content refreshed from the confirmed manuscript. */
+.abstract-text { max-width: 940px; font-size: 18px; color: var(--ink-2); }
+.abstract-text p { margin-bottom: 0; }
+.subsection-title { margin-top: 32px; }
+.res td.best { font-weight: 700; }
+#results .deltas + h3 { margin-top: 32px; }
+.condition-details { margin-top: 24px; border: 1px solid var(--line); border-radius: 14px; padding: 18px; background: var(--card); }
+.condition-details summary { cursor: pointer; color: var(--ink); font-weight: 600; }
+.condition-details h3 { margin-top: 28px; }
+.authors .author { color: inherit; }
+.authors .sep { display: inline-block; padding: 0 10px; }
+.authors .affil { margin-top: 5px; font-size: 14px; }
+#mask figure:first-of-type img { max-width: 720px; margin: 0 auto; }
+#priorTable { min-width: 540px; }
+.nav .links a { padding-left: 9px; padding-right: 9px; }
+.hero-video { max-width: 900px; margin: 34px auto 0; overflow: hidden; border: 1px solid rgba(255,255,255,.2); border-radius: 18px; background: #0f0c1d; box-shadow: 0 20px 50px rgba(0,0,0,.3); text-align: left; }
+.hero-video-head { padding: 12px 18px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 14px; font-weight: 600; }
+.hero-video-head a { color: #ddd4ff; }
+.hero-video video { width: 100%; }
+.hero-video p { padding: 10px 18px; margin: 0; color: #d8d3eb; font-size: 13px; }
+.demo-playback { padding: 12px 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.demo-playback button, .gallery-more button { font: inherit; font-weight: 600; border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px; background: var(--brand-soft); color: var(--brand); cursor: pointer; }
+.demo-playback button:hover, .gallery-more button:hover { background: #e9d5ff; }
+.clip-details { width: 100%; font-size: 12px; color: var(--muted); }
+.clip-details summary { cursor: pointer; }
+.gallery-more { display: flex; justify-content: center; margin-top: 24px; }
+.gallery-more button[hidden] { display: none; }
+@media (max-width: 760px) { .abstract-text { font-size: 16px; } }
+
+/* Main-paper results and successful recorded comparisons take the lead. */
+.hero-lead { max-width: 760px; margin: 18px auto 0; color: #e4def7; font-size: 18px; line-height: 1.55; }
+.hero .stats { margin-top: 30px; }
+.hero-video { margin-top: 30px; }
+.stat .cap, .hero-video p, .demo-playback { font-size: 14px; }
+.btn .soon { font-size: 12px; }
+.gtile .meta { font-size: 14px; }
+.gtile .meta b { font-size: 15px; }
+a:focus-visible, button:focus-visible, .gtile:focus-visible { outline: 3px solid #9488BA; outline-offset: 4px; }
+.hero a:focus-visible { outline-color: #f2b134; }
+.authors .author { display: inline-block; white-space: nowrap; }
+#vinfo .clip-details { display: block; margin-top: 10px; font-size: 14px; }
+#vinfo .clip-details span { display: block; margin-top: 6px; }
+@media (max-width: 560px) { .hero-lead { font-size: 16px; } .hero .stats { gap: 10px; } .stat { padding: 16px 14px; } }
+
+/* Recorded videos stay visible; playback is limited to the viewport. */
+.hero-mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; }
+.mosaic-intro { max-width: 900px; margin: 28px auto 0; color: #eee9ff; font-size: 16px; }
+.mosaic-note { max-width: 900px; margin: 12px auto 0; color: #d8d3eb; font-size: 14px; }
+.mosaic-tile .lbl { font-size: 14px; }
+.hero .stats { max-width: 1060px; }
+.stat { padding: 15px; }
+.stat .num { font-size: 30px; }
+.stat .num small { font-size: 17px; }
+.stat .cap { font-size: 14px; }
+.video-card .head h3 { margin: 0; }
+#maskStage { background: #fff; }
+#maskStage video { display: block; width: 100%; max-height: 740px; object-fit: contain; }
+.mask-timeline { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 14px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+.mask-timeline .timeline-label { color: var(--brand); font-weight: 600; }
+.mask-gallery-card { margin-top: 22px; }
+.featured-base + .featured-base { margin-top: 28px; }
+.featured-base h3 { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; margin-bottom: 12px; }
+.featured-base h3 span { font-family: Inter, sans-serif; color: var(--muted); font-size: 14px; font-weight: 400; }
+.gtile .media video { display: block; }
+.gtile .open-label { position: absolute; right: 8px; bottom: 8px; padding: 4px 8px; border-radius: 5px; background: rgba(15,12,29,.78); color: #fff; font-size: 12px; }
+.gtile .tag { font-size: 12px; }
+.gtile .meta { gap: 5px; padding: 9px 10px; }
+.gtile .meta b { flex-basis: 100%; }
+@media (max-width: 760px) {
+  .hero-mosaic { grid-template-columns: 1fr; max-width: 600px; }
+  .mosaic-intro, .mosaic-note { text-align: left; }
+  .mask-timeline { gap: 6px 14px; }
+  .mask-timeline .timeline-label { flex-basis: 100%; }
+}
