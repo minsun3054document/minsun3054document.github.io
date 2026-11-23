@@ -423,3 +423,18 @@ a:focus-visible, button:focus-visible, .gtile:focus-visible { outline: 3px solid
   .mask-timeline { gap: 6px 14px; }
   .mask-timeline .timeline-label { flex-basis: 100%; }
 }
+
+/* ---------- additional representation analyses ---------- */
+#additional-analysis .analysis-card { margin-top: 28px; }
+#additional-analysis .analysis-head { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin-bottom: 18px; }
+#additional-analysis .analysis-head h3 { margin: 0; }
+#additional-analysis .analysis-scroll { overflow-x: auto; overscroll-behavior-inline: contain; border-radius: 10px; background: #fff; }
+#additional-analysis .analysis-scroll:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; }
+#additional-analysis .analysis-scroll img { width: 100%; max-width: none; min-width: 760px; height: auto; }
+#additional-analysis .analysis-summary { margin: 26px 0 34px; }
+#additional-analysis .analysis-summary-figure { margin: 22px 0 0; }
+@media (max-width: 640px) {
+  #additional-analysis .analysis-head .seg { border-radius: 16px; }
+  #additional-analysis .analysis-head h3 { font-size: 1.2rem; }
+  #additional-analysis .analysis-scroll img { min-width: 720px; }
+}

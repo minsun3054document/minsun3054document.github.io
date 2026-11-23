@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<link rel="stylesheet" href="static/css/style.css?v=dc79b482d4">
+<link rel="stylesheet" href="static/css/style.css?v=731e83728836">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%236e5ba6'/><rect x='12' y='12' width='12' height='12' rx='2' fill='%23f2b134'/><rect x='40' y='12' width='12' height='12' rx='2' fill='%23fff'/><rect x='26' y='26' width='12' height='12' rx='2' fill='%23f2b134'/><rect x='12' y='40' width='12' height='12' rx='2' fill='%23fff'/><rect x='40' y='40' width='12' height='12' rx='2' fill='%23f2b134'/></svg>">
 </head>
 <body>
@@ -49,8 +49,8 @@
     </div>
 
     <div class="hero-video" id="heroHighlight">
-      <div class="hero-video-head"><span>LeNS-JEPA overview</span><a href="#demo">Explore the comparisons</a></div>
-      <video src="static/videos/highlight/selected/highlight_overview.mp4" poster="static/videos/highlight/selected/highlight_overview_poster.jpg" autoplay muted loop playsinline controls preload="metadata" data-visible-autoplay aria-label="Overview of LeNS-JEPA planning under appearance shifts"></video>
+      <div class="hero-video-head"><span>LeNS-JEPA improves planning robustness</span><a href="#demo">Explore the comparisons</a></div>
+      <video src="static/videos/highlight/selected/highlight_overview.mp4?v=3ba436234dc0" poster="static/videos/highlight/selected/highlight_overview_poster.jpg?v=9f586d347e48" autoplay muted loop playsinline controls preload="metadata" data-visible-autoplay aria-label="LeNS-JEPA improves planning robustness"></video>
       <p>Same initial state and clean goal. LeWM is on the left. LeWM + LeNS-JEPA is on the right.</p>
     </div>
     <p class="mosaic-intro">Three tasks, side by side. Selected successful comparisons under appearance shifts.</p>
@@ -90,7 +90,7 @@
 <section id="demo">
   <div class="wrap reveal">
     <div class="kicker">Demo</div>
-    <h2>Planning under appearance shifts</h2>
+    <h2>LeNS-JEPA improves planning robustness</h2>
     <p class="lead">Selected successful planning comparisons under appearance shifts. Each pair starts from the same state and shares a clean goal image. Condition-level results cover all 50 test queries. Replay and selection details are available below each video.</p>
     <div class="demo-box">
       <div class="demo-controls">
@@ -262,6 +262,47 @@
   </div>
 </section>
 
+<!-- ============ ADDITIONAL ANALYSES ============ -->
+<section id="additional-analysis">
+  <div class="wrap reveal">
+    <div class="kicker">Additional analysis</div>
+    <h2>Appearance stability and physical changes</h2>
+    <p class="lead">Recorded trajectories and controlled interventions provide further views of the learned representation. In these figures, + Ours denotes the base model trained with LeNS-JEPA.</p>
+
+    <figure class="card analysis-card" id="trajectoryAnalysis">
+      <div class="analysis-head">
+        <h3>Latent trajectories and goal distance</h3>
+        <div class="seg" aria-label="Trajectory analysis tasks">
+          <button type="button" class="on" aria-pressed="true" data-analysis-image="static/images/trajectory_geometry.png?v=6a85261c4cfb" data-analysis-alt="Recorded TwoRoom and PushT trajectories in latent space, with goal distance for LeWM and GAWM with and without LeNS-JEPA" data-analysis-tasks="TwoRoom under blur and PushT under hue">TwoRoom and PushT</button>
+          <button type="button" aria-pressed="false" data-analysis-image="static/images/reacher_trajectories.png?v=8ea43f5fe554" data-analysis-alt="Recorded Reacher trajectories in latent space under noise, with goal distance for LeWM and GAWM with and without LeNS-JEPA" data-analysis-tasks="Reacher under noise">Reacher</button>
+        </div>
+      </div>
+      <div class="analysis-scroll" tabindex="0" role="region" aria-label="Latent trajectory figure">
+        <img class="zoomable" id="trajectoryAnalysisImage" loading="lazy" src="static/images/trajectory_geometry.png?v=6a85261c4cfb" alt="Recorded TwoRoom and PushT trajectories in latent space, with goal distance for LeWM and GAWM with and without LeNS-JEPA">
+      </div>
+      <figcaption><b id="trajectoryAnalysisTasks">TwoRoom under blur and PushT under hue.</b> One example trajectory per task is encoded from clean and shifted observations. Upper panels show projections onto the first two principal components fitted to the clean trajectory. Lower panels show normalized latent distance to the clean goal. These examples are consistent with reduced appearance sensitivity when the base model is trained with LeNS-JEPA.</figcaption>
+    </figure>
+
+    <details class="condition-details analysis-summary" id="goalDistanceSummary">
+      <summary>Mean goal distance across 512 validation windows per task</summary>
+      <figure class="analysis-summary-figure">
+        <div class="analysis-scroll" tabindex="0" role="region" aria-label="Mean normalized goal distance figure">
+          <img class="zoomable" loading="lazy" src="static/images/goal_distance.png?v=b7b983b6ad8b" alt="Mean normalized goal distance over 512 windows per task for frozen DINOv2 patch features, LeWM, and LeWM plus LeNS-JEPA">
+        </div>
+        <figcaption><b>Average over recorded trajectories.</b> The curves compare frozen DINOv2 patch features (reference), LeWM, and LeWM + LeNS-JEPA over 512 validation windows per task. Each window contains 26 frames and uses its final clean observation as the goal. Distances are normalized by the dispersion of clean frame features for each representation. Dashed curves use clean observations. Solid curves average the five appearance shifts. The clean and shifted curves are generally closer with LeNS-JEPA.</figcaption>
+      </figure>
+    </details>
+
+    <figure class="card analysis-card" id="physicalChangeAnalysis">
+      <div class="analysis-head"><h3>Appearance changes and physical changes</h3></div>
+      <div class="analysis-scroll" tabindex="0" role="region" aria-label="Color change and teleportation prediction error figure">
+        <img class="zoomable" loading="lazy" src="static/images/expectation_violation.png?v=2cb507ac3cea" alt="Next-observation latent prediction error under a color change or teleportation, with an unmodified replay as reference">
+      </div>
+      <figcaption><b>Controlled interventions.</b> Probes on GAWM (TwoRoom and PushT) and SMWM (TwoRoom), each without and with LeNS-JEPA. Each curve averages 100 paired clips replayed from the same initial state with the same actions. At observation 10, a color intervention changes the agent in TwoRoom or the block in PushT without changing the physical state. Teleportation moves the agent in TwoRoom and both the agent and block in PushT. The reference replay has no intervention. The panel statistic <i>r</i> compares the excess prediction error from the color change with that from teleportation at the first intervened observation. In the three comparisons shown, <i>r</i> is smaller with LeNS-JEPA, consistent with a weaker response to appearance changes relative to changes in physical state.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <!-- ============ CONCLUSION ============ -->
 <section id="conclusion"><div class="wrap reveal"><div class="kicker">Conclusion</div><h2>Robust planning from clean trajectories</h2><p class="lead">LeNS-JEPA encourages complementary predictive and nuisance pathways through learned patch masking, feature reconstruction, and an action-adversarial objective. Across TwoRoom, PushT, and Reacher, it improves mean appearance OoD planning success for LeWM, SMWM, and GAWM using clean training trajectories. The added modules are used only during training, retaining each base model’s inference architecture and parameter count.</p></div></section>
 
@@ -288,5 +329,6 @@
 <script src="static/js/manifest.js"></script>
 <script src="static/js/main.js?v=1a701b333d"></script>
 <script src="static/js/gallery.js?v=8ed7a62f8b"></script>
+<script src="static/js/analysis.js?v=4e4b15352ac2"></script>
 </body>
 </html>

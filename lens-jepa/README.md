@@ -10,4 +10,4 @@ Planning videos replay the recorded test actions. Gallery tiles show selected su
 
 The numerical tables and charts retain all measured values. Nonpositive changes use a neutral annotation style. The site uses viewport-based playback, task/model filters, and expandable video galleries.
 
-The overview video uses the same recorded frame sequence with slower presentation (24 fps, approximately 32 seconds). Headings and condition labels are shortened for readability.
+The 16-second overview pauses for one second at step 50/50 before the result summary. Additional analyses show recorded latent trajectories, mean goal distance, and responses to controlled appearance and physical changes.
